@@ -1,11 +1,11 @@
-const CACHE_NAME = 'retrotvra-v2-0-122';
+const CACHE_NAME = 'rectified-retrotvra-v2-3';
 const APP_FILES = [
   './',
   './index.html',
   './admin.html',
-  './style.css?v=122',
-  './app.js?v=104',
-  './admin.js?v=2.4.0',
+  './style.css?v=rectified-3',
+  './app.js?v=rectified-3',
+  './admin.js?v=rectified-3',
   './admin-entry.js?v=1.0.1',
   './manifest.webmanifest',
   './icon.svg',
@@ -25,7 +25,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key.startsWith('retrotvra-v2-') && key !== CACHE_NAME).map(key => caches.delete(key))))
+      .then(keys => Promise.all(keys.filter(key => key.startsWith('rectified-retrotvra-v2-') && key !== CACHE_NAME).map(key => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
@@ -45,6 +45,6 @@ self.addEventListener('fetch', event => {
         }
         return response;
       })
-      .catch(() => caches.match(request).then(cached => cached || caches.match('./index.html')))
+      .catch(() => caches.match(request).then(cached => cached || (request.mode==='navigate'?caches.match('./index.html'):Response.error())))
   );
 });

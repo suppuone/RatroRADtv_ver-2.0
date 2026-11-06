@@ -5,8 +5,8 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <meta name="theme-color" content="#15181c">
   <title>Station Admin · RetroRadtv</title>
-  <link rel="stylesheet" href="style.css?v=87">
-  <script defer src="admin.js?v=2.4.0"></script>
+  <link rel="stylesheet" href="style.css?v=rectified-3">
+  <script defer src="admin.js?v=rectified-3"></script>
 </head>
 <body>
   <div class="admin-backdrop">
@@ -19,7 +19,7 @@
       </div>
       <div class="admin-workspace" id="admin-workspace" hidden>
         <p class="admin-status admin-workspace-status" id="admin-workspace-status" role="status" aria-live="polite"></p>
-        <div class="admin-toolbar" id="admin-toolbar"><div class="admin-tabs" role="tablist"><button type="button" data-admin-type="radio" class="active">RADIO <b id="admin-radio-count">0</b></button><button type="button" data-admin-type="tv">LIVE TV <b id="admin-tv-count">0</b></button><button type="button" id="admin-splash-tab" data-admin-view="splash">SPLASH / BRANDING</button></div><div class="admin-actions" id="admin-actions"><button type="button" id="admin-undo" class="admin-secondary" disabled>UNDO</button><button type="button" id="admin-import" class="admin-secondary">IMPORT</button><button type="button" id="admin-export-json" class="admin-secondary">EXPORT JSON</button><button type="button" id="admin-export-m3u" class="admin-secondary">EXPORT M3U</button><input id="admin-file" type="file" accept=".json,.m3u,.m3u8,.txt,application/json,audio/x-mpegurl" hidden></div></div>
+        <div class="admin-toolbar" id="admin-toolbar"><div class="admin-tabs" role="tablist"><button type="button" data-admin-type="radio" class="active">RADIO <b id="admin-radio-count">0</b></button><button type="button" data-admin-type="tv">TV <b id="admin-tv-count">0</b></button><button type="button" id="admin-splash-tab" data-admin-view="splash">SPLASH / BRANDING</button></div><div class="admin-actions" id="admin-actions"><button type="button" id="admin-undo" class="admin-secondary" disabled>UNDO</button><button type="button" id="admin-import" class="admin-secondary">IMPORT</button><button type="button" id="admin-export-json" class="admin-secondary">EXPORT JSON</button><button type="button" id="admin-export-m3u" class="admin-secondary">EXPORT M3U</button><input id="admin-file" type="file" accept=".json,.m3u,.m3u8,.txt,application/json,audio/x-mpegurl" hidden></div></div>
         <div class="admin-columns" id="admin-catalog-columns">
           <section class="admin-editor-card"><div class="admin-card-heading"><div><span class="admin-kicker">EDIT ENTRY</span><h2 id="admin-editor-heading">Add a radio station</h2></div><button type="button" id="admin-new" class="admin-secondary">＋ NEW</button></div>
             <div class="admin-form-grid"><label>Station / channel name<input id="admin-name" maxlength="120" placeholder="Name shown in the app"></label><label>Country<input id="admin-country" maxlength="80" placeholder="e.g. India"></label><label class="admin-wide">Stream URL<input id="admin-url" type="url" inputmode="url" placeholder="https://…"></label><label>Genre / category<input id="admin-group" maxlength="80" placeholder="Music, News, Education…"></label><label>Logo URL or app asset path<input id="admin-logo" type="text" inputmode="url" maxlength="500" placeholder="https://… or assets/station-logos/…"></label><div class="admin-wide admin-image-tools"><label class="admin-file-picker">UPLOAD STATION LOGO<input id="admin-logo-file" type="file" accept="image/png,image/jpeg,image/webp,image/gif"></label><button type="button" class="admin-secondary" id="admin-logo-clear">REMOVE LOGO</button><small id="admin-logo-file-note">PNG, JPG, WebP or GIF · up to 1.5 MB · uploads with the catalogue when you publish.</small></div><label class="admin-wide">Station tags / notes<input id="admin-tags" maxlength="180" placeholder="Optional tags or short notes"></label></div>
@@ -41,7 +41,7 @@
               <label>Main text color<input id="admin-splash-text" type="color" value="#f4e6c4"></label>
               <label>Accent color<input id="admin-splash-accent" type="color" value="#ffb15c"></label>
               <div class="admin-wide admin-occasions">
-                <div class="admin-occasion-heading"><div><b>Custom occasions</b><small>Add a date and the greeting shown on the splash screen. It appears two days before through two days after the date.</small></div></div>
+                <div class="admin-occasion-heading"><div><b>Custom occasions</b><small>Add a date and the greeting shown on the splash screen. It appears on the selected date, using the user’s local date. Add a new date for each year.</small></div></div>
                 <div class="admin-occasion-add-row"><label>Occasion date<input id="admin-occasion-date" type="date"></label><label>Greeting text<input id="admin-occasion-text" type="text" maxlength="60" placeholder="HAPPY FOUNDATION DAY"></label><button type="button" id="admin-occasion-add" class="admin-secondary">＋ ADD</button></div>
                 <div id="admin-occasion-list" class="admin-occasion-list" aria-live="polite"></div>
               </div>

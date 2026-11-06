@@ -869,7 +869,7 @@ body[data-theme="ultra"] #radio-screen .radio-art .radio-dot-texture{opacity:.3}
 .welcome-splash-v2 .festival-orbit{position:absolute;z-index:4;top:-30px;left:-30px;width:calc(100% + 60px);height:calc(100% + 60px);overflow:visible;pointer-events:none;animation:floatMotion 1.9s ease-in-out infinite alternate!important}
 .welcome-splash-v2 .festival-orbit path{fill:none;stroke:none}
 .welcome-splash-v2 .festival-orbit text{fill:#fff;font-family:'DM Sans',Arial,sans-serif;font-size:19px;font-weight:900;letter-spacing:1.4px;paint-order:stroke;stroke:#10151d;stroke-width:3px;stroke-linejoin:round;filter:drop-shadow(0 0 5px #ffd979);transition:font-size .35s ease}
-.welcome-splash-v2 .festival-orbit-stopped text{font-size:38px}
+
 .welcome-splash-v2 .card-inner{position:relative;z-index:3;display:flex;width:100%;height:100%;min-height:0;flex-direction:column;align-items:center;justify-content:center;box-sizing:border-box;padding:clamp(12px,4vw,24px);text-align:center;transform:translateZ(30px)}
 .welcome-splash-v2 .card-inner h1{margin:0;color:var(--splash-text,#fff);font:800 clamp(23px,6.2vw,30px)/1.12 'DM Sans',Arial,sans-serif;letter-spacing:.075em;text-shadow:0 2px 12px #000b}
 .welcome-splash-v2 .card-inner p{margin:8px 0 0;color:#fff;font:700 clamp(14px,3.7vw,16px)/1.45 'DM Sans',Arial,sans-serif;letter-spacing:.045em;text-shadow:0 1px 5px #000b}
@@ -1017,3 +1017,337 @@ body[data-theme="ultra"] #radio-screen .ticker-track{color:#54e5ff!important;tex
   #tv-screen .remote-dpad>.dpad-down{position:absolute;bottom:9px;left:50%;transform:translateX(-50%)}
   #tv-screen .remote-dpad>.dpad-ok{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)}
 }
+
+.welcome-splash-v2 .card-inner .splash-wait{margin-top:10px;color:#fff;font:800 12px Arial,sans-serif;letter-spacing:.08em;background:none;border:0;box-shadow:none;text-shadow:none;filter:none;animation:none!important;transform:none;cursor:default;pointer-events:none}
+
+/* Enlarge the greeting above the card after its five-second circuit. */
+.welcome-splash-v2 .splash-greeting-large{position:absolute;z-index:4;left:-6%;bottom:calc(100% + 16px);width:112%;text-align:center;color:#fff;font:900 clamp(22px,7vw,34px)/1.15 Arial,sans-serif;letter-spacing:.035em;text-shadow:0 2px 5px #10151d;pointer-events:none;transform-origin:center bottom;animation:splash-greeting-enlarge .45s ease-out both}
+@keyframes splash-greeting-enlarge{from{transform:scale(.65);opacity:.8}to{transform:scale(1);opacity:1}}
+
+/* Keep the splash card and its text track stationary. */
+.welcome-splash-v2 .glow-card,
+.welcome-splash-v2 .festival-orbit{animation:none!important;transform:none!important;will-change:auto}
+
+/* Large touch carousel inside the radio display. */
+#radio-screen .radio-display{position:relative;isolation:isolate}
+#radio-screen .radio-art{height:290px!important;min-height:290px}
+#radio-screen .radio-art .record-mark,#radio-screen .radio-art .station-logo-badge,#radio-screen .radio-art .station-logo-fallback,#radio-screen .radio-art .radio-art-caption,#radio-screen .radio-art .speaker-cone{display:none!important}
+#radio-screen .radio-display>.radio-station-shortcuts{position:absolute;z-index:8;top:62px;left:0;right:0;height:210px;margin:0;padding:0;display:block!important;border:0!important;border-radius:0;background:transparent!important;box-shadow:none!important;backdrop-filter:none}
+#radio-screen .radio-station-shortcuts>.radio-rail-arrow{display:none}
+#radio-screen .radio-station-strip{position:relative;display:flex;justify-content:flex-start;align-items:center;gap:0;height:210px;min-height:210px;box-sizing:border-box;padding:18px max(0px,calc(50% - 68px));overflow-x:auto;overflow-y:hidden;touch-action:pan-x;scroll-padding:0;scroll-snap-type:x mandatory}
+#radio-screen .radio-mini-card{position:relative;isolation:isolate;flex:0 0 136px;width:136px;max-width:136px;height:164px!important;min-height:164px;padding:14px 10px;gap:12px;border-radius:20px;background:linear-gradient(145deg,#283b50,#101b2b);color:#fff;box-shadow:0 12px 24px #0007;transform:scale(var(--rail-scale,.78));opacity:var(--rail-opacity,.7)}
+#radio-screen .radio-mini-card .radio-mini-logo{width:78px;height:78px;min-height:78px;border-radius:18px;background:#ffffffed;display:grid;place-items:center;overflow:hidden}
+#radio-screen .radio-mini-logo img{width:100%;height:100%;object-fit:contain;pointer-events:none;-webkit-user-drag:none}
+#radio-screen .radio-mini-logo .logo-fallback{font-size:28px;color:#163449}
+#radio-screen .radio-mini-card b{font:700 12px/1.3 Arial,sans-serif;white-space:normal;max-width:100%;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+#radio-screen .radio-mini-card.active{background:linear-gradient(145deg,#174757,#182239);box-shadow:0 0 0 2px #90ffed,0 0 22px #43ffeaa0,0 0 48px #29d9e570,0 14px 28px #0008}
+#radio-screen .radio-mini-card.active::before{content:'';position:absolute;z-index:-1;inset:-18px;border-radius:50%;background:radial-gradient(ellipse,#2fffe868,transparent 70%);filter:blur(12px);pointer-events:none}
+@media(min-width:700px){#radio-screen .radio-art{height:330px!important}#radio-screen .radio-display>.radio-station-shortcuts{top:82px}}
+
+/* Give the playing station more prominence, with room for its larger glow. */
+#radio-screen .radio-display>.radio-station-shortcuts{height:240px;top:48px}
+#radio-screen .radio-station-strip{height:240px;min-height:240px;padding-block:30px}
+@media(min-width:700px){#radio-screen .radio-display>.radio-station-shortcuts{top:68px}}
+
+#preset-grid .preset-drag-handle{position:absolute;z-index:4;left:50%;top:3px;transform:translateX(-50%);width:38px;height:32px;padding:0;border:0;background:transparent;color:var(--brass,#bda270);font-size:26px;line-height:1;cursor:grab;touch-action:none;user-select:none}
+#preset-grid .preset-dragging{opacity:.55;outline:2px solid #67e8f9}
+#preset-grid .preset-drop-target{outline:3px solid #67e8f9;box-shadow:0 0 20px #22d3ee66;transform:scale(1.04)}
+
+/* Swipeable logo carousel and sculpted remote. */
+#tv-screen .tv-rail-wrap{display:block;padding:0!important;overflow:hidden;background:transparent!important;box-shadow:none!important}
+#tv-screen .tv-rail-wrap>.rail-arrow{display:none}
+#tv-screen #tv-rail{position:relative;display:flex;align-items:center;justify-content:flex-start;gap:0;height:148px;box-sizing:border-box;padding:18px max(0px,calc(50% - 60px));overflow-x:auto;scroll-snap-type:x mandatory;touch-action:pan-x;scrollbar-width:none}
+#tv-screen .tv-rail-card{flex:0 0 120px;min-width:120px;max-width:120px;height:108px;display:flex;flex-direction:column;justify-content:center;gap:6px;padding:10px;scroll-snap-align:center;transform:scale(var(--tv-card-scale,.8));transition:transform .12s ease-out;box-sizing:border-box;border-radius:17px}
+#tv-screen .tv-rail-logo{width:58px;height:58px;flex:0 0 58px;border-radius:12px;background:#fff;overflow:hidden}
+#tv-screen .tv-rail-logo img{width:100%;height:100%;object-fit:contain;-webkit-user-drag:none}
+#tv-screen .tv-rail-copy b{font-size:10px;display:block;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#tv-screen .tv-rail-copy small{display:none}
+#tv-screen .tv-rail-card.active{box-shadow:0 0 0 1px #ffdc86,0 0 24px #efbd5866}
+#tv-screen .remote-panel{width:min(100%,340px);box-sizing:border-box;margin:16px auto 24px;padding:20px 22px 26px;border-radius:38px 38px 48px 48px!important;background:linear-gradient(105deg,#141515,#393936 22%,#282927 65%,#111313)!important;border:1px solid #656052!important;box-shadow:inset 3px 2px 3px #fff3,inset -5px -5px 8px #000c,0 14px 0 #101110,0 22px 28px #0009,0 0 25px #e5bc491a!important}
+#tv-screen .remote-heading{font-size:10px;letter-spacing:.1em}
+#tv-screen .remote-key{background:radial-gradient(ellipse at 35% 15%,#676258,#302f2a 52%,#181916)!important;border:1px solid #82745a!important;box-shadow:inset 0 2px 2px #fff4,inset 0 -3px 3px #0009,0 5px 0 #111,0 7px 9px #000a,0 0 10px #ffce5720!important;color:#ffdf9a;transition:box-shadow .12s,filter .12s}
+#tv-screen .remote-key:active{box-shadow:inset 0 2px 5px #0009,0 1px 0 #111,0 0 15px #ffd36d88!important;filter:brightness(1.2)}
+#tv-screen .remote-dpad{background:linear-gradient(140deg,#393b36,#121511)!important;box-shadow:inset 0 2px 5px #fff2,0 5px 12px #000b,0 0 15px #eabd4d30!important}
+body.tv-fullscreen-open>#tv-fullscreen-shell{position:fixed!important;inset:0!important;width:100vw!important;height:100dvh!important;z-index:2147483647!important;background:#000;display:block!important}
+body.tv-fullscreen-open #tv-display.cinema-mode{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;max-height:none!important;margin:0!important;padding:0!important;border:0!important;border-radius:0!important;background:#000!important}
+body.tv-fullscreen-open .tv-picture{position:absolute!important;inset:0!important;width:100%!important;height:100%!important;max-width:none!important;border-radius:0!important}
+body.tv-fullscreen-open #tv-video{width:100%!important;height:100%!important;object-fit:contain!important}
+body.tv-fullscreen-open .tv-playing-meta{display:none!important}
+body.tv-fullscreen-open .fullscreen-side-controls{position:absolute!important;z-index:10;right:12px;top:50%;transform:translateY(-50%);display:flex!important;flex-direction:column;gap:12px}
+body.tv-fullscreen-open #tv-display.landscape-fallback{inset:auto!important;left:50%!important;top:50%!important;width:var(--tv-viewport-height)!important;height:var(--tv-viewport-width)!important;transform:translate(-50%,-50%) rotate(90deg)!important;transform-origin:center!important}
+
+/* Keep channel browsing within the television display panel. */
+#tv-screen #tv-display>.tv-rail-wrap{position:relative;z-index:2;width:100%;margin:0;box-sizing:border-box}
+body.tv-fullscreen-open #tv-display>.tv-rail-wrap{display:none!important}
+
+/* The selected carousel card is the live television screen. */
+#tv-screen #tv-display:not(.cinema-mode)>.tv-picture{display:none!important}
+#tv-screen #tv-display>.tv-rail-wrap{overflow:hidden;padding-block:12px!important}
+#tv-screen #tv-rail{height:clamp(210px,35vw,330px);padding:22px 17%;overflow-y:hidden}
+#tv-screen #tv-rail .tv-rail-card{position:relative;flex:0 0 100%;min-width:0;max-width:none;width:100%;height:100%;padding:12px;overflow:hidden;transform:scale(var(--tv-card-scale,.72));border-radius:20px;background:linear-gradient(145deg,#293542,#101820)}
+#tv-screen #tv-rail .tv-rail-card.active{transform:scale(1);box-shadow:0 0 0 1px #ffdc86,0 0 30px #efbd5877}
+#tv-screen #tv-rail .tv-video-card>.tv-rail-logo,#tv-screen #tv-rail .tv-video-card>.tv-rail-copy{display:none}
+#tv-screen #tv-rail .tv-video-card{padding:0}
+#tv-screen #tv-rail .tv-picture{position:relative!important;display:block!important;inset:auto!important;width:100%!important;height:100%!important;max-width:none!important;aspect-ratio:auto!important;margin:0;border-radius:18px}
+#tv-screen #tv-rail #tv-video{width:100%;height:100%;object-fit:contain;background:#000}
+#tv-screen #tv-rail .tv-rail-logo{width:84px;height:84px;flex-basis:84px}
+#tv-screen #tv-rail .tv-rail-copy b{max-width:100%;font-size:13px}
+
+/* Compact television header leaves more space for the remote. */
+#tv-screen .tv-display-header{display:flex;align-items:center;gap:12px;padding:8px 10px 2px;min-width:0}
+#tv-screen #tv-display-clock{flex:0 0 112px;color:var(--brass,#e1bd76);font:700 11px/1.6 Arial,sans-serif;max-width:112px}
+#tv-screen .tv-display-header .tv-playing-meta{display:flex;align-items:center;gap:8px;flex:1;min-width:0;padding:0!important;margin:0!important;background:none}
+#tv-screen .tv-playing-meta>div{min-width:0;flex:1}
+#tv-screen .tv-playing-meta h1{font-size:13px;line-height:1.25;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tv-screen .tv-playing-meta p{font-size:10px;margin:3px 0 0;line-height:1.2}
+#tv-screen .tv-live-badge{flex:none;border-radius:5px;padding:4px 6px;background:#b82929;color:#fff;font:800 10px Arial,sans-serif;white-space:nowrap}
+#tv-screen #tv-display>.tv-rail-wrap{padding-block:0!important}
+#tv-screen #tv-rail{height:clamp(180px,29vw,250px);padding-block:14px}
+#tv-screen .remote-panel{margin-top:10px;margin-bottom:14px;padding-top:15px;padding-bottom:18px}
+body.tv-fullscreen-open .tv-display-header{display:none!important}
+@media(max-width:480px){#tv-screen .tv-display-header{gap:6px;padding-inline:6px}#tv-screen #tv-display-clock{flex-basis:88px;font-size:10px}#tv-screen .tv-playing-meta h1{font-size:11px}#tv-screen .tv-playing-meta .mini-star{width:26px;min-width:26px;height:28px}#tv-screen .tv-live-badge{font-size:9px;padding:3px 4px}}
+
+/* Shared date/time on the outer panel, clear of both media screens. */
+.retro-app{position:relative}
+.topbar #clock,.topbar .top-separator{display:none!important}
+.outer-panel-clock{position:absolute;top:68px;left:30px;z-index:5;pointer-events:none}
+.outer-panel-clock .radio-clock-card{position:static!important;inset:auto!important;display:block!important;width:auto!important;margin:0!important;padding:0!important;background:none!important;border:0!important;box-shadow:none!important;transform:none!important;color:var(--brass,#ebc878)}
+.outer-panel-clock .radio-clock-line{display:flex;align-items:baseline;gap:4px}
+.outer-panel-clock #radio-clock-time{font-size:21px;line-height:1}
+.outer-panel-clock #radio-clock-day,.outer-panel-clock #radio-clock-meridiem{font-size:10px}
+.outer-panel-clock #radio-clock-date{display:block;font-size:9px;letter-spacing:.04em;margin-top:3px}
+#tv-screen>.screen-heading{display:grid;grid-template-columns:auto minmax(0,1fr) auto;gap:12px;align-items:center}
+#tv-screen>.screen-heading .tv-display-header{padding:0;min-width:0}
+#tv-screen .tv-display-header .tv-playing-meta{gap:7px}
+#tv-screen .tv-playing-meta h1{font-size:12px}
+#tv-screen .tv-playing-meta p{font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#tv-screen #tv-display>.tv-rail-wrap{padding:0!important}
+#tv-screen #tv-rail{height:clamp(180px,30vw,250px);padding:12px 17%}
+#tv-screen #tv-rail .tv-rail-card{border-radius:16px}
+#tv-screen .remote-channel-picker select{font-family:'Barlow Condensed',Arial,sans-serif!important;font-weight:800!important;letter-spacing:.08em;font-size:12px!important}
+#tv-screen .remote-panel{margin-top:10px;padding:12px 18px 16px}
+#tv-screen .remote-shortcuts{margin-top:8px}
+@media(max-width:480px){
+ .outer-panel-clock{top:65px;left:18px}
+ .outer-panel-clock #radio-clock-time{font-size:17px}
+ .outer-panel-clock #radio-clock-date{font-size:8px}
+ .mode-switch{margin-left:108px!important}
+ #tv-screen>.screen-heading{grid-template-columns:minmax(0,1fr) auto;gap:6px}
+ #tv-screen>.screen-heading>.eyebrow{grid-column:1;grid-row:1}
+ #tv-screen>.screen-heading>.tv-display-header{grid-column:1;grid-row:2}
+ #tv-screen>.screen-heading>.country-picker{grid-column:2;grid-row:1 / 3}
+ #tv-screen #tv-rail{height:190px}
+ #tv-screen .remote-panel{margin-top:8px;padding-block:10px}
+}
+
+/* Readable remote indicators and adaptable, uncropped page layouts. */
+#tv-screen .remote-main{position:relative;padding-inline:30px!important;box-sizing:border-box}
+#tv-screen .remote-number{position:absolute;top:50%;transform:translateY(-50%);font:800 12px/1.2 'Barlow Condensed',Arial,sans-serif;color:#ffe2a0;text-shadow:0 0 8px #edc56766;text-align:center;pointer-events:none}
+#tv-screen .remote-volume-number{left:0;width:26px}
+#tv-screen .remote-channel-number{right:0;width:28px;font-size:10px}
+body:not(.tv-fullscreen-open){height:auto!important;max-height:none!important;overflow-y:auto!important}
+body:not(.tv-fullscreen-open) .retro-app{height:auto!important;max-height:none!important;min-height:100dvh;overflow:visible!important;padding-bottom:calc(100px + env(safe-area-inset-bottom))!important}
+body:not(.tv-fullscreen-open) .screen{height:auto!important;max-height:none!important;overflow:visible!important;min-width:0}
+#tv-screen .remote-panel{width:min(100%,380px);max-width:100%;height:auto!important;max-height:none!important;overflow:visible!important}
+#tv-screen .remote-main{grid-template-columns:36px minmax(0,1fr) 36px!important;gap:6px!important}
+#tv-screen .remote-dpad{width:clamp(112px,32vw,148px)!important;height:clamp(112px,32vw,148px)!important;max-width:100%}
+#tv-screen .tv-actions{margin-block:4px}
+#tv-screen #tv-rail{height:clamp(170px,27dvh,250px)}
+@media(min-width:700px){.retro-app{width:min(96vw,760px)}#tv-screen .remote-panel{width:360px}#tv-screen #tv-rail{height:clamp(190px,29dvh,265px)}}
+@media(max-width:380px){body{padding-inline:4px}.retro-app{padding-inline:10px}#tv-screen .remote-panel{padding-inline:10px}#tv-screen .remote-main{padding-inline:24px!important;grid-template-columns:30px minmax(0,1fr) 30px!important;gap:3px!important}#tv-screen .remote-number{font-size:10px;width:22px}#tv-screen .remote-channel-number{font-size:9px}}
+@media(max-height:740px){#tv-screen #tv-rail{height:170px}#tv-screen .remote-panel{margin-block:6px;padding-block:10px}#tv-screen .remote-heading{margin-bottom:6px}#radio-screen .radio-art{height:260px!important;min-height:260px}#radio-screen .radio-display>.radio-station-shortcuts{top:28px}}
+
+/* Even preset keypad and prominent numerical readouts. */
+#tv-screen #remote-presets{display:grid!important;grid-template-columns:repeat(5,minmax(0,1fr))!important;grid-auto-rows:36px;gap:8px!important;align-items:stretch;justify-items:stretch;width:100%;padding:5px 0 8px;overflow:visible}
+#tv-screen #remote-presets .remote-preset-key{width:100%!important;min-width:0!important;max-width:none!important;height:36px!important;min-height:36px!important;margin:0!important;border-radius:9px!important;font:700 13px 'Segoe UI',sans-serif;box-sizing:border-box}
+#tv-screen #remote-presets .remote-preset-key.active{background:linear-gradient(145deg,#fff0b4,#e6bc60 48%,#a9752c)!important;color:#302008!important;border:1px solid #ffe3a0!important;box-shadow:inset 0 2px 3px #fff9,inset 0 -2px 3px #87591f88,0 3px 0 #624316,0 0 16px #e9bb6177!important}
+#tv-screen .remote-main .remote-number{font-family:'Segoe UI',sans-serif!important;font-size:24px!important;font-weight:400;line-height:1.1;letter-spacing:-.04em;width:36px;font-variant-numeric:tabular-nums}
+#tv-screen .remote-main .remote-volume-number{left:-7px}
+#tv-screen .remote-main .remote-channel-number{right:-7px}
+@media(max-width:380px){#tv-screen .remote-main .remote-number{font-size:21px!important;width:30px}#tv-screen .remote-main .remote-volume-number{left:-5px}#tv-screen .remote-main .remote-channel-number{right:-5px}#tv-screen #remote-presets{gap:6px!important}}
+
+/* Larger radio cards sized to fill the display without clipping. */
+#radio-screen .radio-display>.radio-station-shortcuts{top:10px;height:270px}
+#radio-screen .radio-station-strip{height:270px;min-height:270px;padding:30px max(0px,calc(50% - 80px))}
+#radio-screen .radio-mini-card{flex-basis:160px;width:160px;max-width:160px;height:184px!important;min-height:184px;padding:16px 12px;gap:12px}
+#radio-screen .radio-mini-card .radio-mini-logo{width:96px;height:96px;min-height:96px;border-radius:20px}
+#radio-screen .radio-mini-card b{font-size:13px}
+@media(min-width:700px){
+ #radio-screen .radio-display>.radio-station-shortcuts{top:10px;height:310px}
+ #radio-screen .radio-station-strip{height:310px;min-height:310px;padding-inline:max(0px,calc(50% - 92px))}
+ #radio-screen .radio-mini-card{flex-basis:184px;width:184px;max-width:184px;height:214px!important;min-height:214px}
+ #radio-screen .radio-mini-card .radio-mini-logo{width:112px;height:112px;min-height:112px}
+ #radio-screen .radio-mini-card b{font-size:14px}
+}
+@media(max-height:740px){
+ #radio-screen .radio-display>.radio-station-shortcuts{top:5px;height:250px}
+ #radio-screen .radio-station-strip{height:250px;min-height:250px}
+ #radio-screen .radio-mini-card{height:174px!important;min-height:174px}
+ #radio-screen .radio-mini-card .radio-mini-logo{width:88px;height:88px;min-height:88px}
+}
+
+/* Reserve clock space without pushing the mode switch outside the panel. */
+@media(max-width:480px){
+ .retro-app>.mode-switch{width:calc(100% - 98px)!important;max-width:286px;min-width:0;margin-left:98px!important;margin-right:0!important;grid-template-columns:repeat(2,minmax(0,1fr));box-sizing:border-box}
+ .retro-app>.mode-switch .mode-tab{min-width:0;padding-inline:4px;font-size:clamp(10px,3.1vw,13px);gap:4px;letter-spacing:0}
+}
+@media(max-width:320px){
+ .retro-app>.mode-switch{width:100%!important;margin:48px 0 4px!important}
+}
+
+/* Slimmer remote body; retain the existing quick-preset keypad width. */
+#tv-screen .remote-panel{width:min(100%,310px)!important;padding-inline:18px}
+#tv-screen .remote-panel .remote-shortcuts{width:min(344px,calc(100vw - 64px));position:relative;left:50%;transform:translateX(-50%)}
+#tv-screen .remote-main{padding-inline:25px!important;grid-template-columns:32px minmax(0,1fr) 32px!important;gap:4px!important}
+#tv-screen .remote-dpad{width:120px!important;height:120px!important}
+@media(max-width:380px){#tv-screen .remote-panel{width:min(100%,290px)!important;padding-inline:12px}#tv-screen .remote-panel .remote-shortcuts{width:min(344px,calc(100vw - 56px))}#tv-screen .remote-main{padding-inline:23px!important;grid-template-columns:30px minmax(0,1fr) 30px!important;gap:3px!important}#tv-screen .remote-dpad{width:112px!important;height:112px!important}}
+
+/* Scale the mobile splash to both viewport dimensions, reserving greeting space. */
+@media(max-width:600px),(max-height:500px){
+ .welcome-splash-v2{padding:24px 32px}
+ .welcome-splash-v2 .card-wrapper{width:min(68vw,54svh,290px);max-width:100%;perspective:none}
+ .welcome-splash-v2 .glow-card{max-height:none;aspect-ratio:1}
+ .welcome-splash-v2 .card-inner{padding:clamp(8px,3vw,18px)}
+ .welcome-splash-v2 .card-inner h1{font-size:clamp(15px,4.5vw,24px)}
+ .welcome-splash-v2 .card-inner p{font-size:clamp(9px,2.6vw,13px);line-height:1.35;margin-top:6px;letter-spacing:.02em}
+ .welcome-splash-v2 .welcome-radio-icon,.welcome-splash-v2 .welcome-splash-v2-logo{width:clamp(26px,9vw,42px);height:clamp(26px,9vw,42px);margin-bottom:6px}
+ .welcome-splash-v2 .card-inner .splash-wait{font-size:10px;margin-top:6px}
+ .welcome-splash-v2 .splash-greeting-large{font-size:clamp(18px,5.5vw,27px);bottom:calc(100% + 12px)}
+}
+
+/* BEGIN temporary radio card-edge glow experiment. Remove this block to revert. */
+@property --radio-edge-angle{syntax:'<angle>';initial-value:0deg;inherits:false}
+
+
+#radio-screen .radio-mini-card.active{box-shadow:0 0 0 1px #c9a55e,0 10px 22px #0007!important}
+#radio-screen .radio-mini-card.active::before{display:none!important}
+#radio-screen .radio-mini-card.active::after{content:none}
+#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::after{content:'';position:absolute;z-index:4;inset:-2px;padding:3px;border-radius:22px;background:conic-gradient(from var(--radio-edge-angle),transparent 0deg 245deg,#aa792e 265deg,#ffe49b 295deg,#fff9dc 315deg,transparent 345deg);-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;filter:drop-shadow(0 0 4px #ffd579);pointer-events:none;animation:radio-card-edge-loop 2.8s linear infinite}
+@keyframes radio-card-edge-loop{to{--radio-edge-angle:360deg}}
+@media(prefers-reduced-motion:reduce){#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::after{animation:none}}
+/* END temporary radio card-edge glow experiment. */
+
+/* Golden-only treatment for the radio card glow experiment. */
+#radio-screen .radio-mini-card.active{background:linear-gradient(145deg,#493b24,#282219 65%,#191817)!important;border-color:#d8af59!important;outline-color:#d8af59!important;color:#fff0c9!important;box-shadow:0 0 0 1px #c9a55e,0 10px 22px #0007!important}
+#radio-screen .radio-mini-card.active .radio-mini-logo{box-shadow:none!important;border-color:#d8af59!important}
+
+/* Flowing audio ribbons behind the radio carousel. */
+#radio-screen .radio-art .sound-rays{display:block!important;position:absolute;inset:0;width:100%;height:100%;z-index:1;opacity:.9;pointer-events:none}
+#radio-screen .radio-display>.radio-station-shortcuts{z-index:8}
+
+/* Splash-style rotating golden light around the playing radio card. */
+#radio-screen .radio-mini-card.active{overflow:hidden;isolation:isolate}
+#radio-screen .radio-mini-card.active>.radio-mini-logo,#radio-screen .radio-mini-card.active>b{position:relative;z-index:3}
+#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::before{content:'';display:block!important;position:absolute;z-index:0;inset:auto;left:-55%;top:-55%;width:210%;height:210%;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg 220deg,#b77b25 245deg,#ffd36d 268deg,#fff6d2 288deg,#f4bb4d 305deg,transparent 330deg);filter:blur(5px) brightness(1.6);transform-origin:center;animation:radio-splash-glow-spin 2.8s linear infinite;pointer-events:none}
+#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::after{content:'';position:absolute;z-index:1;inset:3px;padding:0;border-radius:18px;background:linear-gradient(145deg,#493b24,#282219 65%,#191817);-webkit-mask:none;mask:none;filter:none;animation:none;pointer-events:none}
+@keyframes radio-splash-glow-spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+@media(prefers-reduced-motion:reduce){#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::before{animation:none}}
+
+/* Moving color gradient matching the splash-card frame. */
+#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::before{background:conic-gradient(from 0deg,transparent 0deg 210deg,#06b6d4 235deg,#3b82f6 255deg,#8b5cf6 275deg,#f0abfc 290deg,#fff 300deg,#ec4899 315deg,transparent 340deg);animation:radio-splash-glow-spin 2.8s linear infinite}
+@media(prefers-reduced-motion:reduce){#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::before{animation:none}}
+
+/* Moving gradient across the playing card face, beneath its readable content. */
+#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::before{z-index:2;opacity:.48;filter:blur(14px);background:conic-gradient(from 0deg,#06b6d4,#3b82f6,#8b5cf6,#ec4899,#f0abfc,#06b6d4)}
+#radio-screen .radio-mini-card.active>.radio-mini-logo,#radio-screen .radio-mini-card.active>b{z-index:3}
+
+
+
+/* Use the splash card's exact transform animation for the dark overlay. */
+#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::before{z-index:1;animation:none!important}
+#radio-screen .radio-display:has(.equalizer.playing) .radio-mini-card.active::after{content:'';display:block!important;position:absolute;z-index:2;inset:auto;top:-50%;left:-50%;width:200%;height:200%;padding:0;border-radius:50%;background:conic-gradient(from 0deg,transparent 0deg 65deg,rgba(4,6,12,.2) 100deg,rgba(4,6,12,.95) 165deg 275deg,rgba(4,6,12,.5) 310deg,transparent 360deg);-webkit-mask:none;mask:none;filter:none;transform-origin:center;animation:rotateGlow 3.5s linear infinite!important;will-change:transform;pointer-events:none}
+#radio-screen .radio-mini-card.active>.radio-mini-logo,#radio-screen .radio-mini-card.active>b{position:relative;z-index:3}
+
+
+/* Keep the animated ribbon visible above the ambient background glow. */
+#radio-screen .radio-art .sound-rays{z-index:2;opacity:1}
+
+/* Restore the earlier circular glow ambience behind the radio cards. */
+#radio-screen .radio-art .radio-glow-ring{display:block!important;width:clamp(190px,64vw,280px)!important;height:clamp(190px,64vw,280px)!important;opacity:1!important;animation:radio-ring-turn 28s linear infinite!important;z-index:0!important}
+#radio-screen .radio-art .radio-glow-bloom{display:block!important;width:clamp(220px,72vw,320px)!important;height:clamp(220px,72vw,320px)!important;opacity:.85!important;animation:radio-ring-turn 28s linear infinite!important;filter:blur(13px) saturate(1.5)!important;z-index:0!important}
+@media(prefers-reduced-motion:reduce){#radio-screen .radio-art .radio-glow-ring,#radio-screen .radio-art .radio-glow-bloom{animation:none!important}}
+
+
+/* Fade ribbon endpoints and the bottom boundary into transparency. */
+#radio-screen .radio-art .sound-rays{-webkit-mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 78%,transparent 98%);-webkit-mask-composite:source-in;mask-image:linear-gradient(to right,transparent,#000 9%,#000 91%,transparent),linear-gradient(to bottom,transparent,#000 8%,#000 78%,transparent 98%);mask-composite:intersect}
+
+
+
+/* Remove the front radio card shadow. */
+#radio-screen .radio-mini-card.active{box-shadow:none!important;filter:none!important}
+
+/* Reference-style fine light ribbons with a clear dark surround. */
+#radio-screen .radio-art .sound-rays{opacity:1;z-index:2;-webkit-mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent);mask-image:linear-gradient(to right,transparent,#000 3%,#000 97%,transparent)}
+#radio-screen .radio-art .radio-glow-ring,#radio-screen .radio-art .radio-glow-bloom{display:none!important}
+
+/* Bottom-line equalizer immediately above the news ticker. */
+#radio-screen .radio-art .sound-rays{display:block!important;inset:0;z-index:2;opacity:1;-webkit-mask-image:none;mask-image:none;pointer-events:none}
+
+/* Balanced remote control layout at every viewport width. */
+#tv-screen .remote-panel .remote-main{display:grid!important;grid-template-columns:38px minmax(0,1fr) 38px!important;align-items:center;justify-items:center;gap:8px!important;width:100%;margin:12px auto 10px;padding:0 18px!important;min-height:148px}
+#tv-screen .remote-volume{grid-column:1;grid-row:1}
+#tv-screen .remote-dpad{grid-column:2;grid-row:1;position:relative;display:block!important;width:128px!important;height:128px!important;min-width:128px;max-width:none;padding:0!important;margin:0;justify-self:center}
+#tv-screen .remote-channel{grid-column:3;grid-row:1}
+#tv-screen .remote-rocker{width:38px!important;min-height:148px!important;display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 0!important;margin:0}
+#tv-screen .remote-rocker>.remote-key{width:36px!important;height:36px!important;min-width:36px!important;min-height:36px!important;margin:0}
+#tv-screen .remote-dpad>.remote-key{position:absolute!important;width:34px!important;height:34px!important;min-width:34px!important;min-height:34px!important;margin:0!important}
+#tv-screen .remote-dpad>.dpad-up{left:50%!important;top:5px!important;right:auto!important;bottom:auto!important;transform:translateX(-50%)!important}
+#tv-screen .remote-dpad>.dpad-down{left:50%!important;bottom:5px!important;top:auto!important;right:auto!important;transform:translateX(-50%)!important}
+#tv-screen .remote-dpad>.dpad-left{left:5px!important;top:50%!important;right:auto!important;bottom:auto!important;transform:translateY(-50%)!important}
+#tv-screen .remote-dpad>.dpad-right{right:5px!important;top:50%!important;left:auto!important;bottom:auto!important;transform:translateY(-50%)!important}
+#tv-screen .remote-dpad>.dpad-ok{left:50%!important;top:50%!important;right:auto!important;bottom:auto!important;width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;transform:translate(-50%,-50%)!important}
+#tv-screen .remote-main .remote-volume-number{left:-10px!important}
+#tv-screen .remote-main .remote-channel-number{right:-10px!important}
+#tv-screen .remote-function-row{display:grid!important;grid-template-columns:repeat(3,42px)!important;justify-content:space-between!important;align-items:center;gap:0!important;width:calc(100% - 36px);margin:8px auto 14px!important}
+#tv-screen .remote-function-row>.remote-key{width:42px!important;height:42px!important;min-width:42px!important;min-height:42px!important;margin:0}
+#tv-screen .remote-shortcuts>span{display:block;margin-bottom:6px}
+#tv-screen .remote-device-bar{display:grid;grid-template-columns:minmax(0,1fr) 36px;gap:8px;align-items:center}
+#tv-screen .remote-channel-picker{min-width:0;width:100%}
+#tv-screen .remote-channel-picker select{min-width:0;width:100%;text-overflow:ellipsis}
+@media(max-width:380px){#tv-screen .remote-panel .remote-main{gap:4px!important;padding-inline:16px!important;grid-template-columns:34px minmax(0,1fr) 34px!important}#tv-screen .remote-dpad{width:120px!important;height:120px!important;min-width:120px}}
+
+/* Mobile dial expanded to the marked circle with evenly spaced controls. */
+@media(max-width:699px){
+ #tv-screen .remote-panel .remote-main{grid-template-columns:36px minmax(0,1fr) 36px!important;gap:4px!important;padding-inline:16px!important;min-height:156px}
+ #tv-screen .remote-panel .remote-dpad{width:138px!important;height:138px!important;min-width:138px;box-sizing:border-box}
+ #tv-screen .remote-panel .remote-dpad>.dpad-up{top:7px!important}
+ #tv-screen .remote-panel .remote-dpad>.dpad-down{bottom:7px!important}
+ #tv-screen .remote-panel .remote-dpad>.dpad-left{left:7px!important}
+ #tv-screen .remote-panel .remote-dpad>.dpad-right{right:7px!important}
+ #tv-screen .remote-panel .remote-dpad>.dpad-ok{width:40px!important;height:40px!important;min-width:40px!important;min-height:40px!important}
+ #tv-screen .remote-rocker{min-height:156px!important}
+}
+@media(max-width:320px){#tv-screen .remote-panel .remote-main{padding-inline:12px!important;grid-template-columns:32px minmax(0,1fr) 32px!important;gap:2px!important}#tv-screen .remote-panel .remote-dpad{width:130px!important;height:130px!important;min-width:130px}}
+
+/* Clear, aligned remote labels on mobile. */
+@media(max-width:699px){
+ #tv-screen .remote-panel .remote-heading{display:flex;align-items:center;justify-content:space-between;gap:6px;width:100%;margin:0 0 10px;padding:0 2px;font-family:'Segoe UI',sans-serif!important;font-size:10px;font-weight:600;line-height:1.4;letter-spacing:.025em;white-space:nowrap}
+ #tv-screen .remote-heading>span{min-width:0;flex:1}
+ #tv-screen .remote-heading>i{flex:0 0 6px;width:6px;height:6px;margin:0}
+ #tv-screen .remote-heading>small{flex:0 0 auto;font-family:'Segoe UI',sans-serif!important;font-size:9px;font-weight:400;line-height:1.4;letter-spacing:.015em}
+ #tv-screen .remote-panel .remote-shortcuts>span{display:block;box-sizing:border-box;width:100%;padding:0 2px;margin:4px 0 7px;font-family:'Segoe UI',sans-serif!important;font-size:11px;font-weight:600;line-height:1.4;letter-spacing:.025em;text-align:left}
+ #tv-screen .remote-panel .remote-channel-picker select{font-family:'Segoe UI',sans-serif!important;font-size:11px!important;font-weight:500!important;letter-spacing:0}
+}
+
+@media(max-width:699px){#tv-screen .remote-panel .remote-shortcuts>span{padding-inline:max(2px,calc((100% - 274px)/2 + 2px))}}
+@media(max-width:380px){#tv-screen .remote-panel .remote-shortcuts>span{padding-inline:max(2px,calc((100% - 266px)/2 + 2px))}}
+
+/* Compact mobile remote so the bottom action buttons sit higher. */
+@media(max-width:699px){
+ #tv-screen .remote-panel .remote-heading{display:none!important}
+ #tv-screen .remote-panel{padding-top:9px!important;margin-top:6px!important}
+ #tv-screen .remote-panel .remote-device-bar{margin-top:0;margin-bottom:3px}
+ #tv-screen .remote-panel .remote-main{margin-top:4px!important;margin-bottom:3px!important;min-height:144px}
+ #tv-screen .remote-panel .remote-rocker{min-height:144px!important}
+ #tv-screen .remote-panel .remote-function-row{margin-top:3px!important;margin-bottom:8px!important}
+}
+
+/* Fullscreen fits the complete source frame, never cover/zoom. */
+body.tv-fullscreen-open #tv-display .tv-picture{display:flex!important;align-items:center!important;justify-content:center!important;max-height:none!important;min-height:0!important;aspect-ratio:auto!important;padding:0!important;margin:0!important;overflow:hidden!important;transform:none!important}
+body.tv-fullscreen-open #tv-display #tv-video{display:block!important;flex:none!important;min-width:0!important;min-height:0!important;max-width:100%!important;max-height:100%!important;object-fit:contain!important;object-position:center!important;transform:none!important;zoom:1!important;margin:0!important;padding:0!important;aspect-ratio:auto!important}
+body.tv-fullscreen-open .fullscreen-titlebar{position:absolute!important;z-index:5;top:0;left:0;right:0;background:linear-gradient(#0008,transparent)!important;pointer-events:none}
+
+body.tv-fullscreen-open #tv-display #tv-video.tv-zoomed{max-width:none!important;max-height:none!important}
+body.tv-fullscreen-open .fullscreen-side-controls button[aria-pressed="true"]{border-color:#f5ce76;background:#795b2699;color:#ffe4a4}
+body.tv-fullscreen-open .fullscreen-side-controls{max-height:calc(100% - 16px);overflow-y:auto;gap:6px!important;scrollbar-width:none}
+body.tv-fullscreen-open .fullscreen-side-controls button{flex-shrink:0;width:36px;height:36px;min-width:36px;min-height:36px}

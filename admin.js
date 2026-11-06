@@ -340,44 +340,33 @@
     const includeSplash=splashChanged();
     const stationAssets=referencedStationUploads();
     const summary=[...changed.map(type=>{const d=diffFor(type);return `${type}: +${d.added}, ${d.changed} edited, −${d.removed}`;}),...(stationAssets.length?[`Station logos: ${stationAssets.length} image${stationAssets.length===1?'':'s'} uploaded`]:[]),...(includeSplash?['Splash / branding: settings updated'+(splashUpload?' and logo image uploaded':'')]:[])].join('\n');
-    if(!window.confirm(`Publish these shared changes to ${repo} (${branch})?\n\n${summary}\n\nEach updated file will create a GitHub commit.`))return;
+    if(!window.confirm(`Publish these shared changes to ${repo} (${branch})?\n\n${summary}\n\nAll updated files will be published together in one commit.`))return;
     $('admin-publish').disabled=true;status('Checking for newer repository changes…');let published=[];
     try {
+      const base=`https://api.github.com/repos/${repo}`;
+      const ref=await github(`${base}/git/ref/heads/${branch.split('/').map(encodeURIComponent).join('/')}`);
+      const head=ref.object.sha,commit=await github(`${base}/git/commits/${head}`);
+      const tree=[];
+      const post=(url,body)=>github(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body)});
       for(const type of changed){
-        const endpoint=`https://api.github.com/repos/${repo}/contents/${encodedRepoPath(type)}?ref=${encodeURIComponent(branch)}`;
-        const latest=await github(endpoint),latestData=JSON.parse(decodeBase64(latest.content));
-        if(canonical(latestData)!==originals[type].canonical)throw new Error(`${repoPath(type)} changed on GitHub since you connected. Close this panel, reconnect, and review the latest version before publishing.`);
+        const latest=await github(`${base}/contents/${encodedRepoPath(type)}?ref=${head}`);
+        if(canonical(JSON.parse(decodeBase64(latest.content)))!==originals[type].canonical)throw new Error('Catalogue changed on GitHub. Reconnect before publishing.');
+        tree.push({path:repoPath(type),mode:'100644',type:'blob',content:JSON.stringify(currentFile(type),null,2)+'\n'});
       }
-      for(let i=0;i<stationAssets.length;i++){
-        const {path,file}=stationAssets[i];status(`Uploading station logo ${i+1} of ${stationAssets.length}…`);
-        await uploadStationLogo(path,file);pendingStationUploads.delete(path);
-      }
-      for(const type of changed){
-        const endpoint=`https://api.github.com/repos/${repo}/contents/${encodedRepoPath(type)}?ref=${encodeURIComponent(branch)}`;
-        const latest=await github(endpoint),latestData=JSON.parse(decodeBase64(latest.content));
-        if(canonical(latestData)!==originals[type].canonical)throw new Error(`${repoPath(type)} changed on GitHub since you connected. Close this panel, reconnect, and review the latest version before publishing.`);
-        const content=JSON.stringify(currentFile(type),null,2)+'\n';
-        const result=await github(`https://api.github.com/repos/${repo}/contents/${encodedRepoPath(type)}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:`Update ${type} station catalogue via RetroRadtv admin`,content:encodeBase64(content),sha:latest.sha,branch})});
-        const saved=currentFile(type);originals[type]={sha:result.content?.sha||latest.sha,data:saved,canonical:canonical(saved)};published.push(type);
-      }
+      let settings=includeSplash?splashData():null;
       if(includeSplash){
-        let settings=splashData();
-        if(splashUpload){
-          const extension=({ 'image/png':'png','image/jpeg':'jpg','image/webp':'webp','image/gif':'gif' })[splashUpload.type];
-          if(!extension)throw new Error('Choose a PNG, JPG, WebP or GIF image.');
-          const assetPath=`assets/splash-logo.${extension}`,assetUrl=`https://api.github.com/repos/${repo}/contents/${encodedRepoPath('asset',assetPath)}?ref=${encodeURIComponent(branch)}`;
-          let sha;try{sha=(await github(assetUrl)).sha;}catch(error){if(!/not found|404/i.test(error.message))throw error;}
-          const bytes=new Uint8Array(await splashUpload.arrayBuffer());
-          const uploaded=await github(`https://api.github.com/repos/${repo}/contents/${encodedRepoPath('asset',assetPath)}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Add splash logo via RetroRadtv admin',content:encodeBytesBase64(bytes),...(sha?{sha}:{}),branch})});
-          settings={...settings,splash:{...settings.splash,logo:assetPath}};$('admin-splash-logo').value=assetPath;splashUpload=null;$('admin-splash-image').value='';
-          status(`Splash logo uploaded${uploaded.content?.path?` to ${uploaded.content.path}`:''}; saving branding settings…`);
-        }
-        const endpoint=`https://api.github.com/repos/${repo}/contents/${encodedRepoPath('settings')}?ref=${encodeURIComponent(branch)}`;
-        let latestSha=null;try{const latest=await github(endpoint);latestSha=latest.sha;const latestData=JSON.parse(decodeBase64(latest.content));if(splashOriginal.canonical&&canonical(latestData)!==splashOriginal.canonical)throw new Error(`${repoPath('settings')} changed on GitHub since you connected. Reconnect and review before publishing.`);}catch(error){if(!/not found|404/i.test(error.message))throw error;}
-        const content=JSON.stringify(settings,null,2)+'\n';
-        const result=await github(`https://api.github.com/repos/${repo}/contents/${encodedRepoPath('settings')}`,{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({message:'Update splash branding via RetroRadtv admin',content:encodeBase64(content),...(latestSha?{sha:latestSha}:{}),branch})});
-        splashOriginal={sha:result.content?.sha||latestSha,data:settings,canonical:canonical(settings)};splashDraft={...defaultSplash,...settings.splash};fillSplashForm();
+        try{const latest=await github(`${base}/contents/${encodedRepoPath('settings')}?ref=${head}`);if(splashOriginal.canonical&&canonical(JSON.parse(decodeBase64(latest.content)))!==splashOriginal.canonical)throw new Error('Branding changed on GitHub. Reconnect before publishing.');}catch(error){if(!/not found|404/i.test(error.message))throw error;}
       }
+      const assets=[...stationAssets];
+      if(includeSplash&&splashUpload){const extension=({'image/png':'png','image/jpeg':'jpg','image/webp':'webp','image/gif':'gif'})[splashUpload.type];if(!extension)throw new Error('Unsupported logo image.');const path=`assets/splash-logo.${extension}`;assets.push({path,file:splashUpload});settings={...settings,splash:{...settings.splash,logo:path}};}
+      for(const {path,file} of assets){const blob=await post(`${base}/git/blobs`,{content:encodeBytesBase64(new Uint8Array(await file.arrayBuffer())),encoding:'base64'});tree.push({path:repoPath('asset',path),mode:'100644',type:'blob',sha:blob.sha});}
+      if(settings)tree.push({path:repoPath('settings'),mode:'100644',type:'blob',content:JSON.stringify(settings,null,2)+'\n'});
+      const resultTree=await post(`${base}/git/trees`,{base_tree:commit.tree.sha,tree});
+      const resultCommit=await post(`${base}/git/commits`,{message:'Update catalogue and branding via RetroRadtv admin',tree:resultTree.sha,parents:[head]});
+      await github(`${base}/git/refs/heads/${branch.split('/').map(encodeURIComponent).join('/')}`,{method:'PATCH',headers:{'Content-Type':'application/json'},body:JSON.stringify({sha:resultCommit.sha,force:false})});
+      for(const type of changed){const saved=currentFile(type);originals[type]={sha:null,data:saved,canonical:canonical(saved)};published.push(type);}
+      for(const {path} of stationAssets)pendingStationUploads.delete(path);
+      if(settings){splashOriginal={sha:null,data:settings,canonical:canonical(settings)};splashDraft={...defaultSplash,...settings.splash};splashUpload=null;$('admin-splash-image').value='';fillSplashForm();}
       const what=[...published.map(type=>type==='radio'?'radio catalogue':'TV catalogue'),...(includeSplash?['splash branding']:[])];status(`Published ${what.join(' and ')} to GitHub. Refresh the app after Pages updates.`, 'success');renderAll();
     } catch(error) {
       status(`${published.length?`Published ${published.join(' and ')}; `:''}Publish stopped: ${error.message}`, 'error');renderAll();
