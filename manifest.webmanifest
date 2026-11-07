@@ -1,12 +1,15 @@
 {
   "id": "./",
-  "name": "RetroRadtv 2.0 — COOLmag Radio & TV",
+  "name": "RetroRADtv Version 3",
   "short_name": "RetroRadtv",
   "description": "A touch-friendly radio and live TV player with three visual themes.",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "display_override": ["standalone", "minimal-ui"],
+  "display_override": [
+    "standalone",
+    "minimal-ui"
+  ],
   "orientation": "any",
   "background_color": "#111419",
   "theme_color": "#111419",

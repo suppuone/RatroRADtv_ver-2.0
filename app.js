@@ -1,12 +1,13 @@
 (() => {
   'use strict';
+  const PRESET_LIMIT=50;
   const $ = id => document.getElementById(id);
   const safe = value => String(value ?? '').replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
   const stationLogo = station => String(station?.logo||station?.favicon||station?.image||station?.['tvg-logo']||station?.tvg_logo||station?.icon||'').trim();
   const initialsFor = title => String(title||'LIVE').trim().split(/\s+/).filter(Boolean).slice(0,3).map(word=>word[0]).join('').toUpperCase()||'TV';
   function logoInitials(image){const card=image.closest('.radio-mini-card,.tv-rail-card,.preset-card,.result-row'),title=card?.querySelector('.radio-mini-card b,.tv-rail-copy b,.preset-card>b,.result-copy b')?.textContent||$('radio-title')?.textContent||'LIVE';return initialsFor(title);}
   document.addEventListener('error',event=>{const image=event.target;if(!image||image.tagName!=='IMG')return;const source=image.currentSrc||image.src;if(/^http:\/\//i.test(source)&&image.dataset.httpsRetry!=='1'){image.dataset.httpsRetry='1';image.src=source.replace(/^http:/i,'https:');return;}const fallback=document.createElement('span');if(image.classList.contains('station-logo-badge')){fallback.className='station-logo-fallback';fallback.textContent=logoInitials(image);}else{fallback.className='logo-fallback';fallback.textContent=logoInitials(image);}image.replaceWith(fallback);},true);
-  const RADIO_STORE='retrotvra.radio-presets.v1',TV_STORE='retrotvra.tv-presets.v1',TV_ORDER_STORE='retrotvra.tv-order.v1',RADIO_HIDDEN_STORE='retrotvra.radio-hidden.v1',TV_HIDDEN_STORE='retrotvra.tv-hidden.v1',VOLUME_STORE='retrotvra.volume.v1',THEME_STORE='retrotvra.theme.v2',RADIO_SKIN_STORE='retrotvra.radio-skin.v1',LEGACY_THEME_ENABLED_STORE='retrotvra.legacy-theme-enabled.v1',THEME_SWITCH_ENABLED_STORE='retrotvra.theme-switch-enabled.v1',RECENT_STORE='retrotvra.recent.v2';
+  const RADIO_STORE='retrotvra.radio-presets.v3',TV_STORE='retrotvra.tv-presets.v3',TV_ORDER_STORE='retrotvra.tv-order.v1',RADIO_HIDDEN_STORE='retrotvra.radio-hidden.v1',TV_HIDDEN_STORE='retrotvra.tv-hidden.v1',VOLUME_STORE='retrotvra.volume.v1',THEME_STORE='retrotvra.theme.v2',RADIO_SKIN_STORE='retrotvra.radio-skin.v1',LEGACY_THEME_ENABLED_STORE='retrotvra.legacy-theme-enabled.v1',THEME_SWITCH_ENABLED_STORE='retrotvra.theme-switch-enabled.v1',RECENT_STORE='retrotvra.recent.v2';
   let radios=[],tvs=[],radioPresets={},tvPresets={},recentHistory=[],radioIndex=-1,tvIndex=-1,presetMode='radio',selectedTVPresetKey=null,browserKind='radio',browserSource='library',onlineRows=[],onlineTVCache=null,onlineCountries=[],onlineGenres=[],onlineOffset=0,onlineVisibleLimit=100,onlineHasMore=false,onlineSearchDone=false,hls=null,radioHls=null,currentRadioSource='',toastTimer=null,dragState=null,languageCatalog=[],languageNameByCode=new Map(),languageNameByKey=new Map();
   const audio=$('radio-audio'),video=$('tv-video');
   const THEME_GLOW={retro:'warm',modern:'white',ultra:'color'};
@@ -201,6 +202,10 @@
     for(const key of keys)if(!Object.prototype.hasOwnProperty.call(ordered,key))ordered[key]=presets[key];return ordered;
   }
   async function fetchData(){
+    for(const [next,previous] of [[RADIO_STORE,'retrotvra.radio-presets.v1'],[TV_STORE,'retrotvra.tv-presets.v1']]){
+      if(loadStore(next,null)===null){const saved=loadStore(previous,null);if(saved)saveStore(next,saved);}
+    }
+
     try{
       const [r,t]=await Promise.all([fetch('data/radio-presets.json',{cache:'no-cache'}),fetch('data/tv-presets.json',{cache:'no-cache'})]);
       if(r.ok){const raw=await r.json();radios=Object.entries(raw).map(([key,item])=>({...item,_key:key})).filter(item=>item.url||item.url_resolved);}
@@ -219,6 +224,15 @@
     ];
     radioPresets=mergeInitialPresets(Object.fromEntries(radios.map(s=>[stationKey(s),s])),RADIO_STORE,'radio');
     tvPresets=applyTVOrder(mergeInitialPresets(Object.fromEntries(tvs.map(s=>[s.url,s])),TV_STORE,'tv'));
+    // Preserve pre-migration selections before applying the v3 limit.
+    for(const [kind,presets] of [['radio',radioPresets],['tv',tvPresets]]){
+      if(Object.keys(presets).length>PRESET_LIMIT){
+        const backupKey=`retrotvra.v3.preset-overflow.${kind}`;
+        if(!loadStore(backupKey,null))saveStore(backupKey,presets);
+      }
+    }
+    radioPresets=Object.fromEntries(Object.entries(radioPresets).slice(0,PRESET_LIMIT));
+    tvPresets=Object.fromEntries(Object.entries(tvPresets).slice(0,PRESET_LIMIT));
     const storedRecent=loadStore(RECENT_STORE,[]);recentHistory=Array.isArray(storedRecent)?storedRecent.filter(item=>item&&item.url&&item.name).slice(0,40):[];
     saveStore(RADIO_STORE,radioPresets);saveStore(TV_STORE,tvPresets);
     fillCountries();populateExploreFilters();renderPresets();renderTVRail();renderRemotePresets();renderRadioDisplay();renderExplore();
@@ -252,7 +266,7 @@
     const bounds=target.getBoundingClientRect(),center=bounds.left+bounds.width/2,reach=Math.max(1,bounds.width*.65);
     for(const card of cards){const rect=card.getBoundingClientRect(),distance=Math.abs(rect.left+rect.width/2-center),focus=Math.max(0,1-distance/reach);card.style.setProperty('--rail-scale',(0.52+focus*.68+(card.classList.contains('active')?.10:0)).toFixed(3));card.style.setProperty('--rail-opacity',(0.45+focus*.55).toFixed(3));card.style.zIndex=String(Math.round(focus*10));}
   }
-  function renderRadioShortcuts(){const target=$('radio-station-strip');if(!target)return;const rows=currentRows('radio').slice(0,10);const current=radioCurrent();if(current&&!rows.some(row=>stationKey(row)===stationKey(current)))rows.unshift(current);target.innerHTML=rows.map((station,index)=>{const logo=stationLogo(station),name=station.name||'Radio';return `<button type="button" class="radio-mini-card ${radioCurrent()&&stationKey(radioCurrent())===stationKey(station)?'active':''}" data-radio-shortcut="${index}" title="${safe(name)}" aria-label="Play ${safe(name)}"><span class="radio-mini-logo">${logo?`<img src="${safe(logo)}" loading="lazy" alt="">`:`<span class="logo-fallback">${safe(initialsFor(name))}</span>`}</span><b>${safe(name)}</b></button>`;}).join('')||'<span class="empty-note">Save stations in Explore to add quick tune cards.</span>';target.querySelectorAll('[data-radio-shortcut]').forEach(button=>button.addEventListener('click',()=>{if(target.dataset.dragged==='true'){delete target.dataset.dragged;return;}const station=rows[Number(button.dataset.radioShortcut)];if(station)playRadio(station);}));
+  function renderRadioShortcuts(){const target=$('radio-station-strip');if(!target)return;const rows=currentRows('radio').slice(0,PRESET_LIMIT);const current=radioCurrent();if(current&&!rows.some(row=>stationKey(row)===stationKey(current))){rows.unshift(current);rows.splice(PRESET_LIMIT);}target.innerHTML=rows.map((station,index)=>{const logo=stationLogo(station),name=station.name||'Radio';return `<button type="button" class="radio-mini-card ${radioCurrent()&&stationKey(radioCurrent())===stationKey(station)?'active':''}" data-radio-shortcut="${index}" title="${safe(name)}" aria-label="Play ${safe(name)}"><span class="radio-mini-logo">${logo?`<img src="${safe(logo)}" loading="lazy" alt="">`:`<span class="logo-fallback">${safe(initialsFor(name))}</span>`}</span><b>${safe(name)}</b></button>`;}).join('')||'<span class="empty-note">Save stations in Explore to add quick tune cards.</span>';target.querySelectorAll('[data-radio-shortcut]').forEach(button=>button.addEventListener('click',()=>{if(target.dataset.dragged==='true'){delete target.dataset.dragged;return;}const station=rows[Number(button.dataset.radioShortcut)];if(station)playRadio(station);}));
     if(!target.dataset.autoTuneReady){
       let settleTimer=0;
       target.addEventListener('scroll',()=>{
@@ -310,11 +324,14 @@
   function stopRadio(){stopSoundRays();if(radioHls){radioHls.destroy();radioHls=null;}audio.pause();audio.removeAttribute('src');audio.load();currentRadioSource='';$('radio-art').classList.remove('playing');$('radio-play').textContent='▶';$('radio-play').title='Play';$('equalizer').classList.remove('playing');$('radio-status').textContent='STOPPED';}
   function stepRadio(direction){const rows=currentRows('radio');if(!rows.length)return;const current=radioCurrent();let index=rows.findIndex(s=>stationKey(s)===stationKey(current||{}));index=(index+direction+rows.length)%rows.length;playRadio(rows[index]);}
   function togglePreset(kind,station){
+    const presets=kind==='radio'?radioPresets:tvPresets,key=kind==='radio'?stationKey(station):station.url;
+    if(!presets[key]&&Object.keys(presets).length>=PRESET_LIMIT){notify(`Maximum ${PRESET_LIMIT} ${kind==='radio'?'radio':'TV'} presets. Remove one before adding another.`);return;}
+
     if(kind==='radio'){const key=stationKey(station),hidden=new Set(loadStore(RADIO_HIDDEN_STORE,[])),isShared=radios.some(item=>stationKey(item)===key);if(radioPresets[key]){delete radioPresets[key];if(isShared)hidden.add(key);}else{radioPresets[key]=station;hidden.delete(key);}saveStore(RADIO_HIDDEN_STORE,[...hidden]);saveStore(RADIO_STORE,radioPresets);drawRadio();if(!audio.paused){stopSoundRays();startSoundRays();}renderPresets();renderExplore();}
     else{const key=station.url,hidden=new Set(loadStore(TV_HIDDEN_STORE,[])),isShared=tvs.some(item=>item.url===key);if(tvPresets[key]){delete tvPresets[key];if(isShared)hidden.add(key);}else{tvPresets[key]=station;hidden.delete(key);}saveStore(TV_HIDDEN_STORE,[...hidden]);saveStore(TV_STORE,tvPresets);saveStore(TV_ORDER_STORE,Object.keys(tvPresets));drawTV();renderPresets();renderTVRail();renderRemotePresets();renderExplore();}
   }
   function renderRemotePresets(){
-    const target=$('remote-presets');if(!target)return;const allRows=currentRows('tv'),rows=allRows.slice(0,20),picker=$('remote-channel-select');
+    const target=$('remote-presets');if(!target)return;const allRows=currentRows('tv'),rows=allRows.slice(0,PRESET_LIMIT),picker=$('remote-channel-select');
     picker.innerHTML='<option value="">Choose a channel</option>'+allRows.map(station=>`<option value="${safe(station.url)}">${safe(station.name||'TV channel')}</option>`).join('');picker.value=tvCurrent()?.url||'';
     target.innerHTML=rows.map((station,index)=>`<button class="remote-key remote-preset-key ${tvCurrent()?.url===station.url?'active':''}" type="button" data-remote-preset="${index}" aria-pressed="${tvCurrent()?.url===station.url}" aria-label="Play ${safe(station.name||'TV channel')}" title="${safe(station.name||'TV channel')}">${String(index+1).padStart(2,'0')}</button>`).join('')||'<span class="empty-note">Save TV channels as presets to use quick select.</span>';
     target.querySelectorAll('[data-remote-preset]').forEach(button=>button.addEventListener('click',()=>{const station=rows[Number(button.dataset.remotePreset)];if(station)playTV(station);}));

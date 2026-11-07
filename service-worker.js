@@ -1,12 +1,9 @@
-const CACHE_NAME = 'rectified-retrotvra-v2-3';
+const CACHE_NAME = 'retroradtv-v3-2';
 const APP_FILES = [
   './',
   './index.html',
-  './admin.html',
-  './style.css?v=rectified-3',
-  './app.js?v=rectified-3',
-  './admin.js?v=rectified-3',
-  './admin-entry.js?v=1.0.1',
+  './style.css?v=3.0.1',
+  './app.js?v=3.0.1',
   './manifest.webmanifest',
   './icon.svg',
   './data/radio-presets.json',
@@ -25,7 +22,7 @@ self.addEventListener('install', event => {
 self.addEventListener('activate', event => {
   event.waitUntil(
     caches.keys()
-      .then(keys => Promise.all(keys.filter(key => key.startsWith('rectified-retrotvra-v2-') && key !== CACHE_NAME).map(key => caches.delete(key))))
+      .then(keys => Promise.all(keys.filter(key => key.startsWith('retroradtv-v3-') && key !== CACHE_NAME).map(key => caches.delete(key))))
       .then(() => self.clients.claim())
   );
 });
