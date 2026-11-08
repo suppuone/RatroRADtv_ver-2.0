@@ -13,9 +13,9 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="style.css?v=3.0.1">
+  <link rel="stylesheet" href="style.css?v=3.0.67">
   <script defer src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
-  <script defer src="app.js?v=3.0.1"></script>
+  <script defer src="app.js?v=3.0.68"></script>
 </head>
 <body>
 <section class="welcome-splash-v2" id="welcome-splash-v2" role="dialog" aria-modal="true" aria-labelledby="splash-v2-title" aria-describedby="splash-v2-note">
@@ -35,15 +35,15 @@
   <main class="retro-app">
     <header class="topbar">
       <div class="status-cluster"><span class="status-dot"></span><time id="clock">08:30 AM</time><span class="top-separator">•</span><span class="brand-title">COOLmagRaTv</span></div>
-      <button id="install-app" class="install-app" type="button" aria-label="Install COOLmagRaTv">⇩ <span>INSTALL</span></button>
-      <button id="settings-open" class="settings-open" type="button" aria-label="Open settings" title="Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .11-.63l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.6 7.6 0 0 0-1.62-.87l-.36-2.55a.5.5 0 0 0-.49-.42h-3.84a.5.5 0 0 0-.49.42L9.18 5.4c-.59.2-1.13.5-1.62.87l-2.39-.96a.5.5 0 0 0-.61.22L2.64 8.85a.5.5 0 0 0 .11.63l2.03 1.58c-.05.3-.08.62-.08.94s.03.64.08.94l-2.03 1.58a.5.5 0 0 0-.11.63l1.92 3.32a.5.5 0 0 0 .61.22l2.39-.96c.49.37 1.03.67 1.62.87l.36 2.55a.5.5 0 0 0 .49.42h3.84a.5.5 0 0 0 .49-.42l.36-2.55c.59-.2 1.13-.5 1.62-.87l2.39.96a.5.5 0 0 0 .61-.22l1.92-3.32a.5.5 0 0 0-.11-.63l-2.03-1.58ZM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg></button>
-      <span id="mode-label" class="mode-label">◉ RADIO MODE</span>
+      
+      
+      <button id="install-app" class="install-app" type="button" aria-label="Install COOLmagRaTv" title="Install"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v12m-5-5 5 5 5-5M4 16v5h16v-5"/></svg></button><button id="settings-open" class="settings-open" type="button" aria-label="Open settings" title="Settings"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19.14 12.94c.04-.3.06-.61.06-.94s-.02-.64-.07-.94l2.03-1.58a.5.5 0 0 0 .11-.63l-1.92-3.32a.5.5 0 0 0-.61-.22l-2.39.96a7.6 7.6 0 0 0-1.62-.87l-.36-2.55a.5.5 0 0 0-.49-.42h-3.84a.5.5 0 0 0-.49.42L9.18 5.4c-.59.2-1.13.5-1.62.87l-2.39-.96a.5.5 0 0 0-.61.22L2.64 8.85a.5.5 0 0 0 .11.63l2.03 1.58c-.05.3-.08.62-.08.94s.03.64.08.94l-2.03 1.58a.5.5 0 0 0-.11.63l1.92 3.32a.5.5 0 0 0 .61.22l2.39-.96c.49.37 1.03.67 1.62.87l.36 2.55a.5.5 0 0 0 .49.42h3.84a.5.5 0 0 0 .49-.42l.36-2.55c.59-.2 1.13-.5 1.62-.87l2.39.96a.5.5 0 0 0 .61-.22l1.92-3.32a.5.5 0 0 0-.11-.63l-2.03-1.58ZM12 15.5a3.5 3.5 0 1 1 0-7 3.5 3.5 0 0 1 0 7Z"/></svg></button><span id="mode-label" class="mode-label">◉ RADIO MODE</span>
     </header>
 
     <div class="outer-panel-clock" id="outer-panel-clock" aria-label="Local date and time"><div class="radio-clock-card" aria-label="Local date and time"><div class="radio-clock-line"><span id="radio-clock-day">Th</span><strong id="radio-clock-time">9:47</strong><small id="radio-clock-meridiem">AM</small></div><time id="radio-clock-date">AUG 29, 2024</time></div></div>
     <div class="mode-switch" role="tablist" aria-label="Media mode"><button type="button" class="mode-tab selected" data-mode-screen="radio-screen" role="tab" aria-selected="true"><span aria-hidden="true">◉</span> RADIO</button><button type="button" class="mode-tab" data-mode-screen="tv-screen" role="tab" aria-selected="false"><span aria-hidden="true">▣</span> TV</button></div>
     <section class="screen active" id="radio-screen" aria-label="Radio player">
-      <div class="screen-heading"><div class="radio-heading-copy"><span class="eyebrow">WORLD RADIO</span><span class="education-note">ONLY FOR EDUCATIONAL PURPOSE</span></div><label class="country-picker"><span>COUNTRY</span><select id="radio-country"><option value="all">All countries</option></select></label></div>
+      <div class="screen-heading"><div class="radio-heading-copy"><span class="eyebrow">RADIO</span><span class="education-note">ONLY FOR EDUCATIONAL PURPOSE</span></div><div class="radio-heading-tools"><button type="button" class="mini-star" id="radio-star" aria-label="Add station to presets">☆</button><label class="country-picker"><span>COUNTRY</span><select id="radio-country"><option value="all">All countries</option></select></label></div></div>
       <article class="radio-display inset-panel">
         <div class="radio-art" id="radio-art"><div class="record-mark"><span class="radio-signal-icon" aria-hidden="true">◉</span><b class="radio-center-title">Choose a station</b><small class="radio-center-country">WORLD RADIO</small><div class="record-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>
       <section class="radio-station-shortcuts" aria-label="Quick tune stations"><div id="radio-station-strip" class="radio-station-strip"></div></section>
@@ -63,19 +63,29 @@
     </section>
 
     <section class="screen" id="tv-screen" aria-label="TV player">
-      <div class="screen-heading"><span class="eyebrow">TELEVISION</span><div class="tv-display-header"><div class="tv-playing-meta"><div><h1 id="tv-title">Choose a channel</h1><p id="tv-subtitle">Live channels from your presets</p></div><button class="mini-star" id="tv-star" aria-label="Add channel to presets">☆</button></div></div><label class="country-picker"><span>COUNTRY</span><select id="tv-country"><option value="all">All countries</option></select></label></div>
+      <div class="screen-heading tv-screen-heading">
+        <span class="eyebrow">TELEVISION</span>
+        <div class="tv-heading-tools"><button class="mini-star" id="tv-star" aria-label="Add channel to presets">☆</button><label class="country-picker"><span>COUNTRY</span><select id="tv-country"><option value="all">All countries</option></select></label></div>
+        <nav class="tv-channel-title-strip" aria-label="Previous, current, and next TV channel">
+          <button type="button" class="tv-neighbor-name tv-neighbor-previous" id="tv-prev-name" aria-label="Play previous channel"><span>‹ PREVIOUS</span><b id="tv-prev-name-text">—</b></button>
+          <div class="tv-current-title" aria-live="polite"><span>NOW PLAYING</span><h1 id="tv-title">Choose a channel</h1><p id="tv-subtitle">Live channels from your presets</p></div>
+          <button type="button" class="tv-neighbor-name tv-neighbor-next" id="tv-next-name" aria-label="Play next channel"><span>NEXT ›</span><b id="tv-next-name-text">—</b></button>
+        </nav>
+      </div>
       <div class="tv-fullscreen-shell" id="tv-fullscreen-shell">
       <article class="tv-display inset-panel" id="tv-display">
 
         <div class="fullscreen-titlebar"><b id="fullscreen-channel-name">Choose a channel</b><span id="fullscreen-channel-country">TV</span></div>
         <div class="tv-picture"><video id="tv-video" playsinline controls preload="none"></video><div class="tv-placeholder" id="tv-placeholder"><span class="tv-screen-logo">RETRO<span>TV</span></span><small>SELECT A CHANNEL BELOW</small></div></div>
-        <div class="fullscreen-side-controls" role="group" aria-label="Fullscreen TV controls">
+        <div class="fullscreen-side-controls" role="group" aria-label="Fullscreen TV controls"><div class="fullscreen-drag-handle" title="Drag controls" aria-label="Drag controls">⠿</div>
           <button type="button" data-fullscreen-action="zoom" aria-label="Zoom to fill screen" title="Zoom in" aria-pressed="false"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6M7 10h6m-3-3v6"/></svg></button>
           <button type="button" data-fullscreen-action="normal" aria-label="Zoom out to normal size" title="Zoom out" aria-pressed="true"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="10" cy="10" r="6"/><path d="m15 15 6 6M7 10h6"/></svg></button>
-          <button type="button" data-fullscreen-action="home" class="fullscreen-home">HOME</button>
+          <button type="button" data-fullscreen-action="home" class="fullscreen-home" aria-label="Return to TV page"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m9 5-6 6 6 6M3 11h11a6 6 0 0 1 6 6v2"/></svg><span>RETURN</span></button>
           <button type="button" data-fullscreen-action="previous" aria-label="Previous channel" title="Previous channel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 5v14M19 6l-9 6 9 6z"/></svg></button>
           <button type="button" data-fullscreen-action="play" aria-label="Pause or play" title="Pause or play"><svg class="fs-play-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m8 5 12 7-12 7z"/></svg><svg class="fs-pause-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M8 5v14M16 5v14"/></svg></button>
           <button type="button" data-fullscreen-action="next" aria-label="Next channel" title="Next channel"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 5v14M5 6l9 6-9 6z"/></svg></button>
+<button type="button" data-fullscreen-action="vol-down" aria-label="Volume down" title="Volume down"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 12h7"/></svg></button>
+<button type="button" data-fullscreen-action="vol-up" aria-label="Volume up" title="Volume up"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 12h7m-3.5-3.5v7"/></svg></button>
           <button type="button" data-fullscreen-action="mute" aria-label="Mute" title="Mute"><svg class="fs-sound-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12"/></svg><svg class="fs-muted-icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 9l6 6m0-6-6 6"/></svg></button>
         </div>
         <div class="tv-rail-wrap"><div class="tv-rail" id="tv-rail" aria-label="Swipe or drag to choose a channel"></div></div>
@@ -124,7 +134,6 @@
       <p class="browser-summary" id="browser-summary" aria-live="polite"></p>
       <div class="explore-results" id="explore-results"></div>
     </section>
-
     <nav class="bottom-nav" aria-label="Main sections">
       <button class="nav-item active" data-screen="radio-screen"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="7" width="18" height="14" rx="2"/><path d="m7 7 8-4M7 11v6m3-6v6m5-6h3M15 17h3"/></svg>RADIO</button>
       <button class="nav-item" data-screen="tv-screen"><svg class="nav-icon" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="6" width="18" height="13" rx="2"/><path d="m8 3 4 3 4-3m-4 16v3m-5 0h10"/><circle cx="18" cy="16" r=".7"/></svg>TV</button>

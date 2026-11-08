@@ -7,9 +7,10 @@
   const initialsFor = title => String(title||'LIVE').trim().split(/\s+/).filter(Boolean).slice(0,3).map(word=>word[0]).join('').toUpperCase()||'TV';
   function logoInitials(image){const card=image.closest('.radio-mini-card,.tv-rail-card,.preset-card,.result-row'),title=card?.querySelector('.radio-mini-card b,.tv-rail-copy b,.preset-card>b,.result-copy b')?.textContent||$('radio-title')?.textContent||'LIVE';return initialsFor(title);}
   document.addEventListener('error',event=>{const image=event.target;if(!image||image.tagName!=='IMG')return;const source=image.currentSrc||image.src;if(/^http:\/\//i.test(source)&&image.dataset.httpsRetry!=='1'){image.dataset.httpsRetry='1';image.src=source.replace(/^http:/i,'https:');return;}const fallback=document.createElement('span');if(image.classList.contains('station-logo-badge')){fallback.className='station-logo-fallback';fallback.textContent=logoInitials(image);}else{fallback.className='logo-fallback';fallback.textContent=logoInitials(image);}image.replaceWith(fallback);},true);
-  const RADIO_STORE='retrotvra.radio-presets.v3',TV_STORE='retrotvra.tv-presets.v3',TV_ORDER_STORE='retrotvra.tv-order.v1',RADIO_HIDDEN_STORE='retrotvra.radio-hidden.v1',TV_HIDDEN_STORE='retrotvra.tv-hidden.v1',VOLUME_STORE='retrotvra.volume.v1',THEME_STORE='retrotvra.theme.v2',RADIO_SKIN_STORE='retrotvra.radio-skin.v1',LEGACY_THEME_ENABLED_STORE='retrotvra.legacy-theme-enabled.v1',THEME_SWITCH_ENABLED_STORE='retrotvra.theme-switch-enabled.v1',RECENT_STORE='retrotvra.recent.v2';
+  const RADIO_STORE='retrotvra.radio-presets.v3',TV_STORE='retrotvra.tv-presets.v3',TV_ORDER_STORE='retrotvra.tv-order.v7',RADIO_HIDDEN_STORE='retrotvra.radio-hidden.v9',TV_HIDDEN_STORE='retrotvra.tv-hidden.v4',VOLUME_STORE='retrotvra.volume.v1',THEME_STORE='retrotvra.theme.v2',RADIO_SKIN_STORE='retrotvra.radio-skin.v1',LEGACY_THEME_ENABLED_STORE='retrotvra.legacy-theme-enabled.v1',THEME_SWITCH_ENABLED_STORE='retrotvra.theme-switch-enabled.v1',RECENT_STORE='retrotvra.recent.v2';
   let radios=[],tvs=[],radioPresets={},tvPresets={},recentHistory=[],radioIndex=-1,tvIndex=-1,presetMode='radio',selectedTVPresetKey=null,browserKind='radio',browserSource='library',onlineRows=[],onlineTVCache=null,onlineCountries=[],onlineGenres=[],onlineOffset=0,onlineVisibleLimit=100,onlineHasMore=false,onlineSearchDone=false,hls=null,radioHls=null,currentRadioSource='',toastTimer=null,dragState=null,languageCatalog=[],languageNameByCode=new Map(),languageNameByKey=new Map();
   const audio=$('radio-audio'),video=$('tv-video');
+
   const THEME_GLOW={retro:'warm',modern:'white',ultra:'color'};
   let legacyThemeEnabled=false,themeSwitchEnabled=true;
   try{const legacySetting=localStorage.getItem(LEGACY_THEME_ENABLED_STORE),themeSetting=localStorage.getItem(THEME_SWITCH_ENABLED_STORE);if(legacySetting!==null)legacyThemeEnabled=legacySetting==='true';if(themeSetting!==null)themeSwitchEnabled=themeSetting==='true';}catch{}
@@ -144,7 +145,7 @@
   }
   function initSplash(){
     const splash=$('welcome-splash-v2'),button=$('splash-v2-continue'),card=$('card');if(!splash||!button)return;const splashStartedAt=performance.now();
-    const festive=addFestivalGreeting(splash);let dismissed=false,finishTimer=0;const stopConfetti=startSplashConfetti(splash,festive);const finish=(immediate=false)=>{if(dismissed)return;if(immediate){clearTimeout(finishTimer);dismissed=true;stopConfetti();document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);return;}const remaining=8000-(performance.now()-splashStartedAt);if(remaining>0){clearTimeout(finishTimer);finishTimer=window.setTimeout(()=>finish(),remaining);return;}clearTimeout(finishTimer);dismissed=true;stopConfetti();document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);};const escapeSplash=event=>{if(event.key==='Escape'){event.preventDefault();finish(true);}};closeSplash=finish;card?.addEventListener('click',()=>finish(true));document.addEventListener('keydown',escapeSplash);finishTimer=window.setTimeout(()=>finish(),8000);
+    const festive=addFestivalGreeting(splash);let dismissed=false,finishTimer=0;const stopConfetti=startSplashConfetti(splash,festive);const finish=(immediate=false)=>{if(dismissed)return;if(immediate){clearTimeout(finishTimer);dismissed=true;stopConfetti();document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);return;}const remaining=6000-(performance.now()-splashStartedAt);if(remaining>0){clearTimeout(finishTimer);finishTimer=window.setTimeout(()=>finish(),remaining);return;}clearTimeout(finishTimer);dismissed=true;stopConfetti();document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);};const escapeSplash=event=>{if(event.key==='Escape'){event.preventDefault();finish(true);}};closeSplash=finish;card?.addEventListener('click',()=>finish(true));document.addEventListener('keydown',escapeSplash);finishTimer=window.setTimeout(()=>finish(),6000);
     fetch('data/app-settings.json',{cache:'no-cache'}).then(response=>response.ok?response.json():null).then(settings=>{if(settings){const config=settings?.splash||{};
         const festiveFromSettings=addFestivalGreeting(splash,config.occasions||[]);stopConfetti.setFestive?.(festiveFromSettings);
         if(config.title)$('splash-v2-title').textContent=config.title;
@@ -254,10 +255,10 @@
   function radioCurrent(){return radios[radioIndex]||null;}
   function tvCurrent(){return tvs[tvIndex]||null;}
   function drawRadio(){
-    const station=radioCurrent(),art=$('radio-art');art.classList.toggle('playing',!audio.paused);
+    const station=radioCurrent(),art=$('radio-art');const star=$('radio-star'),isSaved=Boolean(station&&radioPresets[stationKey(station)]);star.textContent=isSaved?'★':'☆';star.classList.toggle('saved',isSaved);star.disabled=!station;star.setAttribute('aria-label',isSaved?'Remove station from presets':'Add station to presets');art.classList.toggle('playing',!audio.paused);
     if(!station){art.innerHTML='<div class="radio-dot-texture" aria-hidden="true"></div><div class="record-mark"><span class="radio-signal-icon" aria-hidden="true">◉</span><b class="radio-center-title">Choose a station</b><small class="radio-center-country">WORLD RADIO</small><div class="record-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div>';art.classList.toggle('glow-off',glowMode==='off');$('radio-status').textContent='READY · SELECT A PRESET OR EXPLORE';formatClock();return;}
     const key=stationKey(station),saved=Boolean(radioPresets[key]),logo=stationLogo(station),stationName=station.name||'Internet Radio',name=safe(stationName),country=safe(station.country||'WORLD RADIO'),details=safe([station.country||'Internet radio',station.codec||'LIVE',station.bitrate?`${station.bitrate} KBPS`:null].filter(Boolean).join(' · '));
-    const starHTML='<button class="mini-star '+(saved?'saved':'')+'" id="radio-star" aria-label="'+(saved?'Remove station from':'Add station to')+' presets">'+(saved?'★':'☆')+'</button>';
+    const starHTML='';
     art.style.backgroundImage='radial-gradient(circle at 50% 48%,#343438,#15171a 68%,#0d0f12)';art.innerHTML='<div class="radio-dot-texture" aria-hidden="true"></div><canvas class="sound-rays" id="sound-rays" aria-hidden="true"></canvas><div class="radio-glow-bloom" aria-hidden="true"></div><div class="radio-glow-ring" aria-hidden="true"></div><div class="speaker-aura" aria-hidden="true"></div><div class="speaker-cone" aria-hidden="true"></div><div class="record-mark"><span class="radio-signal-icon" aria-hidden="true">◉</span><b class="radio-center-title">'+name+'</b><small class="radio-center-country">'+country+'</small><div class="record-equalizer" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div></div><div class="radio-art-caption">'+starHTML+'<div><h1 id="radio-title">'+name+'</h1><p id="radio-subtitle">'+details+'</p></div></div>';art.classList.toggle('glow-off',glowMode==='off');
     $('radio-status').textContent=audio.paused?'READY · PRESS PLAY TO LISTEN':'TUNED IN · LIVE RADIO';formatClock();
   }
@@ -378,7 +379,20 @@
     const station=tvCurrent(),index=currentRows('tv').findIndex(row=>row.url===station?.url);
     if(channel)channel.textContent=index<0?'—':String(index+1);
   }
-  function drawTV(){updateTVNumbers();const station=tvCurrent();if(!station){$('tv-title').textContent='Choose a channel';$('tv-subtitle').textContent='Live channels from your presets';$('fullscreen-channel-name').textContent='Choose a channel';$('fullscreen-channel-country').textContent='TV';$('tv-star').textContent='☆';$('tv-star').classList.remove('saved');$('remote-favorite').classList.remove('saved');$('tv-placeholder').hidden=false;return;}$('tv-title').textContent=station.name||'TV';$('tv-subtitle').textContent=[station.country,station.group].filter(Boolean).join(' · ')||'Live television';$('fullscreen-channel-name').textContent=station.name||'TV';$('fullscreen-channel-country').textContent=[station.country,station.group].filter(Boolean).join(' · ')||'TV';const saved=Boolean(tvPresets[station.url]);$('tv-star').textContent=saved?'★':'☆';$('tv-star').classList.toggle('saved',saved);$('remote-favorite').classList.toggle('saved',saved);$('tv-placeholder').hidden=Boolean(video.currentSrc||video.src);renderTVRail();}
+  function cleanTVTitle(value){let title=String(value||'');while(/\([^()]*\)/.test(title))title=title.replace(/\([^()]*\)/g,'');return title.replace(/\s+/g,' ').trim()||'TV';}
+  function updateTVTitleStrip(){
+    const rows=currentRows('tv'),station=tvCurrent(),index=rows.findIndex(row=>row.url===station?.url),hasNeighbors=rows.length>1;
+    const previous=index>=0&&hasNeighbors?rows[(index-1+rows.length)%rows.length]:null,next=index>=0&&hasNeighbors?rows[(index+1)%rows.length]:null;
+    $('tv-prev-name-text').textContent=previous?cleanTVTitle(previous.name):'—';$('tv-next-name-text').textContent=next?cleanTVTitle(next.name):'—';
+    $('tv-prev-name').disabled=!previous;$('tv-next-name').disabled=!next;
+    $('tv-prev-name').title=previous?'Previous: '+previous.name:'No previous channel';$('tv-next-name').title=next?'Next: '+next.name:'No next channel';
+  }
+  function drawTV(){
+    updateTVNumbers();const station=tvCurrent();
+    if(!station){$('tv-title').textContent='Choose a channel';$('tv-subtitle').textContent='Live channels from your presets';$('fullscreen-channel-name').textContent='Choose a channel';$('fullscreen-channel-country').textContent='TV';$('tv-star').textContent='☆';$('tv-star').classList.remove('saved');$('remote-favorite').classList.remove('saved');$('tv-placeholder').hidden=false;updateTVTitleStrip();return;}
+    $('tv-title').textContent=cleanTVTitle(station.name);$('tv-subtitle').textContent=[station.country,station.group].filter(Boolean).join(' · ')||'Live television';$('fullscreen-channel-name').textContent=cleanTVTitle(station.name);$('fullscreen-channel-country').textContent=[station.country,station.group].filter(Boolean).join(' · ')||'TV';
+    const saved=Boolean(tvPresets[station.url]);$('tv-star').textContent=saved?'★':'☆';$('tv-star').classList.toggle('saved',saved);$('remote-favorite').classList.toggle('saved',saved);$('tv-placeholder').hidden=Boolean(video.currentSrc||video.src);updateTVTitleStrip();renderTVRail();
+  }
   function stopTV(){if(hls){hls.destroy();hls=null;}video.pause();video.removeAttribute('src');video.load();$('tv-toggle').textContent='▶';drawTV();}
   async function playTV(station){
     if(!station)return;if(tvCurrent()?.url!==station.url&&tvCurrent()){stopTVVolumeRamp();tvVolumeRampStarted=true;tvVolumeRampExpected=.05;video.volume=.05;}if(station.demoAutoStart){video.muted=true;defaultTVAutoMuted=true;}else if(defaultTVAutoMuted){video.muted=false;defaultTVAutoMuted=false;}const rows=currentRows('tv');tvIndex=tvs.findIndex(s=>s.url===station.url);if(tvIndex<0){tvs.unshift(station);tvIndex=0;}if(hls){hls.destroy();hls=null;}video.pause();video.removeAttribute('src');video.load();
@@ -463,25 +477,107 @@
   function enablePresetDragging(target,rows){
     const kind=presetMode,key=station=>kind==='tv'?station.url:stationKey(station);
     target.querySelectorAll('.preset-drag-handle').forEach(handle=>{
-      const card=handle.closest('[data-preset-index]');let drag=null;
+      const card=handle.closest('[data-preset-index]');let drag=null,scrollFrame=0,lastScrollTime=0;
+      function updateDropTarget(){
+        const cards=[...target.querySelectorAll('[data-preset-index]')];
+        // Use layout slots, not moving animation boxes, for insertion decisions.
+        const grid=target.getBoundingClientRect();
+        const slots=cards.filter(item=>item!==card).map(item=>({item,left:grid.left+item.offsetLeft-target.offsetLeft,top:grid.top+item.offsetTop-target.offsetTop-target.scrollTop,width:item.offsetWidth,height:item.offsetHeight}));
+        let over=null;
+        const topEdge=Math.max(0,grid.top)+Math.min(90,target.clientHeight*.25),bottomEdge=Math.min(innerHeight,grid.bottom)-Math.min(90,target.clientHeight*.25);
+        const visible=slots.filter(slot=>slot.top+slot.height>0&&slot.top<innerHeight);
+        if(drag.y<topEdge&&visible.length)over=visible[0].item;
+        else if(drag.y>bottomEdge&&visible.length)over=visible[visible.length-1].item;
+        else if(slots.length){
+          slots.sort((a,b)=>Math.hypot(a.left+a.width/2-drag.x,a.top+a.height/2-drag.y)-Math.hypot(b.left+b.width/2-drag.x,b.top+b.height/2-drag.y));
+          over=slots[0].item;
+          const own={left:grid.left+card.offsetLeft-target.offsetLeft,top:grid.top+card.offsetTop-target.offsetTop-target.scrollTop};
+          if(drag.x>=own.left&&drag.x<=own.left+card.offsetWidth&&drag.y>=own.top&&drag.y<=own.top+card.offsetHeight)return;
+        }
+        if(!over||over===card)return;
+        const from=cards.indexOf(card),to=cards.indexOf(over);
+        if(from===to||(drag.y<topEdge&&to>from)||(drag.y>bottomEdge&&to<from))return;
+        const before=new Map(cards.map(item=>[item,item.getBoundingClientRect()]));
+        target.insertBefore(card,from<to?over.nextSibling:over);
+        drag.to=[...target.querySelectorAll('[data-preset-index]')].indexOf(card);
+        if(!matchMedia('(prefers-reduced-motion: reduce)').matches)for(const item of cards){
+          const old=before.get(item),now=item.getBoundingClientRect();
+          if(old.left!==now.left||old.top!==now.top){item.getAnimations().forEach(animation=>animation.cancel());item.animate([{transform:`translate(${old.left-now.left}px,${old.top-now.top}px)`},{transform:'translate(0,0)'}],{duration:180,easing:'ease-out'});}
+        }
+      }
+      function autoScroll(time){
+        if(!drag||!handle.isConnected){cancelAnimationFrame(scrollFrame);return;}
+        const delta=Math.min(32,lastScrollTime?time-lastScrollTime:16);lastScrollTime=time;
+        const bounds=target.getBoundingClientRect(),top=Math.max(0,bounds.top),bottom=Math.min(innerHeight,bounds.bottom),edge=Math.min(90,(bottom-top)*.25);
+        const speed=drag.y<top+edge?-Math.max(.25,Math.min(1,(top+edge-drag.y)/edge)):drag.y>bottom-edge?Math.max(.25,Math.min(1,(drag.y-bottom+edge)/edge)):0;
+        if(speed){let scroller=target;
+          while(scroller&&!(scroller.scrollHeight>scroller.clientHeight&&/auto|scroll/.test(getComputedStyle(scroller).overflowY)))scroller=scroller.parentElement;
+          const amount=speed*delta*.85;
+          if(!scroller||scroller===document.body||scroller===document.documentElement||scroller===document.scrollingElement){
+            const root=document.scrollingElement||document.documentElement;
+            root.scrollTop+=amount;
+            // Some mobile layouts scroll the body rather than the document root.
+            if(document.body!==root&&document.body.scrollHeight>document.body.clientHeight)document.body.scrollTop+=amount;
+          }else scroller.scrollTop+=amount;
+        }
+        updateDropTarget();scrollFrame=requestAnimationFrame(autoScroll);
+      }
       handle.addEventListener('click',event=>{event.preventDefault();event.stopPropagation();});
-      handle.addEventListener('pointerdown',event=>{if(event.button!==0)return;event.stopPropagation();drag={id:event.pointerId,to:null};handle.setPointerCapture(event.pointerId);card.classList.add('preset-dragging');});
-      handle.addEventListener('pointermove',event=>{if(!drag)return;event.preventDefault();event.stopPropagation();const over=document.elementFromPoint(event.clientX,event.clientY)?.closest('#preset-grid [data-preset-index]');target.querySelectorAll('.preset-drop-target').forEach(item=>item.classList.remove('preset-drop-target'));drag.to=over&&over!==card?Number(over.dataset.presetIndex):null;if(drag.to!==null)over.classList.add('preset-drop-target');if(event.clientY<90)window.scrollBy(0,-12);else if(event.clientY>innerHeight-90)window.scrollBy(0,12);});
-      const finish=event=>{if(!drag)return;event.stopPropagation();const to=drag.to;drag=null;card.classList.remove('preset-dragging');target.querySelectorAll('.preset-drop-target').forEach(item=>item.classList.remove('preset-drop-target'));if(handle.hasPointerCapture(event.pointerId))handle.releasePointerCapture(event.pointerId);if(event.type==='pointerup'&&to!==null)reorderPreset(kind,key(rows[Number(card.dataset.presetIndex)]),key(rows[to]));};
-      handle.addEventListener('pointerup',finish);handle.addEventListener('pointercancel',finish);
+      function move(event){
+        if(!drag||drag.id!==event.pointerId)return;
+        event.preventDefault();event.stopPropagation();drag.x=event.clientX;drag.y=event.clientY;
+        if(!drag.moved&&Math.hypot(drag.x-drag.startX,drag.y-drag.startY)>7){
+          drag.moved=true;card.classList.add('preset-dragging');card.style.pointerEvents='none';
+          const rect=card.getBoundingClientRect();drag.ghost=card.cloneNode(true);drag.ghost.removeAttribute('data-preset-index');drag.ghost.className='preset-drag-preview';
+          Object.assign(drag.ghost.style,{position:'fixed',width:rect.width+'px',height:rect.height+'px',pointerEvents:'none',zIndex:'20000'});document.body.append(drag.ghost);
+          lastScrollTime=0;scrollFrame=requestAnimationFrame(autoScroll);
+        }
+        if(drag.ghost){drag.ghost.style.left=(drag.x-drag.offsetX)+'px';drag.ghost.style.top=(drag.y-drag.offsetY)+'px';}
+        if(drag.moved)updateDropTarget();
+      }
+      function finish(event){
+        if(!drag||event.pointerId!==drag.id)return;
+        event.stopPropagation();const moved=drag.moved,to=[...target.querySelectorAll('[data-preset-index]')].indexOf(card);
+        drag.ghost?.remove();drag=null;cancelAnimationFrame(scrollFrame);lastScrollTime=0;
+        window.removeEventListener('pointermove',move);window.removeEventListener('pointerup',finish);window.removeEventListener('pointercancel',finish);
+        card.classList.remove('preset-dragging');card.style.removeProperty('pointer-events');
+        if(moved){target.dataset.suppressTapUntil=String(performance.now()+500);if(event.type==='pointerup'&&to!==Number(card.dataset.presetIndex))reorderPreset(kind,key(rows[Number(card.dataset.presetIndex)]),key(rows[to]));else renderPresets();}
+      }
+      card.addEventListener('pointerdown',event=>{
+        if(event.button!==0||event.target.closest('[data-preset-star]'))return;
+        event.stopPropagation();const rect=card.getBoundingClientRect();
+        drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,offsetX:event.clientX-rect.left,offsetY:event.clientY-rect.top,moved:false};
+        window.addEventListener('pointermove',move,{passive:false});window.addEventListener('pointerup',finish);window.addEventListener('pointercancel',finish);
+      });
       handle.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown'].includes(event.key))return;event.preventDefault();event.stopPropagation();const from=Number(card.dataset.presetIndex),to=from+(['ArrowLeft','ArrowUp'].includes(event.key)?-1:1);if(rows[to]){reorderPreset(kind,key(rows[from]),key(rows[to]));target.querySelector(`[data-preset-index="${to}"] .preset-drag-handle`)?.focus();}});
     });
   }
   function renderPresets(){
-    updatePresetCounts();const target=$('preset-grid');$('clear-recent').hidden=presetMode!=='recent';$('preset-footnote').firstChild.textContent=presetMode==='recent'?'History is stored only on this device. ': 'Drag ⠿ to change priority · Tap to play · ★ to remove ';if(presetMode==='recent'){ $('preset-priority-control').hidden=true;$('preset-selection-label').textContent='RECENTLY PLAYED';target.classList.add('recent-history-grid');target.innerHTML=recentHistory.map((entry,index)=>`<button class="preset-card recent-history-card" type="button" data-recent-index="${index}"><span class="channel-number">${entry.kind==='tv'?'TV':'RADIO'} · ${new Date(entry.playedAt||Date.now()).toLocaleDateString()}</span><span class="preset-logo">${entry.logo?`<img src="${safe(entry.logo)}" loading="lazy" alt="">`:entry.kind==='tv'?'TV':'♫'}</span><b>${safe(entry.name)}</b><small>${safe(entry.country||'Recently played')}</small></button>`).join('')||'<div class="empty-note">Your radio and TV history will appear here.</div>';target.querySelectorAll('[data-recent-index]').forEach(button=>button.addEventListener('click',()=>{const entry=recentHistory[Number(button.dataset.recentIndex)];if(!entry)return;const list=entry.kind==='tv'?tvs:radios,item=list.find(row=>(entry.kind==='tv'?row.url:stationKey(row))===entry.key)||Object.values(entry.kind==='tv'?tvPresets:radioPresets).find(row=>(entry.kind==='tv'?row.url:stationKey(row))===entry.key);if(item){setScreen(entry.kind==='tv'?'tv-screen':'radio-screen');entry.kind==='tv'?playTV(item):playRadio(item);}}));return;}target.classList.remove('recent-history-grid');const rows=currentRows(presetMode);$('preset-priority-control').hidden=true;
+    updatePresetCounts();const target=$('preset-grid');$('clear-recent').hidden=presetMode!=='recent';$('preset-footnote').firstChild.textContent=presetMode==='recent'?'History is stored only on this device. ': 'Drag ⠿ to reorder · Double-tap to play · ★ to remove ';if(presetMode==='recent'){ $('preset-priority-control').hidden=true;$('preset-selection-label').textContent='RECENTLY PLAYED';target.classList.add('recent-history-grid');target.innerHTML=recentHistory.map((entry,index)=>`<button class="preset-card recent-history-card" type="button" data-recent-index="${index}"><span class="channel-number">${entry.kind==='tv'?'TV':'RADIO'} · ${new Date(entry.playedAt||Date.now()).toLocaleDateString()}</span><span class="preset-logo">${entry.logo?`<img src="${safe(entry.logo)}" loading="lazy" alt="">`:entry.kind==='tv'?'TV':'♫'}</span><b>${safe(entry.name)}</b><small>${safe(entry.country||'Recently played')}</small></button>`).join('')||'<div class="empty-note">Your radio and TV history will appear here.</div>';target.querySelectorAll('[data-recent-index]').forEach(button=>button.addEventListener('click',()=>{const entry=recentHistory[Number(button.dataset.recentIndex)];if(!entry)return;const list=entry.kind==='tv'?tvs:radios,item=list.find(row=>(entry.kind==='tv'?row.url:stationKey(row))===entry.key)||Object.values(entry.kind==='tv'?tvPresets:radioPresets).find(row=>(entry.kind==='tv'?row.url:stationKey(row))===entry.key);if(item){setScreen(entry.kind==='tv'?'tv-screen':'radio-screen');entry.kind==='tv'?playTV(item):playRadio(item);}}));return;}target.classList.remove('recent-history-grid');const rows=currentRows(presetMode);$('preset-priority-control').hidden=true;
     if(presetMode==='tv'&&(!rows.some(item=>item.url===selectedTVPresetKey)))selectedTVPresetKey=tvCurrent()?.url&&rows.some(item=>item.url===tvCurrent().url)?tvCurrent().url:rows[0]?.url||null;
     const selected=rows.find(item=>item.url===selectedTVPresetKey);$('preset-selection-label').textContent=selected?`SELECTED · ${selected.name||'TV CHANNEL'}`:'SELECT A TV CHANNEL';
     target.innerHTML=rows.map((station,index)=>{const title=station.name||'Untitled station',logo=stationLogo(station);return `<article class="preset-card ${presetMode==='tv'&&tvCurrent()?.url===station.url||presetMode==='radio'&&stationKey(radioCurrent()||{})===stationKey(station)?'active':''} ${presetMode==='tv'&&selectedTVPresetKey===station.url?'priority-selected':''}" tabindex="0" role="button" data-preset-index="${index}"><span class="channel-number">CH ${String(index+1).padStart(2,'0')}</span><button type="button" class="preset-drag-handle" aria-label="Drag to change priority; use arrow keys with keyboard" title="Drag to change priority">⠿</button><button class="preset-star" type="button" data-preset-star="${safe(presetMode==='tv'?station.url:stationKey(station))}" aria-label="Remove preset">★</button><span class="preset-logo">${logo?`<img src="${safe(logo)}" loading="lazy" alt="">`:safe(title.slice(0,11))}</span><b>${safe(title)}</b><small>${safe(station.country||station.group||'Live')}</small></article>`;}).join('')||'<div class="empty-note">No presets in this section yet. Save stations from Explore.</div>';
-    target.querySelectorAll('[data-preset-index]').forEach(card=>{const station=rows[Number(card.dataset.presetIndex)];card.addEventListener('click',event=>{if(event.target.closest('[data-preset-star],.preset-drag-handle'))return;if(presetMode==='tv')selectedTVPresetKey=station.url;renderPresets();if(presetMode==='tv')playTV(station);else{setScreen('radio-screen');playRadio(station);}});card.addEventListener('keydown',event=>{if(event.key==='Enter'&&event.target===card){if(presetMode==='tv')selectedTVPresetKey=station.url;if(presetMode==='tv')playTV(station);else{setScreen('radio-screen');playRadio(station);}renderPresets();}});});
+    target.querySelectorAll('[data-preset-index]').forEach(card=>{
+      const station=rows[Number(card.dataset.presetIndex)],kind=presetMode;let lastTap=0;
+      const play=()=>{if(kind==='tv')selectedTVPresetKey=station.url;setScreen(kind==='tv'?'tv-screen':'radio-screen');kind==='tv'?playTV(station):playRadio(station);};
+      card.addEventListener('click',event=>{
+        if(performance.now()<Number(target.dataset.suppressTapUntil||0)||event.target.closest('[data-preset-star],.preset-drag-handle'))return;
+        const now=performance.now();
+        if(lastTap&&now-lastTap<400){lastTap=0;play();return;}
+        lastTap=now;
+        target.querySelectorAll('.preset-tap-selected').forEach(item=>item.classList.remove('preset-tap-selected'));
+        card.classList.add('preset-tap-selected');
+      });
+      card.addEventListener('keydown',event=>{if(event.key==='Enter'&&event.target===card){event.preventDefault();play();}});
+    });
     enablePresetDragging(target,rows);
     target.querySelectorAll('[data-preset-star]').forEach(button=>button.addEventListener('click',event=>{event.stopPropagation();const station=rows.find(s=>(presetMode==='tv'?s.url:stationKey(s))===button.dataset.presetStar);if(station)togglePreset(presetMode,station);}));
   }
   function stationGenre(station,kind){
+    const identity=String(station.name||'')+' '+String(station.channelName||'')+' '+String(station.group||'');
+    if(kind==='tv'&&/\bdoordarshan\b|\bdd(?:\s|[-_]|$)/i.test(identity))return 'DD (Doordarshan)';
+    if(kind==='radio'&&/akashvani|akashwani|all india radio|^air(?:\s|[-_]|$)/i.test(identity))return 'Akashvani';
+
     const raw=kind==='tv'?(station.group||station.genre||station.category||station.tags):(station.genre||station.tags||station.group);
     const value=Array.isArray(raw)?raw.join(','):String(raw||'');
     if(value.trim())return value.split(/[;,|]/).map(part=>part.trim()).filter(Boolean)[0]||'Other';
@@ -531,9 +627,9 @@
   function populateExploreFilters(){
     const source=browserKind==='tv'?tvs:radios,store=browserKind==='tv'?tvPresets:radioPresets,rows=[...source,...Object.values(store)];
     const countries=browserSource==='online'&&onlineCountries.length?onlineCountries:[...new Set(rows.map(s=>String(s.country||'').trim()).filter(Boolean))].sort((a,b)=>a.localeCompare(b));
-    const genres=browserSource==='online'&&onlineGenres.length?onlineGenres:[...new Set(rows.map(s=>stationGenre(s,browserKind)))].sort((a,b)=>a.localeCompare(b));
+    const genres=[...new Set([...(browserSource==='online'&&onlineGenres.length?onlineGenres:rows.map(s=>stationGenre(s,browserKind))),browserKind==='tv'?'DD (Doordarshan)':'Akashvani'])].sort((a,b)=>a.localeCompare(b));
     const allStationRows=[...radios,...tvs,...Object.values(radioPresets),...Object.values(tvPresets),...onlineRows,...(onlineTVCache||[])];
-    const languages=[...new Set([...languageCatalog,...allStationRows.flatMap(languageNames)])].sort((a,b)=>a.localeCompare(b));
+    const languages=['English',...['Tamil','Hindi','Malayalam','Telugu','Kannada','Bengali','Marathi','Gujarati','Punjabi','Urdu','Odia','Assamese','Sinhala','Nepali'].sort((a,b)=>a.localeCompare(b,'en'))];
     const replace=(id,items,label)=>{const select=$(id),old=select.value;select.innerHTML=`<option value="all">All ${label}</option>`+items.map(v=>`<option value="${safe(v)}">${safe(v)}</option>`).join('');if(items.includes(old))select.value=old;};
     replace('explore-country',countries,'countries');replace('explore-genre',genres,'genres');replace('explore-language',languages,'languages');
     $('explore-radio-count').textContent=String(new Set([...radios,...Object.values(radioPresets)].map(stationKey)).size);$('explore-tv-count').textContent=String(new Set([...tvs,...Object.values(tvPresets)].map(s=>s.url).filter(Boolean)).size);
@@ -561,7 +657,7 @@
     try{
       if(browserKind==='radio'){
         const hosts=['https://de1.api.radio-browser.info/json','https://nl1.api.radio-browser.info/json'];let found=null,lastError;
-        for(const base of hosts){try{const params=new URLSearchParams({limit:'100',offset:String(onlineOffset),order:'clickcount',reverse:'true',hidebroken:'true'});if(query)params.set('name',query);if(country!=='all')params.set('country',country);if(genre!=='all')params.set('tag',genre);if(language!=='all')params.set('language',language.toLowerCase());found=await fetchJson(`${base}/stations/search?${params}`);break;}catch(error){lastError=error;}}
+        for(const base of hosts){try{const params=new URLSearchParams({limit:'100',offset:String(onlineOffset),order:'clickcount',reverse:'true',hidebroken:'true'});if(query)params.set('name',query);if(country!=='all')params.set('country',country);if(genre==='Akashvani'){if(!query)params.set('name','Akashvani');}else if(genre!=='all')params.set('tag',genre);if(language!=='all')params.set('language',language.toLowerCase());found=await fetchJson(`${base}/stations/search?${params}`);break;}catch(error){lastError=error;}}
         if(!found)throw lastError||new Error('Radio catalog unavailable');
         const next=found.filter(s=>s.url_resolved||s.url).map(s=>({...s,_kind:'radio',url:s.url_resolved||s.url}));
         onlineRows=loadMore?[...onlineRows,...next.filter(x=>!onlineRows.some(y=>stationKey(y)===stationKey(x)))]:next;onlineHasMore=next.length===100;onlineOffset+=next.length;
@@ -576,7 +672,7 @@
         let filtered=onlineTVCache;
         if(query){const q=query.toLowerCase();filtered=filtered.filter(s=>`${s.name} ${s.channelName} ${s.alt_names.join(' ')} ${s.group} ${s.country}`.toLowerCase().includes(q));}
         if(country!=='all')filtered=filtered.filter(s=>s.country===country);
-        if(genre!=='all')filtered=filtered.filter(s=>s.group.split(', ').includes(genre)||s.genre===genre);
+        if(genre!=='all')filtered=filtered.filter(s=>stationGenre(s,'tv')===genre||s.group.split(', ').includes(genre)||s.genre===genre);
         const collator=new Intl.Collator(undefined,{sensitivity:'base'});filtered.sort((a,b)=>collator.compare(a.country,b.country)||collator.compare(a.group,b.group)||collator.compare(a.name,b.name));
         onlineRows=filtered;onlineHasMore=filtered.length>100;
       }
@@ -653,12 +749,12 @@
   $('radio-country').addEventListener('change',()=>{renderRadioDisplay();renderPresets();});
   $('tv-country').addEventListener('change',()=>{renderTVRail();renderPresets();});
   $('radio-play').addEventListener('click',toggleRadio);$('radio-prev').addEventListener('click',()=>stepRadio(-1));$('radio-next').addEventListener('click',()=>stepRadio(1));
-  $('radio-art').addEventListener('click',event=>{if(!event.target.closest('#radio-star'))return;const station=radioCurrent();if(station)togglePreset('radio',station);});
+  $('radio-star').addEventListener('click',()=>{const station=radioCurrent();if(station)togglePreset('radio',station);});
 
   $('radio-volume').addEventListener('input',event=>setRadioVolume(event.target.value));
   document.querySelectorAll('[data-radio-volume-action]').forEach(button=>button.addEventListener('click',()=>{const action=button.dataset.radioVolumeAction;if(action==='mute'){audio.muted=!audio.muted;button.classList.toggle('muted',audio.muted);button.setAttribute('aria-label',audio.muted?'Unmute radio':'Mute radio');}else if(action==='up'){audio.muted=false;setRadioVolume(Number($('radio-volume').value)+5);}}));
   $('tv-star').addEventListener('click',()=>{const station=tvCurrent();if(station)togglePreset('tv',station);});
-  $('tv-prev').addEventListener('click',()=>stepTV(-1));$('tv-next').addEventListener('click',()=>stepTV(1));$('tv-toggle').addEventListener('click',()=>{if(!video.src&&!video.currentSrc){const rows=currentRows('tv');if(rows.length)playTV(rows[0]);return;}if(video.paused)video.play().then(()=>{$('tv-toggle').textContent='Ⅱ';}).catch(()=>notify('Press play on the video.'));else video.pause();});
+  $('tv-prev').addEventListener('click',()=>stepTV(-1));$('tv-next').addEventListener('click',()=>stepTV(1));$('tv-prev-name').addEventListener('click',()=>stepTV(-1));$('tv-next-name').addEventListener('click',()=>stepTV(1));$('tv-toggle').addEventListener('click',()=>{if(!video.src&&!video.currentSrc){const rows=currentRows('tv');if(rows.length)playTV(rows[0]);return;}if(video.paused)video.play().then(()=>{$('tv-toggle').textContent='Ⅱ';}).catch(()=>notify('Press play on the video.'));else video.pause();});
   document.querySelectorAll('[data-remote]').forEach(button=>button.addEventListener('click',()=>{
     const action=button.dataset.remote;
     if(action==='vol-up'||action==='vol-down'){video.muted=false;video.volume=Math.min(1,Math.max(0,video.volume+(action==='vol-up' ? 0.1 : -0.1)));return;}
@@ -670,7 +766,25 @@
     if(action==='power')stopTV();
   }));
   $('remote-channel-select').addEventListener('change',event=>{const station=currentRows('tv').find(item=>item.url===event.target.value);if(station)playTV(station);});
-  document.querySelectorAll('[data-fullscreen-action]').forEach(button=>button.addEventListener('click',()=>{const action=button.dataset.fullscreenAction;if(action==='zoom'||action==='normal'){tvZoomed=action==='zoom';fitTVFullscreenVideo();return;}if(action==='home'){exitTVFullscreen();setScreen('tv-screen');$('tv-screen').scrollIntoView({behavior:'smooth',block:'start'});return;}if(action==='previous'){stepTV(-1);return;}if(action==='next'){stepTV(1);return;}if(action==='play'){if(video.paused)video.play().catch(()=>notify('Press play to resume this channel.'));else video.pause();return;}if(action==='mute'){video.muted=!video.muted;$('tv-display').classList.toggle('is-muted',video.muted);button.setAttribute('aria-label',video.muted?'Unmute':'Mute');}}));
+  // Drag coordinates are measured in the player plane, including rotated mobile fallback.
+  const fullscreenPanel=document.querySelector('.fullscreen-side-controls');
+  let fullscreenDrag=null,fullscreenPosition=null;
+  function panelPoint(event){const stage=$('tv-display'),rect=stage.getBoundingClientRect();return stage.classList.contains('landscape-fallback')?{x:event.clientY-rect.top,y:rect.right-event.clientX}:{x:event.clientX-rect.left,y:event.clientY-rect.top};}
+  function positionFullscreenPanel(x,y){
+    const stage=$('tv-display'),panel=fullscreenPanel;
+    x=Math.max(0,Math.min(x,stage.clientWidth-panel.offsetWidth));y=Math.max(0,Math.min(y,stage.clientHeight-panel.offsetHeight));
+    fullscreenPosition={x,y};panel.style.setProperty('left',x+'px','important');panel.style.setProperty('top',y+'px','important');panel.style.setProperty('right','auto','important');panel.style.setProperty('transform','none','important');
+  }
+  fullscreenPanel.addEventListener('pointerdown',event=>{
+    if(!tvFullscreenActive||event.target.closest('button')||event.button!==0)return;
+    const point=panelPoint(event);fullscreenDrag={id:event.pointerId,x:point.x,y:point.y,left:fullscreenPanel.offsetLeft,top:fullscreenPanel.offsetTop-fullscreenPanel.offsetHeight/2};
+    if(fullscreenPosition){fullscreenDrag.left=fullscreenPosition.x;fullscreenDrag.top=fullscreenPosition.y;}
+    fullscreenPanel.setPointerCapture(event.pointerId);event.preventDefault();
+  });
+  fullscreenPanel.addEventListener('pointermove',event=>{if(!fullscreenDrag||fullscreenDrag.id!==event.pointerId)return;const point=panelPoint(event);positionFullscreenPanel(fullscreenDrag.left+point.x-fullscreenDrag.x,fullscreenDrag.top+point.y-fullscreenDrag.y);event.preventDefault();});
+  for(const name of ['pointerup','pointercancel','lostpointercapture'])fullscreenPanel.addEventListener(name,event=>{if(fullscreenDrag?.id!==event.pointerId)return;fullscreenDrag=null;if(fullscreenPanel.hasPointerCapture(event.pointerId))fullscreenPanel.releasePointerCapture(event.pointerId);});
+  window.addEventListener('resize',()=>requestAnimationFrame(()=>{if(tvFullscreenActive&&fullscreenPosition)positionFullscreenPanel(fullscreenPosition.x,fullscreenPosition.y);}));
+  document.querySelectorAll('[data-fullscreen-action]').forEach(button=>button.addEventListener('click',()=>{const action=button.dataset.fullscreenAction;if(action==='vol-up'||action==='vol-down'){stopTVVolumeRamp();tvVolumeRampStarted=true;video.muted=false;video.volume=Math.max(0,Math.min(1,video.volume+(action==='vol-up'?.05:-.05)));updateTVNumbers();return;}if(action==='zoom'||action==='normal'){tvZoomed=action==='zoom';fitTVFullscreenVideo();return;}if(action==='home'){exitTVFullscreen();setScreen('tv-screen');$('tv-screen').scrollIntoView({behavior:'smooth',block:'start'});return;}if(action==='previous'){stepTV(-1);return;}if(action==='next'){stepTV(1);return;}if(action==='play'){if(video.paused)video.play().catch(()=>notify('Press play to resume this channel.'));else video.pause();return;}if(action==='mute'){video.muted=!video.muted;$('tv-display').classList.toggle('is-muted',video.muted);button.setAttribute('aria-label',video.muted?'Unmute':'Mute');}}));
 
   audio.addEventListener('play',()=>{$('equalizer').classList.add('playing');$('radio-art').classList.add('playing');$('radio-play').textContent='Ⅱ';$('radio-play').title='Pause';drawRadio();startSoundRays();});audio.addEventListener('pause',()=>{stopSoundRays();$('equalizer').classList.remove('playing');$('radio-art').classList.remove('playing');$('radio-play').textContent='▶';$('radio-play').title='Play';drawRadio();});
   audio.addEventListener('waiting',()=>{if(currentRadioSource)$('radio-status').textContent='BUFFERING · '+(radioCurrent()?.name||'RADIO');});
