@@ -13,23 +13,14 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="style.css?v=3.0.71">
+  <link rel="stylesheet" href="style.css?v=3.0.74">
   <script defer src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
-  <script defer src="app.js?v=3.0.71"></script>
+  <script defer src="app.js?v=3.0.76"></script>
 </head>
 <body>
-<section class="welcome-splash-v2" id="welcome-splash-v2" role="dialog" aria-modal="true" aria-labelledby="splash-v2-title" aria-describedby="splash-v2-note">
-    <div class="card-wrapper" id="cardContainer">
-      <div class="glow-card" id="card">
-        <div class="card-inner">
-          <img class="welcome-splash-v2-logo" id="splash-v2-logo-image" alt="" hidden>
-          <svg class="welcome-radio-icon" id="splash-v2-default-icon" viewBox="0 0 72 72" aria-hidden="true"><circle class="radio-loop-wave wave-one" cx="36" cy="34" r="11"/><circle class="radio-loop-wave wave-two" cx="36" cy="34" r="19"/><circle class="radio-loop-wave wave-three" cx="36" cy="34" r="27"/><circle cx="36" cy="34" r="3.5" fill="#67e8f9" stroke="none"/><path d="M36 40v16m-9 2h18" stroke="#67e8f9" stroke-width="2.5" stroke-linecap="round"/></svg>
-          <h1 id="splash-v2-title">COOL RADIO &amp; TV</h1>
-          <p id="splash-v2-note"><span id="splash-v2-line1">ONLY FOR EDUCATIONAL PURPOSE</span><br><span id="splash-v2-line2">PRIVATE USE · NOT TO BE SHARED</span></p>
-          <div id="splash-v2-continue" class="splash-wait" role="status">Wait.....</div>
-        </div>
-      </div>
-    </div>
+<section class="welcome-splash-v2 video-splash" id="welcome-splash-v2" role="dialog" aria-modal="true" aria-label="Welcome to COOLmagRaTv">
+    <video id="splash-intro-video" playsinline preload="auto" aria-label="COOLmagRaTv introduction"><source src="assets/splash-intro-gemini.mp4" type="video/mp4"></video>
+    <div class="splash-video-actions"><button type="button" id="splash-video-sound">Enable sound</button><button type="button" id="splash-video-skip">Skip intro</button></div>
   </section>
   <main class="retro-app">
     <header class="topbar">

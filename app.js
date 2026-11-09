@@ -122,18 +122,21 @@
   }
 
   function initSplash(){
-    const splash=$('welcome-splash-v2'),button=$('splash-v2-continue'),card=$('card');if(!splash||!button)return;const splashStartedAt=performance.now();let splashDuration=6000;try{if(localStorage.getItem('retrotvra.splash-seen.v3'))splashDuration=2000;localStorage.setItem('retrotvra.splash-seen.v3','true');}catch{}
-    addFestivalGreeting(splash);let dismissed=false,finishTimer=0;const finish=(immediate=false)=>{if(dismissed)return;if(immediate){clearTimeout(finishTimer);dismissed=true;document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);return;}const remaining=splashDuration-(performance.now()-splashStartedAt);if(remaining>0){clearTimeout(finishTimer);finishTimer=window.setTimeout(()=>finish(),remaining);return;}clearTimeout(finishTimer);dismissed=true;document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);};const escapeSplash=event=>{if(event.key==='Escape'){event.preventDefault();finish(true);}};closeSplash=finish;card?.addEventListener('click',()=>finish(true));document.addEventListener('keydown',escapeSplash);finishTimer=window.setTimeout(()=>finish(),splashDuration);
-    fetch('data/app-settings.json',{cache:'no-cache'}).then(response=>response.ok?response.json():null).then(settings=>{if(settings){const config=settings?.splash||{};
-        addFestivalGreeting(splash,config.occasions||[]);
-        if(config.title)$('splash-v2-title').textContent=config.title;
-        if(config.line1)$('splash-v2-line1').textContent=config.line1;
-        if(config.line2)$('splash-v2-line2').textContent=config.line2;
-        if(/^#[0-9a-f]{6}$/i.test(config.backgroundColor||''))splash.style.setProperty('--splash-bg',config.backgroundColor);
-        if(/^#[0-9a-f]{6}$/i.test(config.textColor||''))splash.style.setProperty('--splash-text',config.textColor);
-        if(/^#[0-9a-f]{6}$/i.test(config.accentColor||''))splash.style.setProperty('--splash-accent',config.accentColor);
-        if(config.logo){const image=$('splash-v2-logo-image');image.onload=()=>{image.hidden=false;$('splash-v2-default-icon').hidden=true;};image.onerror=()=>{image.hidden=true;$('splash-v2-default-icon').hidden=false;};image.src=/^(https?:|data:image\/)/i.test(config.logo)?config.logo:new URL(config.logo,document.baseURI).href;}
-      }}).catch(()=>{});
+    const splash=$('welcome-splash-v2'),intro=$('splash-intro-video'),sound=$('splash-video-sound'),skip=$('splash-video-skip');
+    if(!splash||!intro)return;
+    let dismissed=false,watchdog=0;
+    const finish=()=>{if(dismissed)return;dismissed=true;clearTimeout(watchdog);intro.pause();document.removeEventListener('keydown',escape);splash.classList.add('leaving');setTimeout(()=>{splash.remove();$('radio-play')?.focus({preventScroll:true});},360);};
+    const escape=event=>{if(event.key==='Escape'){event.preventDefault();finish();}};
+    // Data loading must not dismiss the video early.
+    closeSplash=immediate=>{if(immediate===true)finish();};
+    skip.addEventListener('click',finish);document.addEventListener('keydown',escape);
+    intro.addEventListener('ended',finish,{once:true});intro.addEventListener('error',finish,{once:true});
+    intro.querySelector('source')?.addEventListener('error',finish,{once:true});
+    intro.addEventListener('playing',()=>{clearTimeout(watchdog);watchdog=setTimeout(finish,20000);sound.hidden=!intro.muted;});
+    sound.addEventListener('click',()=>{intro.muted=false;intro.play().then(()=>{sound.hidden=true;}).catch(()=>{intro.muted=true;sound.hidden=false;});});
+    watchdog=setTimeout(finish,20000);
+    intro.muted=false;
+    intro.play().catch(()=>{if(dismissed)return;intro.muted=true;sound.hidden=false;intro.play().catch(()=>{sound.textContent='Play intro with sound';});});
   }
   function formatClock(){const d=new Date();$('clock').textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}).toUpperCase();const day=$('radio-clock-day');if(day){day.textContent=d.toLocaleDateString([], {weekday:'short'}).slice(0,2);const time=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',hour12:true}).match(/^(.+?)\s*(AM|PM)$/i);$('radio-clock-time').textContent=time?time[1]:d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});$('radio-clock-meridiem').textContent=time?time[2].toUpperCase():'';$('radio-clock-date').textContent=d.toLocaleDateString([], {month:'short',day:'2-digit',year:'numeric'}).toUpperCase();}}
   initSplash();
