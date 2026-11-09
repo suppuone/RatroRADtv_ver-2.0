@@ -21,11 +21,26 @@
   if(!['retro','modern','ultra'].includes(themeMode))themeMode='ultra';
   let glowMode=THEME_GLOW[themeMode];
   const DEFAULT_TV_CHANNEL={"name": "BBC News South Asia (720p)", "group": "News", "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BBC_NEWS/images/LOGO_HD/image.png", "url": "https://mumbai-edge.smartplaytv.in/BBCNews/index.m3u8", "options": [], "genre": "News", "country": "United Kingdom", "language": "English", "tags": "English news curated", "curated": true, "curatedOrder": 4, "presetNumber": 13, "presetLanguage": "International English", "presetGenre": "News", "catalogSource": "Saved preset"};
+  let visualizerPattern='halo';try{visualizerPattern=localStorage.getItem('retrotvra.visualizer-pattern.v5')||'halo';}catch{}
+  if(!['wave','halo','mesh','mix','off'].includes(visualizerPattern))visualizerPattern='halo';
+  let visualizerMixBag=[],visualizerMixCurrent='',visualizerMixSince=0;
+  function nextMixedVisualizer(){if(!visualizerMixBag.length){visualizerMixBag=['wave','halo','mesh'].sort(()=>Math.random()-.5);if(visualizerMixBag[0]===visualizerMixCurrent)visualizerMixBag.push(visualizerMixBag.shift());}visualizerMixCurrent=visualizerMixBag.shift();}
   let meterAudio=null,meterContext=null,meterAnalyser=null,meterGain=null,meterSource=null,meterBins=null,meterFrame=0,meterLevel=0,meterLastPaint=0;
   function stopSoundRays(){if(meterFrame){cancelAnimationFrame(meterFrame);meterFrame=0;}if(meterAudio)meterAudio.pause();const canvas=$('sound-rays');if(canvas){const c=canvas.getContext('2d');c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,canvas.width,canvas.height);}}
   function startSoundRays(){
-    if(audio.paused)return;
+    if(audio.paused||visualizerPattern==='off')return;
     const canvas=$('sound-rays');if(!canvas)return;
+    // Analyse a silent CORS-enabled monitor so unsupported streams cannot silence the player.
+    try{
+      const Ctx=window.AudioContext||window.webkitAudioContext;
+      if(Ctx){
+        if(!meterContext){meterContext=new Ctx();meterAnalyser=meterContext.createAnalyser();meterAnalyser.fftSize=1024;meterAnalyser.smoothingTimeConstant=.65;meterBins=new Uint8Array(meterAnalyser.frequencyBinCount);meterAudio=new Audio();meterAudio.crossOrigin='anonymous';meterAudio.preload='none';meterSource=meterContext.createMediaElementSource(meterAudio);meterGain=meterContext.createGain();meterGain.gain.value=0;meterSource.connect(meterAnalyser);meterAnalyser.connect(meterGain);meterGain.connect(meterContext.destination);}
+        const src=audio.currentSrc||audio.src;
+        if(src&&meterAudio.src!==src){meterAudio.pause();meterAudio.src=src;meterAudio.load();}
+        meterContext.resume().then(()=>{if(!audio.paused)meterAudio.play().catch(()=>{});}).catch(()=>{});
+      }
+    }catch{}
+
     if(!meterFrame){
       const draw=()=>{
         if(audio.paused){stopSoundRays();return;}
@@ -36,6 +51,14 @@
         if(canvas.width!==Math.round(w*dpr)||canvas.height!==Math.round(h*dpr)){canvas.width=Math.round(w*dpr);canvas.height=Math.round(h*dpr);}
         const c=canvas.getContext('2d');c.setTransform(dpr,0,0,dpr,0,0);c.clearRect(0,0,w,h);
         const t=now/1000;
+        let activePattern=visualizerPattern;
+        if(visualizerPattern==='mix'){
+          if(!visualizerMixSince||now-visualizerMixSince>=10000){nextMixedVisualizer();visualizerMixSince=now;}
+          activePattern=visualizerMixCurrent;
+          const elapsed=now-visualizerMixSince;
+          canvas.style.opacity=String(Math.max(0,Math.min(1,elapsed/450,(10000-elapsed)/450)));
+        }else canvas.style.opacity='1';
+
         let energy=0,hasSignal=false;
         if(meterAnalyser&&meterBins){
           meterAnalyser.getByteFrequencyData(meterBins);
@@ -45,15 +68,44 @@
           energy=weight?Math.sqrt(sum/weight)/255:0;
           hasSignal=energy>.009;
         }
-        // Some public streams block Web Audio analysis. Keep a lively playback-synced
-        // fallback in that case; readable beats still come from the analyser where allowed.
-        if(!hasSignal)energy=.22+.25*(.5+.5*Math.sin(t*5.2)+.3*Math.sin(t*8.1));
-        meterLevel+=(energy-meterLevel)*(energy>meterLevel?.40:.14);
+        // Never synthesize loudness when analysis is unavailable or the source is silent.
+        meterLevel+=(energy-meterLevel)*(energy>meterLevel?.60:.18);
         const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
         const phase=reduced?0:t;
-        const baseline=h-2;
-        const gradient=c.createLinearGradient(0,h*.64,w,h);
-        gradient.addColorStop(0,'#7762b7');gradient.addColorStop(.45,'#329bc8');gradient.addColorStop(1,'#36c4df');
+        const vw=w;
+        const baseline=h-3;
+        if(activePattern==='halo'||activePattern==='mesh'){
+          c.globalCompositeOperation='lighter';
+          const strength=Math.min(1,Math.sqrt(meterLevel)*1.5);
+          if(activePattern==='halo'){
+            const count=reduced?80:150,points=[],cx=vw/2,cy=h*.52,base=Math.min(vw*.39,h*.43);
+            for(let i=0;i<count;i++){
+              const angle=i/count*Math.PI*2,bin=Math.min(meterBins?.length-1||0,2+i%110),sample=hasSignal?meterBins[bin]/255:0;
+              const radius=base+(sample-.3)*base*.2*strength+Math.sin(angle*9+phase*.5)*base*.035;
+              points.push({x:cx+Math.cos(angle+phase*.08)*radius,y:cy+Math.sin(angle+phase*.08)*radius});
+            }
+            for(let i=0;i<count;i++){
+              const point=points[i],hue=(185+i/count*300+phase*9)%360;
+              c.strokeStyle=`hsla(${hue},95%,70%,${.2+strength*.38})`;c.fillStyle=`hsla(${hue},100%,80%,${.45+strength*.5})`;c.lineWidth=.9;
+              c.shadowColor=`hsl(${hue},100%,65%)`;c.shadowBlur=i%4===0?5+strength*7:0;
+              for(const offset of [1,4,7]){const next=points[(i+offset)%count];c.beginPath();c.moveTo(point.x,point.y);c.lineTo(next.x,next.y);c.stroke();}
+              c.beginPath();c.arc(point.x,point.y,1+strength,0,Math.PI*2);c.fill();
+            }
+          }else{
+            const cols=36,rows=reduced?10:18,points=[];
+            for(let row=0;row<rows;row++){points[row]=[];for(let col=0;col<=cols;col++){
+              const u=col/cols,bin=Math.min(meterBins?.length-1||0,2+col*3),sample=hasSignal?meterBins[bin]/255:0;
+              points[row][col]={x:u*vw,y:baseline-row*3-(.5+.5*Math.sin(u*6+phase*.4+row*.12))*h*(.08+strength*.35+sample*.15)*(row/(rows-1))};
+            }}
+            for(let row=0;row<rows;row++)for(let col=0;col<cols;col++){
+              const point=points[row][col];c.strokeStyle=`hsla(${185+col/cols*90},90%,65%,${.2+strength*.35})`;c.lineWidth=.9;
+              for(const next of [points[row][col+1],points[row+1]?.[col],points[row+1]?.[col+1]])if(next){c.beginPath();c.moveTo(point.x,point.y);c.lineTo(next.x,next.y);c.stroke();}
+            }
+          }
+          c.shadowBlur=0;c.globalAlpha=1;c.globalCompositeOperation='source-over';meterFrame=requestAnimationFrame(draw);return;
+        }
+        const gradient=c.createLinearGradient(0,h*.64,vw,h);
+        gradient.addColorStop(0,'#25d9ed');gradient.addColorStop(.2,'#5584ff');gradient.addColorStop(.4,'#b56bff');gradient.addColorStop(.6,'#ff5cb4');gradient.addColorStop(.8,'#ffbd59');gradient.addColorStop(1,'#68e9bd');
         c.globalCompositeOperation='lighter';c.strokeStyle=gradient;
         const lines=reduced?16:32,steps=140;
         for(let layer=0;layer<2;layer++){
@@ -61,15 +113,19 @@
             const strand=line/(lines-1);
             c.beginPath();
             for(let step=0;step<=steps;step++){
-              const u=step/steps,x=u*w;
+              const u=step/steps,x=u*vw;
               const sample=hasSignal?meterBins[Math.min(meterBins.length-1,Math.floor(u*150))]/255:meterLevel;
-              const shape=Math.pow(Math.max(0,Math.sin(u*Math.PI*3.2-phase*.65+layer*1.6+strand*.5)),2);
+              const leftPeak=.08+Math.sin(phase*.45+layer)*.012;
+              const rightPeak=.92+Math.sin(phase*.4+layer)*.012;
+              const spread=.045+strand*.018;
+              const shape=Math.min(1,Math.exp(-Math.pow((u-leftPeak)/spread,2))+Math.exp(-Math.pow((u-rightPeak)/spread,2))*(.9+.1*Math.sin(phase+strand)));
               const secondary=.5+.5*Math.sin(u*Math.PI*6+phase*.42+strand);
-              const amplitude=h*(.12+Math.min(.8,meterLevel)*.15+sample*.08);
-              const y=baseline-shape*(.3+strand*.7)*amplitude*(.65+secondary*.35);
+              const amplitude=h*Math.min(.32,Math.sqrt(meterLevel)*.28+sample*.15);
+              const vibration=Math.sin(u*48+phase*3+strand*5)*sample*h*.009;
+              const y=baseline-Math.max(0,shape*(.35+strand*.65)*amplitude*(.8+secondary*.2)+vibration);
               if(step===0)c.moveTo(x,y);else c.lineTo(x,y);
             }
-            c.globalAlpha=.17+strand*.20;c.lineWidth=.8;c.shadowColor='#35b6d9';c.shadowBlur=line%8===0?4:0;c.stroke();
+            c.globalAlpha=.18+strand*.25;c.lineWidth=1.15;c.shadowColor=layer?'#fa70bd':'#48cbef';c.shadowBlur=line%8===0?4:0;c.stroke();
           }
         }
         c.shadowBlur=0;
@@ -85,7 +141,7 @@
   function toggleRadioSkin(){if(!legacyThemeEnabled)return;radioSkin=radioSkin==='legacy'?'modern':'legacy';document.body.dataset.radioSkin=radioSkin;try{localStorage.setItem(RADIO_SKIN_STORE,radioSkin);}catch{}notify(radioSkin==='legacy'?'Version 1 radio look enabled':'Version 2 radio look enabled');}
   // Theme switching is deliberately presentation-only: it does not navigate,
   // reload, or touch either live media element, so the current stream continues.
-  function applyTheme(value,force=false){if(!themeSwitchEnabled&&!force){const select=$('theme-choice');if(select)select.value=themeMode;return;}themeMode=['retro','modern','ultra'].includes(value)?value:'ultra';glowMode=THEME_GLOW[themeMode];document.body.dataset.theme=themeMode;document.body.dataset.glow=glowMode;const select=$('theme-choice');if(select)select.value=themeMode;try{localStorage.setItem(THEME_STORE,themeMode);}catch{}}
+  function applyTheme(value,force=false){if(!themeSwitchEnabled&&!force){const select=$('theme-choice');if(select)select.value=themeMode;return;}themeMode=['retro','modern','ultra'].includes(value)?value:'ultra';glowMode=THEME_GLOW[themeMode];document.body.dataset.theme=themeMode;document.body.dataset.glow=glowMode;const select=$('theme-choice');if(select)select.value=themeMode;try{localStorage.setItem(THEME_STORE,themeMode);}catch{}retryBlockedRadio();}
   function syncThemeSettings(){const legacy=$('legacy-theme-enabled'),theme=$('theme-switch-enabled'),picker=$('theme-choice');legacy.checked=legacyThemeEnabled;theme.checked=themeSwitchEnabled;picker.disabled=!themeSwitchEnabled;document.body.dataset.themeSwitch=themeSwitchEnabled?'on':'off';}
   function setLegacyThemeEnabled(enabled){legacyThemeEnabled=Boolean(enabled);try{localStorage.setItem(LEGACY_THEME_ENABLED_STORE,String(legacyThemeEnabled));}catch{}if(!legacyThemeEnabled){legacyRadioTapCount=0;clearTimeout(legacyRadioTapTimer);if(radioSkin==='legacy'){radioSkin='modern';document.body.dataset.radioSkin='modern';try{localStorage.setItem(RADIO_SKIN_STORE,'modern');}catch{}}}}
   function setThemeSwitchEnabled(enabled){themeSwitchEnabled=Boolean(enabled);try{localStorage.setItem(THEME_SWITCH_ENABLED_STORE,String(themeSwitchEnabled));}catch{}syncThemeSettings();}
@@ -152,6 +208,9 @@
     for(const key of keys)if(!Object.prototype.hasOwnProperty.call(ordered,key))ordered[key]=presets[key];return ordered;
   }
   async function fetchData(){
+    const builtIn=window.COOLRADTV_DEFAULTS;
+    if(builtIn){radios=Object.entries(builtIn.radio).map(([key,item])=>({...item,_key:key}));tvs=Object.entries(builtIn.tv).map(([key,item])=>({...item,url:item.url||key}));}
+
     for(const [next,previous] of [[RADIO_STORE,'retrotvra.radio-presets.v1'],[TV_STORE,'retrotvra.tv-presets.v1']]){
       if(loadStore(next,null)===null){const saved=loadStore(previous,null);if(saved)saveStore(next,saved);}
     }
@@ -173,32 +232,15 @@
       {name:'DW English',group:'World News',country:'Germany',url:'https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/stream04/streamPlaylist.m3u8',logo:''}
     ];
     radioPresets=mergeInitialPresets(Object.fromEntries(radios.map(s=>[stationKey(s),s])),RADIO_STORE,'radio');
-    if(!loadStore('retrotvra.radio-priority.2026-11-09',false)){
-      const requested=new Map(radios.map((station,index)=>[stationKey(station),index]));
-      radioPresets=Object.fromEntries(Object.entries(radioPresets).sort(([a],[b])=>(requested.get(a)??9999)-(requested.get(b)??9999)));
-      saveStore('retrotvra.radio-priority.2026-11-09',true);
-    }
-
-    tvPresets=applyTVOrder(mergeInitialPresets(Object.fromEntries(tvs.map(s=>[s.url,s])),TV_STORE,'tv'));
-    // Apply the newly requested catalogue order once; later user reordering remains saved.
-    if(!loadStore('retrotvra.tv-priority.bbc-default.2026-11-09',false)){
-      const rank=new Map(tvs.map((station,index)=>[station.url,index]));
-      tvPresets=Object.fromEntries(Object.entries(tvPresets).sort(([a],[b])=>(rank.get(a)??9999)-(rank.get(b)??9999)));
-      saveStore(TV_ORDER_STORE,Object.keys(tvPresets));
-      saveStore('retrotvra.tv-priority.bbc-default.2026-11-09',true);
-    }
-
-    // Preserve pre-migration selections before applying the v3 limit.
-    for(const [kind,presets] of [['radio',radioPresets],['tv',tvPresets]]){
-      if(Object.keys(presets).length>PRESET_LIMIT){
-        const backupKey=`retrotvra.v3.preset-overflow.${kind}`;
-        if(!loadStore(backupKey,null))saveStore(backupKey,presets);
-      }
-    }
-    if(!loadStore('retrotvra.radio-defaults.hits-sixth.2026-11-09',false)){
-      saveStore('retrotvra.radio-before-hits-sixth.2026-11-09',radioPresets);
+    tvPresets=applyTVOrder(mergeInitialPresets(Object.fromEntries(tvs.map(station=>[station.url,station])),TV_STORE,'tv'));
+    const curatedVersion='retrotvra.curated-defaults.2026-11-09.v1';
+    if(!loadStore(curatedVersion,null)){
+      saveStore(curatedVersion+'.previous',{radio:radioPresets,tv:tvPresets});
       radioPresets=Object.fromEntries(radios.slice(0,PRESET_LIMIT).map(station=>[stationKey(station),station]));
-      saveStore('retrotvra.radio-defaults.hits-sixth.2026-11-09',true);
+      tvPresets=Object.fromEntries(tvs.slice(0,PRESET_LIMIT).map(station=>[station.url,station]));
+      saveStore(TV_ORDER_STORE,Object.keys(tvPresets));
+      // Object marker is compatible with loadStore; later reorders remain preserved.
+      saveStore(curatedVersion,{applied:true});
     }
     radioPresets=Object.fromEntries(Object.entries(radioPresets).slice(0,PRESET_LIMIT));
     tvPresets=Object.fromEntries(Object.entries(tvPresets).slice(0,PRESET_LIMIT));
@@ -209,30 +251,24 @@
   function listFor(kind){return kind==='tv'?Object.values(tvPresets):Object.values(radioPresets);}
   function selectedCountry(kind){return $(kind==='tv'?'tv-country':'radio-country')?.value||'all';}
   function currentRows(kind){const rows=listFor(kind);const country=selectedCountry(kind);return rows.filter(item=>country==='all'||String(item.country||'').toLowerCase()===country.toLowerCase());}
-  let autoplayPending=false,radioFadeFrame=0;
-  function fadeRadioAutoplay(){
-    cancelAnimationFrame(radioFadeFrame);
-    const target=audio.volume,start=performance.now();let expected=0;
-    audio.volume=0;
-    function fade(now){
-      if(audio.paused||audio.muted||Math.abs(audio.volume-expected)>.002)return;
-      const progress=Math.min(1,(now-start)/900);expected=target*progress*progress*(3-2*progress);audio.volume=expected;
-      if(progress<1)radioFadeFrame=requestAnimationFrame(fade);
-    }
-    radioFadeFrame=requestAnimationFrame(fade);
+  let radioAutoplayBlocked=false;
+  function retryBlockedRadio(){
+    if(!radioAutoplayBlocked||document.querySelector('.screen.active')?.id!=='radio-screen')return;
+    radioAutoplayBlocked=false;
+    audio.play().then(()=>{$('radio-status').textContent='Playing · '+(radioCurrent()?.name||'Radio');}).catch(error=>{radioAutoplayBlocked=error?.name==='NotAllowedError';});
   }
+  document.addEventListener('pointerup',event=>{if(event.isTrusted&&!event.target.closest('button,a,input,select,textarea'))retryBlockedRadio();});
   function startOpenedPlayer(){
-    if(autoplayPending)return;
     if($('welcome-splash-v2')&&!$('welcome-splash-v2').classList.contains('leaving'))return;
     const screen=document.querySelector('.screen.active')?.id;
     if(screen==='radio-screen'){
       if(radioHls&&!audio.src&&!audio.currentSrc)return;
       if(audio.src||audio.currentSrc||radioHls){if(audio.paused)audio.play().catch(()=>notify('Tap Play to start radio.'));return;}
-      const station=currentRows('radio')[0];if(station){autoplayPending=true;audio.addEventListener('playing',fadeRadioAutoplay,{once:true});Promise.resolve(playRadio(station)).finally(()=>{autoplayPending=false;});}
+      const station=currentRows('radio')[0];if(station)playRadio(station);
     }else if(screen==='tv-screen'){
       if(hls&&!video.src&&!video.currentSrc)return;
       if(video.src||video.currentSrc||hls){if(video.paused)video.play().catch(()=>notify('Tap Play to start TV.'));return;}
-      const station=currentRows('tv')[0]||tvs.find(row=>row.url===DEFAULT_TV_CHANNEL.url);if(station){autoplayPending=true;Promise.resolve(playTV(station)).finally(()=>{autoplayPending=false;});}
+      const station=currentRows('tv')[0]||tvs.find(row=>row.url===DEFAULT_TV_CHANNEL.url);if(station)playTV(station);
     }
   }
   function setScreen(screenId){
@@ -285,7 +321,7 @@
   async function playRadio(station){
     const src=station?.url_resolved||station?.url;
     if(!src){notify('This station has no playable stream URL.');return;}
-    currentRadioSource=src;
+    radioAutoplayBlocked=false;currentRadioSource=src;
     const key=stationKey(station);radioIndex=radios.findIndex(s=>stationKey(s)===key);if(radioIndex<0){radios.unshift(station);radioIndex=0;}
     if(hls||video.src||video.currentSrc)stopTV();
     stopSoundRays();if(radioHls){radioHls.destroy();radioHls=null;}audio.pause();audio.removeAttribute('src');audio.load();
@@ -294,7 +330,7 @@
     setRadioVolume(Math.min(40,Number($('radio-volume').value||30)));
     $('equalizer').classList.remove('playing');drawRadio();$('radio-status').textContent='CONNECTING · '+(station.name||'RADIO');rememberPlayed('radio',station);renderRadioShortcuts();
     const onRadioStarted=()=>{$('radio-art').classList.add('playing');$('equalizer').classList.add('playing');startSoundRays();$('radio-play').textContent='Ⅱ';$('radio-play').title='Pause';$('radio-status').textContent=`Playing · ${station.name||'Internet radio'}`;};
-    const onRadioFailed=error=>{console.error('Radio playback failed:',currentRadioSource,error||'play() rejected');if(location.protocol==='https:'&&/^http:\/\//i.test(currentRadioSource)){$('radio-status').textContent='HTTPS REQUIRED · THIS STREAM USES HTTP';notify('This station uses an HTTP link, which secure pages block. Use an HTTPS stream.');}else{$('radio-status').textContent='STREAM COULD NOT START';notify('This station stream could not start. Try another station.');}};
+    const onRadioFailed=error=>{if(error?.name==='NotAllowedError'){radioAutoplayBlocked=true;$('radio-status').textContent='TAP PLAY TO START RADIO';return;}console.error('Radio playback failed:',currentRadioSource,error||'play() rejected');if(location.protocol==='https:'&&/^http:\/\//i.test(currentRadioSource)){$('radio-status').textContent='HTTPS REQUIRED · THIS STREAM USES HTTP';notify('This station uses an HTTP link, which secure pages block. Use an HTTPS stream.');}else{$('radio-status').textContent='STREAM COULD NOT START';notify('This station stream could not start. Try another station.');}};
     const isHls=/\.m3u8(?:$|[?#])/i.test(src);
     if(isHls&&window.Hls&&Hls.isSupported()){
       const player=new Hls({enableWorker:true,lowLatencyMode:false,maxBufferLength:18});radioHls=player;
@@ -717,6 +753,9 @@
   });
   document.querySelectorAll('[data-preset-mode]').forEach(button=>button.addEventListener('click',()=>{presetMode=button.dataset.presetMode;document.querySelectorAll('[data-preset-mode]').forEach(item=>item.classList.toggle('selected',item===button));renderPresets();}));
   $('theme-choice').addEventListener('change',event=>applyTheme(event.target.value));
+  $('visualizer-choice').value=visualizerPattern;
+  $('visualizer-choice').addEventListener('change',event=>{visualizerPattern=event.target.value;visualizerMixSince=0;visualizerMixBag=[];try{localStorage.setItem('retrotvra.visualizer-pattern.v5',visualizerPattern);}catch{}stopSoundRays();if(!audio.paused)startSoundRays();});
+
   $('legacy-theme-enabled').addEventListener('change',event=>setLegacyThemeEnabled(event.target.checked));
   $('theme-switch-enabled').addEventListener('change',event=>setThemeSwitchEnabled(event.target.checked));
   // Triple taps on either player screen change its skin. Glow follows the skin.
@@ -812,6 +851,12 @@
   });
   if('serviceWorker' in navigator&&window.isSecureContext){navigator.serviceWorker.register('./service-worker.js',{scope:'./'}).catch(()=>{});}
   applyTheme(themeMode,true);syncThemeSettings();
+  $('export-curated-presets').addEventListener('click',()=>{
+    const orderedTV=applyTVOrder(tvPresets);
+    const payload={format:'coolradtv-curated-v1',exportedAt:new Date().toISOString(),radio:radioPresets,tv:orderedTV};
+    const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),link=document.createElement('a');
+    link.href=url;link.download='CoolRADtv-curated-presets.json';document.body.append(link);link.click();link.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);
+  });
   $('settings-open').addEventListener('click',()=>$('settings-dialog').showModal());
   $('clear-recent').addEventListener('click',()=>{recentHistory=[];saveStore(RECENT_STORE,recentHistory);renderPresets();notify('Recent history cleared.');});
   formatClock();setInterval(formatClock,30000);loadRadioNews();setInterval(loadRadioNews,60*60*1000);loadLanguageCatalog();fetchData().finally(()=>{if(!$('welcome-splash-v2'))startOpenedPlayer();window.setTimeout(closeSplash,650);});

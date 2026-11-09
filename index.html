@@ -13,9 +13,10 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="style.css?v=3.0.79">
+  <link rel="stylesheet" href="style.css?v=3.0.92">
   <script defer src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
-  <script defer src="app.js?v=3.0.88"></script>
+  <script defer src="preset-defaults.js?v=3.0.102"></script>
+  <script defer src="app.js?v=3.0.102"></script>
 </head>
 <body>
 <section class="welcome-splash-v2 tuning-splash" id="welcome-splash-v2" role="dialog" aria-modal="true" aria-labelledby="tuning-title">
@@ -139,7 +140,7 @@
       <button class="nav-item" data-screen="explore-screen"><span>⌕</span>EXPLORE</button>
     </nav>
   </main>
-  <dialog class="settings-dialog" id="settings-dialog"><form method="dialog"><button class="dialog-close" aria-label="Close settings">×</button><span class="eyebrow">PERSONALISE YOUR PLAYER</span><h2>Settings</h2><div class="setting-row"><span><b>LEGACY THEME</b><small>Allow 10 taps on the Radio page to switch to the Version 1 look.</small></span><label class="setting-switch"><input id="legacy-theme-enabled" type="checkbox" role="switch" aria-label="Legacy theme on or off"><span class="switch-track" aria-hidden="true"></span></label></div><div class="setting-row"><span><b>THEME</b><small>Allow switching between Retro, Modern, and Ultra.</small></span><label class="setting-switch"><input id="theme-switch-enabled" type="checkbox" role="switch" aria-label="Theme switching on or off"><span class="switch-track" aria-hidden="true"></span></label></div><label class="setting-row"><span><b>App theme</b><small>Retro: warm glow · Modern: white glow · Ultra: color glow</small></span><select id="theme-choice"><option value="retro">RETRO</option><option value="modern">MODERN</option><option value="ultra">ULTRA</option></select></label><p class="settings-note">Your presets and choices remain saved in this browser.</p></form></dialog>
+  <dialog class="settings-dialog" id="settings-dialog"><form method="dialog"><button class="dialog-close" aria-label="Close settings">×</button><span class="eyebrow">PERSONALISE YOUR PLAYER</span><h2>Settings</h2><div class="setting-row"><span><b>LEGACY THEME</b><small>Allow 10 taps on the Radio page to switch to the Version 1 look.</small></span><label class="setting-switch"><input id="legacy-theme-enabled" type="checkbox" role="switch" aria-label="Legacy theme on or off"><span class="switch-track" aria-hidden="true"></span></label></div><div class="setting-row"><span><b>THEME</b><small>Allow switching between Retro, Modern, and Ultra.</small></span><label class="setting-switch"><input id="theme-switch-enabled" type="checkbox" role="switch" aria-label="Theme switching on or off"><span class="switch-track" aria-hidden="true"></span></label></div><label class="setting-row"><span><b>App theme</b><small>Retro: warm glow · Modern: white glow · Ultra: color glow</small></span><select id="theme-choice"><option value="retro">RETRO</option><option value="modern">MODERN</option><option value="ultra">ULTRA</option></select></label><label class="setting-row"><span><b>Radio visualizer</b><small>Audio-reactive patterns across the bottom</small></span><select id="visualizer-choice"><option value="wave">Colour waves</option><option value="halo">Particle halo</option><option value="mesh">Flowing mesh</option><option value="mix">Mix — random cycle</option><option value="off">Off</option></select></label><div class="setting-row"><span><b>Curated presets</b><small>Export your saved Radio and TV lists in their current order</small></span><button type="button" id="export-curated-presets">Export presets</button></div><p class="settings-note">Your presets and choices remain saved in this browser.</p></form></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

@@ -1,9 +1,10 @@
-const CACHE_NAME = 'retroradtv-v3-91';
+const CACHE_NAME = 'retroradtv-v3-105';
 const APP_FILES = [
   './',
   './index.html',
-  './style.css?v=3.0.79',
-  './app.js?v=3.0.88',
+  './preset-defaults.js?v=3.0.102',
+  './style.css?v=3.0.92',
+  './app.js?v=3.0.102',
   './manifest.webmanifest',
   './icon.svg',
   './data/radio-presets.json',

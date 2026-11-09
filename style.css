@@ -2233,3 +2233,17 @@ body[data-theme="modern"] #explore-screen .result-star{color:#795008!important}
 .tuning-stage{transform:translateY(-20px)}}
 @media(prefers-reduced-motion:reduce){
 .tuning-splash *{animation:none!important;transition:none!important}}
+
+/* Mobile portrait TV uses the available panel width, without extra height or crop. */
+@media(max-width:699px) and (orientation:portrait){
+ #tv-screen{padding-left:0!important;padding-right:0!important}
+ #tv-screen #tv-fullscreen-shell{width:100%;max-width:100%;margin-left:0;margin-right:0;padding-left:0;padding-right:0;box-sizing:border-box}
+ #tv-screen #tv-display:not(.cinema-mode){width:100%!important;max-width:none!important;margin-left:0!important;margin-right:0!important;padding-left:0!important;padding-right:0!important}
+ #tv-screen #tv-display:not(.cinema-mode)>.tv-rail-wrap,#tv-screen #tv-display:not(.cinema-mode) #tv-rail{width:100%!important;max-width:none!important;margin-inline:0!important;padding-inline:0!important;box-sizing:border-box}
+ #tv-screen #tv-display:not(.cinema-mode) #tv-rail .tv-picture{width:100%!important;max-width:none!important}
+ #tv-screen #tv-display:not(.cinema-mode) #tv-video{width:100%!important;object-fit:contain!important}
+}
+
+/* Modern clock: dark text, without pale glow, on its light background. */
+body[data-theme="modern"] .outer-panel-clock .radio-clock-card,body[data-theme="modern"] .outer-panel-clock #radio-clock-time,body[data-theme="modern"] .outer-panel-clock #radio-clock-day,body[data-theme="modern"] .outer-panel-clock #radio-clock-meridiem{color:#172b43!important;text-shadow:none!important;filter:none!important}
+body[data-theme="modern"] .outer-panel-clock #radio-clock-date{color:#304963!important;text-shadow:none!important;filter:none!important}
