@@ -114,40 +114,18 @@
     else if(!greeting&&withinFestivalDays(diwaliDates[year],0,0)){greeting='HAPPY DEEPAVALI';festive=true;}
     else if(!greeting){const hour=now.getHours();greeting=hour<12?'GOOD MORNING':hour<17?'GOOD AFTERNOON':'GOOD EVENING';}
     const card=$('card');if(!card)return false;
-    const existing=$('cardContainer')?.querySelector('.festival-orbit, .splash-greeting-large');
-    if(existing){
-      if(existing.matches('.festival-orbit')){existing.dataset.greeting=greeting;const node=existing.querySelector('textPath')?.firstChild;if(node?.nodeType===Node.TEXT_NODE)node.nodeValue=greeting;}
-      else existing.textContent=greeting;
-      return festive;
-    }
-    const ns='http://www.w3.org/2000/svg',svg=document.createElementNS(ns,'svg');svg.setAttribute('class','festival-orbit');svg.dataset.greeting=greeting;svg.setAttribute('viewBox','0 0 420 420');svg.setAttribute('aria-hidden','true');
-    const path=document.createElementNS(ns,'path');path.setAttribute('id','festival-orbit-path');path.setAttribute('d','M 48 14 H 372 A 34 34 0 0 1 406 48 V 372 A 34 34 0 0 1 372 406 H 48 A 34 34 0 0 1 14 372 V 48 A 34 34 0 0 1 48 14 Z');path.setAttribute('d',Array(3).fill(path.getAttribute('d')).join(' '));svg.append(path);
-    const text=document.createElementNS(ns,'text'),textPath=document.createElementNS(ns,'textPath');textPath.setAttribute('href','#festival-orbit-path');textPath.setAttribute('startOffset','70.233333%');textPath.setAttribute('text-anchor','middle');textPath.textContent=greeting;
-    const animate=document.createElementNS(ns,'animate');animate.setAttribute('begin','indefinite');animate.setAttribute('attributeName','startOffset');animate.setAttribute('from','70.233333%');animate.setAttribute('to','36.9%');animate.setAttribute('dur','5s');animate.setAttribute('calcMode','linear');animate.setAttribute('fill','freeze');animate.addEventListener('endEvent',()=>{if(!svg.isConnected)return;const label=document.createElement('div');label.className='splash-greeting-large';label.textContent=svg.dataset.greeting;svg.replaceWith(label);});textPath.append(animate);text.append(textPath);svg.append(text);$('cardContainer')?.append(svg);animate.beginElement();return festive;
+    const container=$('cardContainer');if(!container)return festive;
+    let label=container.querySelector('.splash-greeting-large');
+    if(!label){label=document.createElement('div');label.className='splash-greeting-large';label.setAttribute('role','status');container.append(label);}
+    label.textContent=greeting;
+    return festive;
   }
-  function startSplashConfetti(splash,festive=false){
-    const canvas=$('splash-confetti'),ctx=canvas?.getContext('2d');if(!canvas||!ctx)return()=>{};
-    const colors=['#06b6d4','#3b82f6','#8b5cf6','#ec4899','#fbbf24','#ffffff'];let width=0,height=0,raf=0,last=0,nextRocketAt=0;
-    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
-    let rockets=[],sparks=[];
-    function resize(){const dpr=Math.min(devicePixelRatio||1,1.5),rect=splash.getBoundingClientRect();width=rect.width;height=rect.height;canvas.width=Math.round(width*dpr);canvas.height=Math.round(height*dpr);canvas.style.width=width+'px';canvas.style.height=height+'px';ctx.setTransform(dpr,0,0,dpr,0,0);}
-    function launchRocket(){const splashRect=splash.getBoundingClientRect(),card=$('card')?.getBoundingClientRect(),left=card?card.left-splashRect.left:width*.2,right=card?card.right-splashRect.left:width*.8,bottom=card?card.bottom-splashRect.top:height*.75,side=Math.random()<.5?'left':'right',x=side==='left'?Math.max(7,left-9):Math.min(width-7,right+9),y=Math.min(height-12,bottom-15-Math.random()*Math.min(70,height*.1));rockets.push({x,y,vx:(side==='left'?-1:1)*(.2+Math.random()*1.2),vy:-(8+Math.random()*4),life:20+Math.random()*12,color:colors[Math.floor(Math.random()*colors.length)]});nextRocketAt=performance.now()+(reduced?950:420+Math.random()*260);}
-    function explode(rocket){const rayCount=reduced?42:68,baseAngle=Math.random()*Math.PI*2;for(let i=0;i<rayCount;i++){const angle=baseAngle+Math.PI*2*i/rayCount+(Math.random()-.5)*.09,speed=3+Math.random()*5.8,life=30+Math.random()*28;sparks.push({ox:rocket.x,oy:rocket.y,x:rocket.x,y:rocket.y,vx:Math.cos(angle)*speed,vy:Math.sin(angle)*speed,size:.8+Math.random()*1.6,color:Math.random()<.18?'#ffffff':colors[Math.floor(Math.random()*colors.length)],life,maxLife:life});}}
-    function draw(time=0){
-      if(!splash.isConnected)return;if(time-last<16){raf=requestAnimationFrame(draw);return;}last=time;
-      if(performance.now()>nextRocketAt)launchRocket();
-      ctx.clearRect(0,0,width,height);
-      const active=[];for(const r of rockets){ctx.save();ctx.strokeStyle=r.color;ctx.lineWidth=2.5;ctx.lineCap='round';ctx.globalAlpha=.95;ctx.beginPath();ctx.moveTo(r.x,r.y);ctx.lineTo(r.x-r.vx*2.3,r.y-r.vy*2.3);ctx.stroke();ctx.restore();r.x+=r.vx;r.y+=r.vy;r.vy+=.12;if(--r.life>0)active.push(r);else explode(r);}rockets=active;
-      sparks=sparks.filter(p=>p.life>0);for(const p of sparks){ctx.save();ctx.globalAlpha=Math.max(0,p.life/p.maxLife);ctx.strokeStyle=p.color;ctx.lineWidth=p.size;ctx.lineCap='round';ctx.shadowColor=p.color;ctx.shadowBlur=3;ctx.beginPath();ctx.moveTo(p.ox,p.oy);ctx.lineTo(p.x,p.y);ctx.stroke();ctx.restore();p.x+=p.vx;p.y+=p.vy;p.vy+=.08;p.vx*=.992;p.life--;}
-      raf=requestAnimationFrame(draw);
-    }
-    resize();draw();window.addEventListener('resize',resize);const stop=()=>{cancelAnimationFrame(raf);window.removeEventListener('resize',resize);rockets=[];sparks=[];ctx.clearRect(0,0,width,height);};stop.setFestive=value=>{festive=Boolean(value);};return stop;
-  }
+
   function initSplash(){
-    const splash=$('welcome-splash-v2'),button=$('splash-v2-continue'),card=$('card');if(!splash||!button)return;const splashStartedAt=performance.now();
-    const festive=addFestivalGreeting(splash);let dismissed=false,finishTimer=0;const stopConfetti=startSplashConfetti(splash,festive);const finish=(immediate=false)=>{if(dismissed)return;if(immediate){clearTimeout(finishTimer);dismissed=true;stopConfetti();document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);return;}const remaining=6000-(performance.now()-splashStartedAt);if(remaining>0){clearTimeout(finishTimer);finishTimer=window.setTimeout(()=>finish(),remaining);return;}clearTimeout(finishTimer);dismissed=true;stopConfetti();document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);};const escapeSplash=event=>{if(event.key==='Escape'){event.preventDefault();finish(true);}};closeSplash=finish;card?.addEventListener('click',()=>finish(true));document.addEventListener('keydown',escapeSplash);finishTimer=window.setTimeout(()=>finish(),6000);
+    const splash=$('welcome-splash-v2'),button=$('splash-v2-continue'),card=$('card');if(!splash||!button)return;const splashStartedAt=performance.now();let splashDuration=6000;try{if(localStorage.getItem('retrotvra.splash-seen.v3'))splashDuration=2000;localStorage.setItem('retrotvra.splash-seen.v3','true');}catch{}
+    addFestivalGreeting(splash);let dismissed=false,finishTimer=0;const finish=(immediate=false)=>{if(dismissed)return;if(immediate){clearTimeout(finishTimer);dismissed=true;document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);return;}const remaining=splashDuration-(performance.now()-splashStartedAt);if(remaining>0){clearTimeout(finishTimer);finishTimer=window.setTimeout(()=>finish(),remaining);return;}clearTimeout(finishTimer);dismissed=true;document.removeEventListener('keydown',escapeSplash);splash.classList.add('leaving');window.setTimeout(()=>splash.remove(),360);};const escapeSplash=event=>{if(event.key==='Escape'){event.preventDefault();finish(true);}};closeSplash=finish;card?.addEventListener('click',()=>finish(true));document.addEventListener('keydown',escapeSplash);finishTimer=window.setTimeout(()=>finish(),splashDuration);
     fetch('data/app-settings.json',{cache:'no-cache'}).then(response=>response.ok?response.json():null).then(settings=>{if(settings){const config=settings?.splash||{};
-        const festiveFromSettings=addFestivalGreeting(splash,config.occasions||[]);stopConfetti.setFestive?.(festiveFromSettings);
+        addFestivalGreeting(splash,config.occasions||[]);
         if(config.title)$('splash-v2-title').textContent=config.title;
         if(config.line1)$('splash-v2-line1').textContent=config.line1;
         if(config.line2)$('splash-v2-line2').textContent=config.line2;

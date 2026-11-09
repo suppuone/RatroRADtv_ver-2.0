@@ -1698,3 +1698,11 @@ body[data-theme="modern"] #explore-screen .browser-filters option{background:#f2
 body[data-theme="modern"] #explore-screen .browser-source button,body[data-theme="modern"] #explore-screen .browser-kind button,body[data-theme="modern"] #explore-screen .discover-button,body[data-theme="modern"] #explore-screen .load-more-online{color:#203149!important;background:linear-gradient(#f5f7fb,#c9d4e4)!important}
 body[data-theme="modern"] #explore-screen .browser-source button.selected,body[data-theme="modern"] #explore-screen .browser-kind button.selected{background:linear-gradient(#c1ddec,#91baca)!important;color:#102b3b!important}
 body[data-theme="modern"] #explore-screen .result-star{color:#795008!important}
+
+/* Calm splash: stationary greeting with one subtle frame glow. */
+.welcome-splash-v2 .splash-greeting-large{font-family:'Segoe UI',Arial,sans-serif;font-weight:600;letter-spacing:.025em;animation:splash-greeting-fade .6s ease-out both}
+@keyframes splash-greeting-fade{from{opacity:0;transform:translateY(5px)}to{opacity:1;transform:none}}
+.welcome-splash-v2 .glow-card::before{opacity:.65;filter:blur(5px);animation:rotateGlow 7s linear infinite!important}
+.welcome-splash-v2 .card-inner p span:first-child{animation:none!important;text-shadow:none}
+.welcome-splash-v2 .radio-loop-wave{animation:none!important;opacity:.45}
+@media(prefers-reduced-motion:reduce){.welcome-splash-v2 .splash-greeting-large,.welcome-splash-v2 .glow-card::before{animation:none!important}}
