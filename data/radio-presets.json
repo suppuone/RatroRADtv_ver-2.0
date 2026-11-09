@@ -1,4 +1,15 @@
 {
+  "https://stream.zeno.fm/rc7dnetgrwzuv": {
+    "stationuuid": "https://stream.zeno.fm/rc7dnetgrwzuv",
+    "name": "CoolMag RADIO Default Relay",
+    "url": "https://stream.zeno.fm/rc7dnetgrwzuv",
+    "url_resolved": "https://stream.zeno.fm/rc7dnetgrwzuv",
+    "favicon": "assets/station-logos/coolmag-radio.png",
+    "logo": "assets/station-logos/coolmag-radio.png",
+    "country": "India",
+    "tags": "music",
+    "genre": "Music"
+  },
   "98adecf7-2683-4408-9be7-02d3f9098eb8": {
     "changeuuid": "3aab83a3-f980-40ad-96bb-17e479e5c078",
     "stationuuid": "98adecf7-2683-4408-9be7-02d3f9098eb8",

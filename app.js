@@ -233,6 +233,13 @@
     ];
     radioPresets=mergeInitialPresets(Object.fromEntries(radios.map(s=>[stationKey(s),s])),RADIO_STORE,'radio');
     tvPresets=applyTVOrder(mergeInitialPresets(Object.fromEntries(tvs.map(station=>[station.url,station])),TV_STORE,'tv'));
+    const ownStation=radios.find(station=>(station.url_resolved||station.url)==='https://stream.zeno.fm/rc7dnetgrwzuv');
+    if(ownStation&&!loadStore('retrotvra.own-station-first.rc7dnetgrwzuv',null)){
+      saveStore('retrotvra.own-station-first.rc7dnetgrwzuv.previous',radioPresets);
+      const entries=Object.entries(radioPresets).filter(([key])=>key!==stationKey(ownStation)).slice(0,PRESET_LIMIT-1);
+      entries.unshift([stationKey(ownStation),ownStation]);radioPresets=Object.fromEntries(entries);
+      saveStore('retrotvra.own-station-first.rc7dnetgrwzuv',{applied:true});
+    }
     const curatedVersion='retrotvra.curated-defaults.2026-11-09.v1';
     if(!loadStore(curatedVersion,null)){
       saveStore(curatedVersion+'.previous',{radio:radioPresets,tv:tvPresets});
