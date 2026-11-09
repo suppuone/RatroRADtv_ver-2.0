@@ -17,11 +17,10 @@
   let radioSkin='modern';try{radioSkin=localStorage.getItem(RADIO_SKIN_STORE)==='legacy'?'legacy':'modern';}catch{}
   if(!legacyThemeEnabled)radioSkin='modern';
   document.body.dataset.radioSkin=radioSkin;
-  let themeMode='retro';try{themeMode=localStorage.getItem(THEME_STORE)||'retro';}catch{}
-  if(!['retro','modern','ultra'].includes(themeMode))themeMode='retro';
+  let themeMode='ultra';try{themeMode=localStorage.getItem(THEME_STORE)||'ultra';}catch{}
+  if(!['retro','modern','ultra'].includes(themeMode))themeMode='ultra';
   let glowMode=THEME_GLOW[themeMode];
-  const DEFAULT_TV_DEMO={name:'BBC News (demo stream)',group:'World News · Demo',country:'United Kingdom',url:'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',logo:'',demoAutoStart:true};
-  let defaultTVAutoMuted=false;
+  const DEFAULT_TV_CHANNEL={"name": "BBC News South Asia (720p)", "group": "News", "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BBC_NEWS/images/LOGO_HD/image.png", "url": "https://mumbai-edge.smartplaytv.in/BBCNews/index.m3u8", "options": [], "genre": "News", "country": "United Kingdom", "language": "English", "tags": "English news curated", "curated": true, "curatedOrder": 4, "presetNumber": 13, "presetLanguage": "International English", "presetGenre": "News", "catalogSource": "Saved preset"};
   let meterAudio=null,meterContext=null,meterAnalyser=null,meterGain=null,meterSource=null,meterBins=null,meterFrame=0,meterLevel=0,meterLastPaint=0;
   function stopSoundRays(){if(meterFrame){cancelAnimationFrame(meterFrame);meterFrame=0;}if(meterAudio)meterAudio.pause();const canvas=$('sound-rays');if(canvas){const c=canvas.getContext('2d');c.setTransform(1,0,0,1,0,0);c.clearRect(0,0,canvas.width,canvas.height);}}
   function startSoundRays(){
@@ -86,7 +85,7 @@
   function toggleRadioSkin(){if(!legacyThemeEnabled)return;radioSkin=radioSkin==='legacy'?'modern':'legacy';document.body.dataset.radioSkin=radioSkin;try{localStorage.setItem(RADIO_SKIN_STORE,radioSkin);}catch{}notify(radioSkin==='legacy'?'Version 1 radio look enabled':'Version 2 radio look enabled');}
   // Theme switching is deliberately presentation-only: it does not navigate,
   // reload, or touch either live media element, so the current stream continues.
-  function applyTheme(value,force=false){if(!themeSwitchEnabled&&!force){const select=$('theme-choice');if(select)select.value=themeMode;return;}themeMode=['retro','modern','ultra'].includes(value)?value:'retro';glowMode=THEME_GLOW[themeMode];document.body.dataset.theme=themeMode;document.body.dataset.glow=glowMode;const select=$('theme-choice');if(select)select.value=themeMode;try{localStorage.setItem(THEME_STORE,themeMode);}catch{}}
+  function applyTheme(value,force=false){if(!themeSwitchEnabled&&!force){const select=$('theme-choice');if(select)select.value=themeMode;return;}themeMode=['retro','modern','ultra'].includes(value)?value:'ultra';glowMode=THEME_GLOW[themeMode];document.body.dataset.theme=themeMode;document.body.dataset.glow=glowMode;const select=$('theme-choice');if(select)select.value=themeMode;try{localStorage.setItem(THEME_STORE,themeMode);}catch{}}
   function syncThemeSettings(){const legacy=$('legacy-theme-enabled'),theme=$('theme-switch-enabled'),picker=$('theme-choice');legacy.checked=legacyThemeEnabled;theme.checked=themeSwitchEnabled;picker.disabled=!themeSwitchEnabled;document.body.dataset.themeSwitch=themeSwitchEnabled?'on':'off';}
   function setLegacyThemeEnabled(enabled){legacyThemeEnabled=Boolean(enabled);try{localStorage.setItem(LEGACY_THEME_ENABLED_STORE,String(legacyThemeEnabled));}catch{}if(!legacyThemeEnabled){legacyRadioTapCount=0;clearTimeout(legacyRadioTapTimer);if(radioSkin==='legacy'){radioSkin='modern';document.body.dataset.radioSkin='modern';try{localStorage.setItem(RADIO_SKIN_STORE,'modern');}catch{}}}}
   function setThemeSwitchEnabled(enabled){themeSwitchEnabled=Boolean(enabled);try{localStorage.setItem(THEME_SWITCH_ENABLED_STORE,String(themeSwitchEnabled));}catch{}syncThemeSettings();}
@@ -94,50 +93,19 @@
   function stationKey(item){return String(item?.stationuuid||item?.url_resolved||item?.url||item?.name||'');}
   function notify(message){const el=$('toast');el.textContent=message;el.classList.add('show');clearTimeout(toastTimer);toastTimer=setTimeout(()=>el.classList.remove('show'),2400);}
   let closeSplash=()=>{};
-  function addFestivalGreeting(splash,customOccasions=[]){
-    const now=new Date(),month=String(now.getMonth()+1).padStart(2,'0'),day=String(now.getDate()).padStart(2,'0'),key=`${month}-${day}`,year=now.getFullYear();
-    const diwaliDates={2026:'11-08',2027:'10-29',2028:'10-17',2029:'11-05',2030:'10-26'};
-    const pongalDates={2026:'01-14',2027:'01-15',2028:'01-15',2029:'01-14',2030:'01-14'};
-    const withinFestivalDays=(dateKey,before,after)=>{if(!dateKey)return false;const [m,d]=dateKey.split('-').map(Number),festivalDay=Date.UTC(year,m-1,d),today=Date.UTC(year,now.getMonth(),now.getDate()),offset=Math.round((today-festivalDay)/86400000);return offset>=-before&&offset<=after;};
-    let greeting='',festive=false;
-    const todayUtc=Date.UTC(year,now.getMonth(),now.getDate());
-    for(const occasion of Array.isArray(customOccasions)?customOccasions:[]){
-      const match=String(occasion?.date||'').match(/^(\d{4})-(\d{2})-(\d{2})$/),text=String(occasion?.text||'').trim();if(!match||!text)continue;
-      const eventMonth=Number(match[2])-1,eventDay=Number(match[3]);if(eventMonth<0||eventMonth>11||eventDay<1||eventDay>31)continue;
-      const validated=new Date(Date.UTC(Number(match[1]),eventMonth,eventDay));if(validated.getUTCMonth()!==eventMonth||validated.getUTCDate()!==eventDay)continue;
-      const eventUtc=Date.UTC(Number(match[1]),eventMonth,eventDay);
-      if(todayUtc===eventUtc){greeting=text.slice(0,60);festive=true;break;}
-    }
-    if(!greeting&&key==='12-25'){greeting='HAPPY CHRISTMAS';festive=true;}
-    else if(!greeting&&key==='01-01'){greeting='HAPPY NEW YEAR';festive=true;}
-    else if(!greeting&&withinFestivalDays(pongalDates[year],0,0)){greeting='HAPPY PONGAL';festive=true;}
-    else if(!greeting&&withinFestivalDays(diwaliDates[year],0,0)){greeting='HAPPY DEEPAVALI';festive=true;}
-    else if(!greeting){const hour=now.getHours();greeting=hour<12?'GOOD MORNING':hour<17?'GOOD AFTERNOON':'GOOD EVENING';}
-    const card=$('card');if(!card)return false;
-    const container=$('cardContainer');if(!container)return festive;
-    let label=container.querySelector('.splash-greeting-large');
-    if(!label){label=document.createElement('div');label.className='splash-greeting-large';label.setAttribute('role','status');container.append(label);}
-    label.textContent=greeting;
-    return festive;
+  function initSplash(){
+    const splash=$('welcome-splash-v2'),enter=$('tuning-enter');if(!splash||!enter)return;
+    let returning=false;try{returning=localStorage.getItem('coolradtv.tuning-seen')==='true';}catch{}
+    const reduced=matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if(returning)splash.classList.add('tuning-returning');
+    let finished=false;const previousFocus=document.activeElement;
+    const finish=()=>{if(finished)return;finished=true;clearTimeout(timer);document.removeEventListener('keydown',keys);splash.classList.add('leaving');startOpenedPlayer();try{localStorage.setItem('coolradtv.tuning-seen','true');}catch{}setTimeout(()=>{splash.remove();if(previousFocus&&previousFocus!==document.body&&previousFocus.isConnected)previousFocus.focus({preventScroll:true});else $('radio-play')?.focus({preventScroll:true});},reduced?0:360);};
+    const keys=event=>{if(event.key==='Escape'){event.preventDefault();finish();}if(event.key==='Tab'){event.preventDefault();enter.focus({preventScroll:true});}};
+    const timer=setTimeout(finish,returning?2000:4000);
+    closeSplash=immediate=>{if(immediate===true)finish();};
+    enter.addEventListener('click',finish);document.addEventListener('keydown',keys);enter.focus({preventScroll:true});
   }
 
-  function initSplash(){
-    const splash=$('welcome-splash-v2'),intro=$('splash-intro-video'),sound=$('splash-video-sound'),skip=$('splash-video-skip');
-    if(!splash||!intro)return;
-    let dismissed=false,watchdog=0;
-    const finish=()=>{if(dismissed)return;dismissed=true;clearTimeout(watchdog);intro.pause();document.removeEventListener('keydown',escape);splash.classList.add('leaving');setTimeout(()=>{splash.remove();$('radio-play')?.focus({preventScroll:true});},360);};
-    const escape=event=>{if(event.key==='Escape'){event.preventDefault();finish();}};
-    // Data loading must not dismiss the video early.
-    closeSplash=immediate=>{if(immediate===true)finish();};
-    skip.addEventListener('click',finish);document.addEventListener('keydown',escape);
-    intro.addEventListener('ended',finish,{once:true});intro.addEventListener('error',finish,{once:true});
-    intro.querySelector('source')?.addEventListener('error',finish,{once:true});
-    intro.addEventListener('playing',()=>{clearTimeout(watchdog);watchdog=setTimeout(finish,20000);sound.hidden=!intro.muted;});
-    sound.addEventListener('click',()=>{intro.muted=false;intro.play().then(()=>{sound.hidden=true;}).catch(()=>{intro.muted=true;sound.hidden=false;});});
-    watchdog=setTimeout(finish,20000);
-    intro.muted=false;
-    intro.play().catch(()=>{if(dismissed)return;intro.muted=true;sound.hidden=false;intro.play().catch(()=>{sound.textContent='Play intro with sound';});});
-  }
   function formatClock(){const d=new Date();$('clock').textContent=d.toLocaleTimeString([], {hour:'2-digit',minute:'2-digit'}).toUpperCase();const day=$('radio-clock-day');if(day){day.textContent=d.toLocaleDateString([], {weekday:'short'}).slice(0,2);const time=d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit',hour12:true}).match(/^(.+?)\s*(AM|PM)$/i);$('radio-clock-time').textContent=time?time[1]:d.toLocaleTimeString([], {hour:'numeric',minute:'2-digit'});$('radio-clock-meridiem').textContent=time?time[2].toUpperCase():'';$('radio-clock-date').textContent=d.toLocaleDateString([], {month:'short',day:'2-digit',year:'numeric'}).toUpperCase();}}
   initSplash();
   const hinduRssUrl='https://www.thehindu.com/news/national/feeder/default.rss';
@@ -200,18 +168,37 @@
       {stationuuid:'sample-oli',name:'Oli 96.8 FM',country:'Singapore',url:'https://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FMAAC.aac',tags:'music tamil'}
     ];
     if(!tvs.length)tvs=[
-      {name:'BBC News (demo stream)',group:'World News',country:'United Kingdom',url:'https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8',logo:''},
+      DEFAULT_TV_CHANNEL,
       {name:'France 24 English',group:'World News',country:'France',url:'https://live.france24.com/hls/live/2037220/F24_EN_HI_HLS/master.m3u8',logo:''},
       {name:'DW English',group:'World News',country:'Germany',url:'https://dwamdstream104.akamaized.net/hls/live/2015530/dwstream104/stream04/streamPlaylist.m3u8',logo:''}
     ];
     radioPresets=mergeInitialPresets(Object.fromEntries(radios.map(s=>[stationKey(s),s])),RADIO_STORE,'radio');
+    if(!loadStore('retrotvra.radio-priority.2026-11-09',false)){
+      const requested=new Map(radios.map((station,index)=>[stationKey(station),index]));
+      radioPresets=Object.fromEntries(Object.entries(radioPresets).sort(([a],[b])=>(requested.get(a)??9999)-(requested.get(b)??9999)));
+      saveStore('retrotvra.radio-priority.2026-11-09',true);
+    }
+
     tvPresets=applyTVOrder(mergeInitialPresets(Object.fromEntries(tvs.map(s=>[s.url,s])),TV_STORE,'tv'));
+    // Apply the newly requested catalogue order once; later user reordering remains saved.
+    if(!loadStore('retrotvra.tv-priority.bbc-default.2026-11-09',false)){
+      const rank=new Map(tvs.map((station,index)=>[station.url,index]));
+      tvPresets=Object.fromEntries(Object.entries(tvPresets).sort(([a],[b])=>(rank.get(a)??9999)-(rank.get(b)??9999)));
+      saveStore(TV_ORDER_STORE,Object.keys(tvPresets));
+      saveStore('retrotvra.tv-priority.bbc-default.2026-11-09',true);
+    }
+
     // Preserve pre-migration selections before applying the v3 limit.
     for(const [kind,presets] of [['radio',radioPresets],['tv',tvPresets]]){
       if(Object.keys(presets).length>PRESET_LIMIT){
         const backupKey=`retrotvra.v3.preset-overflow.${kind}`;
         if(!loadStore(backupKey,null))saveStore(backupKey,presets);
       }
+    }
+    if(!loadStore('retrotvra.radio-defaults.hits-sixth.2026-11-09',false)){
+      saveStore('retrotvra.radio-before-hits-sixth.2026-11-09',radioPresets);
+      radioPresets=Object.fromEntries(radios.slice(0,PRESET_LIMIT).map(station=>[stationKey(station),station]));
+      saveStore('retrotvra.radio-defaults.hits-sixth.2026-11-09',true);
     }
     radioPresets=Object.fromEntries(Object.entries(radioPresets).slice(0,PRESET_LIMIT));
     tvPresets=Object.fromEntries(Object.entries(tvPresets).slice(0,PRESET_LIMIT));
@@ -222,6 +209,32 @@
   function listFor(kind){return kind==='tv'?Object.values(tvPresets):Object.values(radioPresets);}
   function selectedCountry(kind){return $(kind==='tv'?'tv-country':'radio-country')?.value||'all';}
   function currentRows(kind){const rows=listFor(kind);const country=selectedCountry(kind);return rows.filter(item=>country==='all'||String(item.country||'').toLowerCase()===country.toLowerCase());}
+  let autoplayPending=false,radioFadeFrame=0;
+  function fadeRadioAutoplay(){
+    cancelAnimationFrame(radioFadeFrame);
+    const target=audio.volume,start=performance.now();let expected=0;
+    audio.volume=0;
+    function fade(now){
+      if(audio.paused||audio.muted||Math.abs(audio.volume-expected)>.002)return;
+      const progress=Math.min(1,(now-start)/900);expected=target*progress*progress*(3-2*progress);audio.volume=expected;
+      if(progress<1)radioFadeFrame=requestAnimationFrame(fade);
+    }
+    radioFadeFrame=requestAnimationFrame(fade);
+  }
+  function startOpenedPlayer(){
+    if(autoplayPending)return;
+    if($('welcome-splash-v2')&&!$('welcome-splash-v2').classList.contains('leaving'))return;
+    const screen=document.querySelector('.screen.active')?.id;
+    if(screen==='radio-screen'){
+      if(radioHls&&!audio.src&&!audio.currentSrc)return;
+      if(audio.src||audio.currentSrc||radioHls){if(audio.paused)audio.play().catch(()=>notify('Tap Play to start radio.'));return;}
+      const station=currentRows('radio')[0];if(station){autoplayPending=true;audio.addEventListener('playing',fadeRadioAutoplay,{once:true});Promise.resolve(playRadio(station)).finally(()=>{autoplayPending=false;});}
+    }else if(screen==='tv-screen'){
+      if(hls&&!video.src&&!video.currentSrc)return;
+      if(video.src||video.currentSrc||hls){if(video.paused)video.play().catch(()=>notify('Tap Play to start TV.'));return;}
+      const station=currentRows('tv')[0]||tvs.find(row=>row.url===DEFAULT_TV_CHANNEL.url);if(station){autoplayPending=true;Promise.resolve(playTV(station)).finally(()=>{autoplayPending=false;});}
+    }
+  }
   function setScreen(screenId){
     if(screenId==='tv-screen'&&(audio.src||radioHls))stopRadio();
     if(screenId==='radio-screen'&&(video.src||video.currentSrc))stopTV();
@@ -230,7 +243,7 @@
     document.querySelectorAll('[data-mode-screen]').forEach(node=>{const active=node.dataset.modeScreen===screenId;node.classList.toggle('selected',active);node.setAttribute('aria-selected',String(active));});
     $('mode-label').textContent=screenId==='radio-screen'?'◉ RADIO MODE':screenId==='tv-screen'?'▣ TV MODE':screenId==='presets-screen'?'★ YOUR PRESETS':'⌕ EXPLORE';
     if(screenId==='presets-screen')renderPresets();
-    if(screenId==='tv-screen')queueMicrotask(()=>{if(document.querySelector('.screen.active')?.id!=='tv-screen'||hls||video.src||video.currentSrc)return;playTV(DEFAULT_TV_DEMO);});
+    if(screenId==='radio-screen'||screenId==='tv-screen')queueMicrotask(startOpenedPlayer);
   }
   function stepScreen(direction){const order=['radio-screen','tv-screen','presets-screen','explore-screen'],active=document.querySelector('.screen.active')?.id,index=Math.max(0,order.indexOf(active));setScreen(order[(index+direction+order.length)%order.length]);}
   function radioCurrent(){return radios[radioIndex]||null;}
@@ -349,10 +362,10 @@
     tvVolumeRampTimer=setInterval(()=>{
       if(video.muted||Math.abs(video.volume-tvVolumeRampExpected)>.001){stopTVVolumeRamp();return;}
       if(video.paused)return;
-      tvVolumeRampExpected=Math.min(.10,Math.round((tvVolumeRampExpected+.01)*100)/100);
+      tvVolumeRampExpected=Math.min(.10,Math.round((tvVolumeRampExpected+.0005)*10000)/10000);
       video.volume=tvVolumeRampExpected;updateTVNumbers();
       if(tvVolumeRampExpected>=.10)stopTVVolumeRamp();
-    },1000);
+    },50);
   }
   function updateTVNumbers(){
     const volume=$('tv-volume-number'),channel=$('tv-channel-number');
@@ -376,7 +389,7 @@
   }
   function stopTV(){if(hls){hls.destroy();hls=null;}video.pause();video.removeAttribute('src');video.load();$('tv-toggle').textContent='▶';drawTV();}
   async function playTV(station){
-    if(!station)return;if(tvCurrent()?.url!==station.url&&tvCurrent()){stopTVVolumeRamp();tvVolumeRampStarted=true;tvVolumeRampExpected=.05;video.volume=.05;}if(station.demoAutoStart){video.muted=true;defaultTVAutoMuted=true;}else if(defaultTVAutoMuted){video.muted=false;defaultTVAutoMuted=false;}const rows=currentRows('tv');tvIndex=tvs.findIndex(s=>s.url===station.url);if(tvIndex<0){tvs.unshift(station);tvIndex=0;}if(hls){hls.destroy();hls=null;}video.pause();video.removeAttribute('src');video.load();
+    if(!station)return;if(tvCurrent()?.url!==station.url&&tvCurrent()){stopTVVolumeRamp();tvVolumeRampStarted=true;tvVolumeRampExpected=.05;video.volume=.05;}const rows=currentRows('tv');tvIndex=tvs.findIndex(s=>s.url===station.url);if(tvIndex<0){tvs.unshift(station);tvIndex=0;}if(hls){hls.destroy();hls=null;}video.pause();video.removeAttribute('src');video.load();
     if(audio.src||radioHls)stopRadio();
     const url=station.url||'';drawTV();$('tv-placeholder').hidden=true;rememberPlayed('tv',station);
     if(/\.m3u8($|\?)/i.test(url)&&window.Hls&&Hls.isSupported()){hls=new Hls({enableWorker:true,maxBufferLength:15});hls.loadSource(url);hls.attachMedia(video);hls.on(Hls.Events.MANIFEST_PARSED,()=>video.play().then(()=>{$('tv-toggle').textContent='Ⅱ';}).catch(()=>notify('Press play on the video to start.')));hls.on(Hls.Events.ERROR,(_e,data)=>{if(data.fatal)notify('This channel is not available right now.');});}
@@ -801,5 +814,5 @@
   applyTheme(themeMode,true);syncThemeSettings();
   $('settings-open').addEventListener('click',()=>$('settings-dialog').showModal());
   $('clear-recent').addEventListener('click',()=>{recentHistory=[];saveStore(RECENT_STORE,recentHistory);renderPresets();notify('Recent history cleared.');});
-  formatClock();setInterval(formatClock,30000);loadRadioNews();setInterval(loadRadioNews,60*60*1000);loadLanguageCatalog();fetchData().finally(()=>window.setTimeout(closeSplash,650));
+  formatClock();setInterval(formatClock,30000);loadRadioNews();setInterval(loadRadioNews,60*60*1000);loadLanguageCatalog();fetchData().finally(()=>{if(!$('welcome-splash-v2'))startOpenedPlayer();window.setTimeout(closeSplash,650);});
 })();
