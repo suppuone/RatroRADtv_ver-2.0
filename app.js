@@ -543,7 +543,7 @@
         card.classList.remove('preset-dragging');card.style.removeProperty('pointer-events');
         if(moved){target.dataset.suppressTapUntil=String(performance.now()+500);if(event.type==='pointerup'&&to!==Number(card.dataset.presetIndex))reorderPreset(kind,key(rows[Number(card.dataset.presetIndex)]),key(rows[to]));else renderPresets();}
       }
-      card.addEventListener('pointerdown',event=>{
+      handle.addEventListener('pointerdown',event=>{
         if(event.button!==0||event.target.closest('[data-preset-star]'))return;
         event.stopPropagation();const rect=card.getBoundingClientRect();
         drag={id:event.pointerId,x:event.clientX,y:event.clientY,startX:event.clientX,startY:event.clientY,offsetX:event.clientX-rect.left,offsetY:event.clientY-rect.top,moved:false};

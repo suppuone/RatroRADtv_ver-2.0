@@ -1663,7 +1663,7 @@ body.tv-fullscreen-open .scroll-to-top{display:none}
 #tv-screen #tv-display:not(.cinema-mode) #tv-rail .tv-rail-card:focus-visible{outline:2px solid #c4cbd3!important;outline-offset:-2px}
 
 /* Preset cards stay draggable after playback; floating preview follows the pointer. */
-#presets-screen #preset-grid [data-preset-index]{touch-action:none;user-select:none;-webkit-user-select:none}
+#presets-screen #preset-grid [data-preset-index]{touch-action:pan-y;user-select:none;-webkit-user-select:none}
 #presets-screen #preset-grid .preset-card.preset-dragging{opacity:.25}
 .preset-drag-preview{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;padding:10px;border:2px solid #67e8f9;border-radius:14px;background:#132432ee;color:#fff;box-shadow:0 12px 28px #0009;overflow:hidden}
 .preset-drag-preview .preset-star,.preset-drag-preview .preset-drag-handle{display:none}
