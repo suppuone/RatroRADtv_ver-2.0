@@ -1,13 +1,14 @@
-const CACHE_NAME = 'retroradtv-v3-107';
+const CACHE_NAME = 'retroradtv-v3-111';
 const APP_FILES = [
   './',
   './index.html',
-  './preset-defaults.js?v=3.0.104',
+  './preset-defaults.js?v=3.0.111',
   './style.css?v=3.0.92',
-  './app.js?v=3.0.104',
+  './app.js?v=3.0.110',
   './manifest.webmanifest',
   './icon.svg',
   './assets/station-logos/coolmag-radio.png',
+  './assets/station-logos/sikkim-school-radio.png',
   './data/radio-presets.json',
   './data/tv-presets.json',
   './data/app-settings.json'

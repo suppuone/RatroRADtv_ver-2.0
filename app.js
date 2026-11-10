@@ -841,6 +841,56 @@
   document.addEventListener('webkitfullscreenchange',onTVFullscreenChange);
   document.addEventListener('keydown',event=>{if(event.key==='Escape'&&tvFullscreenActive){event.preventDefault();exitTVFullscreen();}});
   document.addEventListener('keydown',event=>{if(event.target.closest('input,select,textarea,button,video,[contenteditable],.preset-drag-handle'))return;if(event.code==='Space'&&['radio-screen','tv-screen'].includes(document.querySelector('.screen.active')?.id)){event.preventDefault();if(!$('radio-screen').classList.contains('active'))$('tv-toggle').click();else toggleRadio();}if(event.key==='ArrowRight'&&$('tv-screen').classList.contains('active'))stepTV(1);if(event.key==='ArrowLeft'&&$('tv-screen').classList.contains('active'))stepTV(-1);});
+  // Bluetooth media buttons are delivered through the browser Media Session.
+  let remoteMedia=audio;
+  let lastRemoteSwitch=0;
+  function switchRemoteMode(){
+    const now=Date.now();
+    if(now-lastRemoteSwitch<500)return;
+    lastRemoteSwitch=now;
+    const active=document.querySelector('.screen.active')?.id;
+    const toRadio=active==='tv-screen'||(active!=='radio-screen'&&remoteMedia===video);
+    if(tvFullscreenActive)exitTVFullscreen();
+    remoteMedia=toRadio?audio:video;
+    setScreen(toRadio?'radio-screen':'tv-screen');
+  }
+  let remoteClicks=0,remoteClickTimer=null;
+  function remotePlayPause(){
+    remoteClicks++;
+    clearTimeout(remoteClickTimer);
+    if(remoteClicks===3){remoteClicks=0;switchRemoteMode();return;}
+    remoteClickTimer=setTimeout(()=>{
+      const clicks=remoteClicks;remoteClicks=0;
+      if(clicks%2){
+        if(remoteMedia.paused){
+          if(!remoteMedia.src&&!remoteMedia.currentSrc){if(remoteMedia===audio)toggleRadio();else $('tv-toggle').click();}
+          else remoteMedia.play().catch(()=>{});
+        }else remoteMedia.pause();
+      }
+    },450);
+  }
+  function remoteStep(direction){if(remoteMedia===video)stepTV(direction);else stepRadio(direction);}
+  function syncRemoteMedia(){
+    if(!navigator.mediaSession)return;
+    const station=remoteMedia===video?tvCurrent():radioCurrent();
+    try{
+      navigator.mediaSession.playbackState=remoteMedia.paused?'paused':'playing';
+      if(typeof MediaMetadata!=='undefined')navigator.mediaSession.metadata=new MediaMetadata({title:station?.name||'COOLmagRaTv',artist:remoteMedia===video?'Live TV':'Radio',album:'COOLmagRaTv'});
+    }catch{}
+  }
+  for(const media of [audio,video]){
+    media.addEventListener('play',()=>{remoteMedia=media;syncRemoteMedia();});
+    media.addEventListener('pause',()=>{if(remoteMedia===media)syncRemoteMedia();});
+  }
+  if(navigator.mediaSession?.setActionHandler){
+    const actions={play:remotePlayPause,pause:remotePlayPause,stop:()=>{if(remoteMedia===video)stopTV();else stopRadio();},previoustrack:()=>remoteStep(-1),nexttrack:()=>remoteStep(1)};
+    for(const [action,handler] of Object.entries(actions)){try{navigator.mediaSession.setActionHandler(action,handler);}catch{}}
+  }
+  document.addEventListener('keydown',event=>{
+    if(event.defaultPrevented||event.repeat||event.target.closest('input,select,textarea,[contenteditable]'))return;
+    const actions={MediaPlayPause:remotePlayPause,MediaPlay:remotePlayPause,MediaPause:remotePlayPause,MediaTrackNext:()=>remoteStep(1),MediaTrackPrevious:()=>remoteStep(-1)};
+    if(actions[event.key]){event.preventDefault();actions[event.key]();}
+  });
   video.volume=0.05;updateTVNumbers();
   const volume=Number(loadStore(VOLUME_STORE,30));setRadioVolume(Number.isFinite(volume)?Math.min(100,Math.max(0,volume)):30);
   let pendingInstallPrompt=null;const installButton=$('install-app'),installedModes=['standalone','minimal-ui','fullscreen','window-controls-overlay'].map(mode=>window.matchMedia(`(display-mode: ${mode})`));

@@ -90,6 +90,19 @@
     "has_extended_info": false,
     "_key": "8c8b010b-07ec-4c69-a668-3c600d95e9bf"
   },
+  "https://stream.zeno.fm/g2szgxxpqwzuv": {
+    "stationuuid": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "name": "SIKKIM SCHOOL RADIO",
+    "url": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "url_resolved": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "homepage": "https://stream.zeno.fm/g2szgxxpqwzuv.m3u",
+    "favicon": "assets/station-logos/sikkim-school-radio.png",
+    "logo": "assets/station-logos/sikkim-school-radio.png",
+    "country": "India",
+    "state": "Sikkim",
+    "tags": "school,education",
+    "genre": "Education"
+  },
   "7dd71b85-139b-4362-81b1-4206133a517c": {
     "changeuuid": "2a96bfed-b2d6-4ef9-87b3-5d4c35e0a1fa",
     "stationuuid": "7dd71b85-139b-4362-81b1-4206133a517c",
