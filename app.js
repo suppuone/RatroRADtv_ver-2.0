@@ -265,7 +265,9 @@
     audio.play().then(()=>{$('radio-status').textContent='Playing · '+(radioCurrent()?.name||'Radio');}).catch(error=>{radioAutoplayBlocked=error?.name==='NotAllowedError';});
   }
   document.addEventListener('pointerup',event=>{if(event.isTrusted&&!event.target.closest('button,a,input,select,textarea'))retryBlockedRadio();});
+  document.addEventListener('coolradio-onboarding-ready',()=>startOpenedPlayer());
   function startOpenedPlayer(){
+    if(window.coolRadioOnboardingBlocked)return;
     if($('welcome-splash-v2')&&!$('welcome-splash-v2').classList.contains('leaving'))return;
     const screen=document.querySelector('.screen.active')?.id;
     if(screen==='radio-screen'){

@@ -1,10 +1,11 @@
-const CACHE_NAME = 'retroradtv-v3-111';
+const CACHE_NAME = 'retroradtv-v3-115';
 const APP_FILES = [
   './',
   './index.html',
-  './preset-defaults.js?v=3.0.111',
+  './preset-defaults.js?v=3.0.113',
   './style.css?v=3.0.92',
-  './app.js?v=3.0.110',
+  './app.js?v=3.0.112',
+  './onboarding.js?v=3.0.115',
   './manifest.webmanifest',
   './icon.svg',
   './assets/station-logos/coolmag-radio.png',
