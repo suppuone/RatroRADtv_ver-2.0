@@ -8,7 +8,21 @@
     "logo": "assets/station-logos/coolmag-radio.png",
     "country": "India",
     "tags": "music",
-    "genre": "Music"
+    "genre": "Music",
+    "fallbackLogo": "assets/station-logos/name-69ee6685de85.svg"
+  },
+  "https://stream.zeno.fm/74mzdgk024zuv": {
+    "stationuuid": "https://stream.zeno.fm/74mzdgk024zuv",
+    "name": "COOL Nagpuri",
+    "url": "https://stream.zeno.fm/74mzdgk024zuv",
+    "url_resolved": "https://stream.zeno.fm/74mzdgk024zuv",
+    "country": "INDIA",
+    "favicon": "https://raw.githubusercontent.com/suppuone/RADIOtv/main/nagpuri%20logo.png",
+    "tags": "",
+    "codec": "",
+    "bitrate": 0,
+    "_key": "https://stream.zeno.fm/74mzdgk024zuv",
+    "fallbackLogo": "assets/station-logos/name-c791f4a53328.svg"
   },
   "98adecf7-2683-4408-9be7-02d3f9098eb8": {
     "changeuuid": "3aab83a3-f980-40ad-96bb-17e479e5c078",
@@ -48,7 +62,264 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "98adecf7-2683-4408-9be7-02d3f9098eb8"
+    "_key": "98adecf7-2683-4408-9be7-02d3f9098eb8",
+    "fallbackLogo": "assets/station-logos/name-81aaf4cdbf83.svg"
+  },
+  "https://stream.zeno.fm/g2szgxxpqwzuv": {
+    "stationuuid": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "name": "SIKKIM SCHOOL RADIO",
+    "url": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "url_resolved": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "homepage": "https://stream.zeno.fm/g2szgxxpqwzuv.m3u",
+    "favicon": "assets/station-logos/sikkim-school-radio.png",
+    "logo": "assets/station-logos/sikkim-school-radio.png",
+    "country": "India",
+    "state": "Sikkim",
+    "tags": "school,education",
+    "genre": "Education",
+    "fallbackLogo": "assets/station-logos/name-c20f85670f1e.svg"
+  },
+  "http://103.213.31.109:90/AajtakHD/playlist.m3u8": {
+    "stationuuid": "http://103.213.31.109:90/AajtakHD/playlist.m3u8",
+    "name": "Aaj Tak · News Audio",
+    "url": "http://103.213.31.109:90/AajtakHD/playlist.m3u8",
+    "url_resolved": "http://103.213.31.109:90/AajtakHD/playlist.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_AAJ_TAK/images/LOGO_HD/image.png",
+    "country": "India",
+    "language": "Hindi",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-19acb7409004.svg"
+  },
+  "https://suntvlive.akamaized.net/hls/live/2093435/SunNews/master.m3u8": {
+    "stationuuid": "https://suntvlive.akamaized.net/hls/live/2093435/SunNews/master.m3u8",
+    "name": "Sun News · News Audio",
+    "url": "https://suntvlive.akamaized.net/hls/live/2093435/SunNews/master.m3u8",
+    "url_resolved": "https://suntvlive.akamaized.net/hls/live/2093435/SunNews/master.m3u8",
+    "logo": "assets/station-logos/name-fe1707630aac.svg",
+    "country": "India",
+    "language": "Tamil",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-fe1707630aac.svg",
+    "favicon": "assets/station-logos/name-fe1707630aac.svg"
+  },
+  "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicTV.m3u8": {
+    "stationuuid": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicTV.m3u8",
+    "name": "Republic TV · News Audio",
+    "url": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicTV.m3u8",
+    "url_resolved": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicTV.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s143723_ld_h15_aa.png?lock=720x540",
+    "country": "India",
+    "language": "English",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-dbdac3490321.svg"
+  },
+  "https://cdn.pishow.tv/ott/live/1245/master.m3u8": {
+    "stationuuid": "https://cdn.pishow.tv/ott/live/1245/master.m3u8",
+    "name": "Polimer News · News Audio",
+    "url": "https://cdn.pishow.tv/ott/live/1245/master.m3u8",
+    "url_resolved": "https://cdn.pishow.tv/ott/live/1245/master.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s143664_ld_h9_aa.png?lock=720x540",
+    "country": "India",
+    "language": "Tamil",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-e8a33b02fd00.svg"
+  },
+  "https://n18syndication.akamaized.net/bpk-tv/News18_India_NW18_MOB/output01/master.m3u8": {
+    "stationuuid": "https://n18syndication.akamaized.net/bpk-tv/News18_India_NW18_MOB/output01/master.m3u8",
+    "name": "News18 India · News Audio",
+    "url": "https://n18syndication.akamaized.net/bpk-tv/News18_India_NW18_MOB/output01/master.m3u8",
+    "url_resolved": "https://n18syndication.akamaized.net/bpk-tv/News18_India_NW18_MOB/output01/master.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_NEWS18_INDIA/images/LOGO_HD/image.png",
+    "country": "India",
+    "language": "Hindi",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-ccf9b695182e.svg"
+  },
+  "https://dztlhgid9me95.cloudfront.net/live-tv/Vidgyor/timesnow/timesnow_master.m3u8": {
+    "stationuuid": "https://dztlhgid9me95.cloudfront.net/live-tv/Vidgyor/timesnow/timesnow_master.m3u8",
+    "name": "Times Now · News Audio",
+    "url": "https://dztlhgid9me95.cloudfront.net/live-tv/Vidgyor/timesnow/timesnow_master.m3u8",
+    "url_resolved": "https://dztlhgid9me95.cloudfront.net/live-tv/Vidgyor/timesnow/timesnow_master.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_TIMES_NOW/images/LOGO_HD/image.png",
+    "country": "India",
+    "language": "English",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-476936e9d8d2.svg"
+  },
+  "https://cdn.pishow.tv/ott/live/1261/master.m3u8": {
+    "stationuuid": "https://cdn.pishow.tv/ott/live/1261/master.m3u8",
+    "name": "Puthiya Thalaimurai · News Audio",
+    "url": "https://cdn.pishow.tv/ott/live/1261/master.m3u8",
+    "url_resolved": "https://cdn.pishow.tv/ott/live/1261/master.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s143692_ld_h15_aa.png?lock=720x540",
+    "country": "India",
+    "language": "Tamil",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-6a5acd6003a5.svg"
+  },
+  "https://vg-indiatv-waves.vgcdn.net/vglive-sk-394591/playlist.m3u8": {
+    "stationuuid": "https://vg-indiatv-waves.vgcdn.net/vglive-sk-394591/playlist.m3u8",
+    "name": "India TV · News Audio",
+    "url": "https://vg-indiatv-waves.vgcdn.net/vglive-sk-394591/playlist.m3u8",
+    "url_resolved": "https://vg-indiatv-waves.vgcdn.net/vglive-sk-394591/playlist.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_INDIA_TV/images/LOGO_HD/image.png",
+    "country": "India",
+    "language": "Hindi",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-2ffc6138d2af.svg"
+  },
+  "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/NDTV24x7.m3u8": {
+    "stationuuid": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/NDTV24x7.m3u8",
+    "name": "NDTV 24x7 · News Audio",
+    "url": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/NDTV24x7.m3u8",
+    "url_resolved": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/NDTV24x7.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s154895_ld_h15_aa.png?lock=720x540",
+    "country": "India",
+    "language": "English",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-d8d4f0eb67ad.svg"
+  },
+  "https://mumt03.tangotv.in/Dsly5z3HTHANTHITV/index.m3u8": {
+    "stationuuid": "https://mumt03.tangotv.in/Dsly5z3HTHANTHITV/index.m3u8",
+    "name": "Thanthi TV · News Audio",
+    "url": "https://mumt03.tangotv.in/Dsly5z3HTHANTHITV/index.m3u8",
+    "url_resolved": "https://mumt03.tangotv.in/Dsly5z3HTHANTHITV/index.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s144000_ld_h15_aa.png?lock=720x540",
+    "country": "India",
+    "language": "Tamil",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-9bfe55632cdb.svg"
+  },
+  "https://d1rc86nwwc9fag.cloudfront.net/vglive-sk-472500/abpnews/master.m3u8": {
+    "stationuuid": "https://d1rc86nwwc9fag.cloudfront.net/vglive-sk-472500/abpnews/master.m3u8",
+    "name": "ABP News · News Audio",
+    "url": "https://d1rc86nwwc9fag.cloudfront.net/vglive-sk-472500/abpnews/master.m3u8",
+    "url_resolved": "https://d1rc86nwwc9fag.cloudfront.net/vglive-sk-472500/abpnews/master.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s158138_ld_h15_aa.png?lock=720x540",
+    "country": "India",
+    "language": "Hindi",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-4467af9042dd.svg"
+  },
+  "https://nw18live.cdn.jio.com/bpk-tv/CNN_News18_NW18_MOB/output01/index.m3u8": {
+    "stationuuid": "https://nw18live.cdn.jio.com/bpk-tv/CNN_News18_NW18_MOB/output01/index.m3u8",
+    "name": "CNN-News18 · News Audio",
+    "url": "https://nw18live.cdn.jio.com/bpk-tv/CNN_News18_NW18_MOB/output01/index.m3u8",
+    "url_resolved": "https://nw18live.cdn.jio.com/bpk-tv/CNN_News18_NW18_MOB/output01/index.m3u8",
+    "logo": "https://i.imgur.com/K3M8MoK.png",
+    "country": "India",
+    "language": "English",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-d79f2f38b21f.svg"
+  },
+  "https://n18syndication.akamaized.net/bpk-tv/News18_Tamil_Nadu_NW18_MOB/output01/master.m3u8": {
+    "stationuuid": "https://n18syndication.akamaized.net/bpk-tv/News18_Tamil_Nadu_NW18_MOB/output01/master.m3u8",
+    "name": "News18 Tamil Nadu · News Audio",
+    "url": "https://n18syndication.akamaized.net/bpk-tv/News18_Tamil_Nadu_NW18_MOB/output01/master.m3u8",
+    "url_resolved": "https://n18syndication.akamaized.net/bpk-tv/News18_Tamil_Nadu_NW18_MOB/output01/master.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_NEWS18_TAMIL_NADU/images/LOGO_HD/image.png",
+    "country": "India",
+    "language": "Tamil",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-65a382c97fa2.svg"
+  },
+  "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicBharat.m3u8": {
+    "stationuuid": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicBharat.m3u8",
+    "name": "Republic Bharat · News Audio",
+    "url": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicBharat.m3u8",
+    "url_resolved": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/RepublicBharat.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s143724_ld_h15_aa.png?lock=720x540",
+    "country": "India",
+    "language": "Hindi",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-bfc94c35b6e7.svg"
+  },
+  "https://d2lk5u59tns74c.cloudfront.net/out/v1/d4435039c7d1433d9b9d0b6cdc9dd4ff/index.m3u8": {
+    "stationuuid": "https://d2lk5u59tns74c.cloudfront.net/out/v1/d4435039c7d1433d9b9d0b6cdc9dd4ff/index.m3u8",
+    "name": "India Today TV · News Audio",
+    "url": "https://d2lk5u59tns74c.cloudfront.net/out/v1/d4435039c7d1433d9b9d0b6cdc9dd4ff/index.m3u8",
+    "url_resolved": "https://d2lk5u59tns74c.cloudfront.net/out/v1/d4435039c7d1433d9b9d0b6cdc9dd4ff/index.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_INDIA_TODAY/images/LOGO_HD/image.png",
+    "country": "India",
+    "language": "English",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-25b4631e18ab.svg"
+  },
+  "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/KalaignarSeithigal.m3u8": {
+    "stationuuid": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/KalaignarSeithigal.m3u8",
+    "name": "Kalaignar Seithigal · News Audio",
+    "url": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/KalaignarSeithigal.m3u8",
+    "url_resolved": "https://raw.githubusercontent.com/amazeyourself/adaptive-streams/refs/heads/main/streams/in/YuppTV/KalaignarSeithigal.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/s143769_ld_h15_aa.png?lock=720x540",
+    "country": "India",
+    "language": "Tamil",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-46b7cfd9417e.svg"
+  },
+  "https://dknttpxmr0dwf.cloudfront.net/index_57.m3u8": {
+    "stationuuid": "https://dknttpxmr0dwf.cloudfront.net/index_57.m3u8",
+    "name": "Zee News · News Audio",
+    "url": "https://dknttpxmr0dwf.cloudfront.net/index_57.m3u8",
+    "url_resolved": "https://dknttpxmr0dwf.cloudfront.net/index_57.m3u8",
+    "logo": "https://dtil.tmsimg.com/assets/GNLZZGG0023VWYC.png?lock=720x540",
+    "country": "India",
+    "language": "Hindi",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-67b3506c3cfe.svg"
+  },
+  "https://d7x8z4yuq42qn.cloudfront.net/index_1.m3u8": {
+    "stationuuid": "https://d7x8z4yuq42qn.cloudfront.net/index_1.m3u8",
+    "name": "WION · News Audio",
+    "url": "https://d7x8z4yuq42qn.cloudfront.net/index_1.m3u8",
+    "url_resolved": "https://d7x8z4yuq42qn.cloudfront.net/index_1.m3u8",
+    "logo": "assets/station-logos/name-6a80ab8cecee.svg",
+    "country": "India",
+    "language": "English",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-6a80ab8cecee.svg",
+    "favicon": "assets/station-logos/name-6a80ab8cecee.svg"
+  },
+  "https://mumbai-edge.smartplaytv.in/JayaPLus/index.m3u8": {
+    "stationuuid": "https://mumbai-edge.smartplaytv.in/JayaPLus/index.m3u8",
+    "name": "Jaya Plus · News Audio",
+    "url": "https://mumbai-edge.smartplaytv.in/JayaPLus/index.m3u8",
+    "url_resolved": "https://mumbai-edge.smartplaytv.in/JayaPLus/index.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_JAYA_PLUS/images/LOGO_HD/image.png",
+    "country": "India",
+    "language": "Tamil",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-357253c90520.svg"
+  },
+  "https://mumbai-edge.smartplaytv.in/BBCNews/index.m3u8": {
+    "stationuuid": "https://mumbai-edge.smartplaytv.in/BBCNews/index.m3u8",
+    "name": "BBC World · News Audio",
+    "url": "https://mumbai-edge.smartplaytv.in/BBCNews/index.m3u8",
+    "url_resolved": "https://mumbai-edge.smartplaytv.in/BBCNews/index.m3u8",
+    "logo": "https://xstreamcp-assets-msp.streamready.in/assets/LIVETV/LIVECHANNEL/LIVETV_LIVETVCHANNEL_BBC_NEWS/images/LOGO_HD/image.png",
+    "country": "United Kingdom",
+    "language": "English",
+    "tags": "news,tv audio",
+    "genre": "News",
+    "fallbackLogo": "assets/station-logos/name-cacfcdcec03e.svg"
   },
   "8c8b010b-07ec-4c69-a668-3c600d95e9bf": {
     "changeuuid": "7379e9a3-7500-458a-88b7-5fbbe2d89160",
@@ -88,20 +359,8 @@
     "geo_long": 103.82003747260612,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "8c8b010b-07ec-4c69-a668-3c600d95e9bf"
-  },
-  "https://stream.zeno.fm/g2szgxxpqwzuv": {
-    "stationuuid": "https://stream.zeno.fm/g2szgxxpqwzuv",
-    "name": "SIKKIM SCHOOL RADIO",
-    "url": "https://stream.zeno.fm/g2szgxxpqwzuv",
-    "url_resolved": "https://stream.zeno.fm/g2szgxxpqwzuv",
-    "homepage": "https://stream.zeno.fm/g2szgxxpqwzuv.m3u",
-    "favicon": "assets/station-logos/sikkim-school-radio.png",
-    "logo": "assets/station-logos/sikkim-school-radio.png",
-    "country": "India",
-    "state": "Sikkim",
-    "tags": "school,education",
-    "genre": "Education"
+    "_key": "8c8b010b-07ec-4c69-a668-3c600d95e9bf",
+    "fallbackLogo": "assets/station-logos/name-b8ae6bbc5109.svg"
   },
   "7dd71b85-139b-4362-81b1-4206133a517c": {
     "changeuuid": "2a96bfed-b2d6-4ef9-87b3-5d4c35e0a1fa",
@@ -141,19 +400,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "7dd71b85-139b-4362-81b1-4206133a517c"
-  },
-  "https://stream.zeno.fm/74mzdgk024zuv": {
-    "stationuuid": "https://stream.zeno.fm/74mzdgk024zuv",
-    "name": "COOL Nagpuri",
-    "url": "https://stream.zeno.fm/74mzdgk024zuv",
-    "url_resolved": "https://stream.zeno.fm/74mzdgk024zuv",
-    "country": "INDIA",
-    "favicon": "https://raw.githubusercontent.com/suppuone/RADIOtv/main/nagpuri%20logo.png",
-    "tags": "",
-    "codec": "",
-    "bitrate": 0,
-    "_key": "https://stream.zeno.fm/74mzdgk024zuv"
+    "_key": "7dd71b85-139b-4362-81b1-4206133a517c",
+    "fallbackLogo": "assets/station-logos/name-1b4c548e55c9.svg"
   },
   "https://stream.zeno.fm/hem5rrfn07zuv": {
     "stationuuid": "https://stream.zeno.fm/hem5rrfn07zuv",
@@ -164,8 +412,10 @@
     "language": "hindi",
     "tags": "bollywood,oldies,hindi",
     "genre": "Music",
-    "favicon": "",
-    "_key": "https://stream.zeno.fm/hem5rrfn07zuv"
+    "favicon": "assets/station-logos/name-7eb103a430df.svg",
+    "_key": "https://stream.zeno.fm/hem5rrfn07zuv",
+    "fallbackLogo": "assets/station-logos/name-7eb103a430df.svg",
+    "logo": "assets/station-logos/name-7eb103a430df.svg"
   },
   "6de7e6da-5c4f-4264-ab2d-bbc731219f7d": {
     "changeuuid": "6ff8340b-4138-4ec7-9369-ebe372e56705",
@@ -175,7 +425,7 @@
     "url": "https://stream.zeno.fm/a2gyqzwpwfeuv",
     "url_resolved": "https://stream.zeno.fm/a2gyqzwpwfeuv",
     "homepage": "http://www.hitsofbollywood.com/",
-    "favicon": "",
+    "favicon": "assets/station-logos/name-eaf8dd2ac337.svg",
     "tags": "bollywood,desi,hindi,india",
     "country": "India",
     "countrycode": "IN",
@@ -205,7 +455,9 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "6de7e6da-5c4f-4264-ab2d-bbc731219f7d"
+    "_key": "6de7e6da-5c4f-4264-ab2d-bbc731219f7d",
+    "fallbackLogo": "assets/station-logos/name-eaf8dd2ac337.svg",
+    "logo": "assets/station-logos/name-eaf8dd2ac337.svg"
   },
   "https://stream.zeno.fm/fdgs82xkzhhvv": {
     "stationuuid": "https://stream.zeno.fm/fdgs82xkzhhvv",
@@ -217,7 +469,8 @@
     "tags": "",
     "codec": "",
     "bitrate": 0,
-    "_key": "https://stream.zeno.fm/fdgs82xkzhhvv"
+    "_key": "https://stream.zeno.fm/fdgs82xkzhhvv",
+    "fallbackLogo": "assets/station-logos/name-d041fa89fbc9.svg"
   },
   "e75a90d7-b812-49f2-a6be-a3585977ee12": {
     "changeuuid": "7d591a15-943d-4187-8961-ffa0f1d09747",
@@ -257,7 +510,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "e75a90d7-b812-49f2-a6be-a3585977ee12"
+    "_key": "e75a90d7-b812-49f2-a6be-a3585977ee12",
+    "fallbackLogo": "assets/station-logos/name-9721c888a760.svg"
   },
   "a41bfe8f-e6c7-4f2b-96a9-928755b65641": {
     "changeuuid": "7a5dc868-7874-4ab8-b7c6-3e4f2ee632f7",
@@ -297,7 +551,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "a41bfe8f-e6c7-4f2b-96a9-928755b65641"
+    "_key": "a41bfe8f-e6c7-4f2b-96a9-928755b65641",
+    "fallbackLogo": "assets/station-logos/name-f03f96be1e51.svg"
   },
   "b70248dd-67a7-4c82-a5be-b4d9e3322835": {
     "changeuuid": "95dbed1d-2fcd-48e5-8c4b-8560f4733420",
@@ -337,7 +592,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "b70248dd-67a7-4c82-a5be-b4d9e3322835"
+    "_key": "b70248dd-67a7-4c82-a5be-b4d9e3322835",
+    "fallbackLogo": "assets/station-logos/name-8a3f0fb0d858.svg"
   },
   "8d1d51be-420f-49e5-8832-124afe4da4aa": {
     "changeuuid": "839369fb-c2e2-4e98-ba42-04e65d7abf18",
@@ -377,7 +633,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "8d1d51be-420f-49e5-8832-124afe4da4aa"
+    "_key": "8d1d51be-420f-49e5-8832-124afe4da4aa",
+    "fallbackLogo": "assets/station-logos/name-b44defd81f7c.svg"
   },
   "6a7c8a21-cb7d-41d2-8c32-99c355e2ac20": {
     "changeuuid": "f3fec6dd-b149-4522-820f-a51becfd85a9",
@@ -417,7 +674,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "6a7c8a21-cb7d-41d2-8c32-99c355e2ac20"
+    "_key": "6a7c8a21-cb7d-41d2-8c32-99c355e2ac20",
+    "fallbackLogo": "assets/station-logos/name-5e9d22f2b75a.svg"
   },
   "f5450af2-bf52-4563-bd44-a09a9a07f913": {
     "changeuuid": "81a65562-9013-4123-8a3d-987b36f428b1",
@@ -427,7 +685,7 @@
     "url": "https://vpmurugun.radioca.st/stream",
     "url_resolved": "https://vpmurugun.radioca.st/stream",
     "homepage": "https://www.radioparamankurichi.in/",
-    "favicon": "",
+    "favicon": "assets/station-logos/name-1e12289104e3.svg",
     "tags": "",
     "country": "India",
     "countrycode": "IN",
@@ -457,7 +715,9 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "f5450af2-bf52-4563-bd44-a09a9a07f913"
+    "_key": "f5450af2-bf52-4563-bd44-a09a9a07f913",
+    "fallbackLogo": "assets/station-logos/name-1e12289104e3.svg",
+    "logo": "assets/station-logos/name-1e12289104e3.svg"
   },
   "0510988b-b95f-43a5-b9a7-4ab57ebf7e1d": {
     "changeuuid": "c158155e-4aaf-49db-9e16-0a9c34072c5b",
@@ -497,7 +757,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "0510988b-b95f-43a5-b9a7-4ab57ebf7e1d"
+    "_key": "0510988b-b95f-43a5-b9a7-4ab57ebf7e1d",
+    "fallbackLogo": "assets/station-logos/name-0146f7520331.svg"
   },
   "e46c2240-bc26-4ff4-bd24-7cd0072318b2": {
     "changeuuid": "a3b1cb51-99ae-4052-be7a-97cc988f065e",
@@ -537,7 +798,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "e46c2240-bc26-4ff4-bd24-7cd0072318b2"
+    "_key": "e46c2240-bc26-4ff4-bd24-7cd0072318b2",
+    "fallbackLogo": "assets/station-logos/name-7e69375817b8.svg"
   },
   "d5d79959-7da5-4943-9af7-5ddca45c1c0b": {
     "changeuuid": "aaaac909-071d-4d26-81f7-b490a54916db",
@@ -577,7 +839,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "d5d79959-7da5-4943-9af7-5ddca45c1c0b"
+    "_key": "d5d79959-7da5-4943-9af7-5ddca45c1c0b",
+    "fallbackLogo": "assets/station-logos/name-7022fbeb1893.svg"
   },
   "1e64ded1-bc95-479c-8f67-e98ad15010ad": {
     "changeuuid": "c3a64798-f884-41d8-b6b9-77e04ab75cdf",
@@ -617,7 +880,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "1e64ded1-bc95-479c-8f67-e98ad15010ad"
+    "_key": "1e64ded1-bc95-479c-8f67-e98ad15010ad",
+    "fallbackLogo": "assets/station-logos/name-ce8183ba0c11.svg"
   },
   "724e92cd-9d57-4fef-b7e6-adad9fcc270d": {
     "changeuuid": "cc27cc1f-45ba-4b38-93ef-3b60598b718a",
@@ -657,7 +921,8 @@
     "geo_long": 85.330810546875,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "724e92cd-9d57-4fef-b7e6-adad9fcc270d"
+    "_key": "724e92cd-9d57-4fef-b7e6-adad9fcc270d",
+    "fallbackLogo": "assets/station-logos/name-93d621b2d6c0.svg"
   },
   "f7d8a07a-21dc-40cf-82fe-ac8483e364c3": {
     "changeuuid": "20c55bdd-69cb-4e00-9b1d-9c267498f331",
@@ -667,7 +932,7 @@
     "url": "https://streaming.softnep.net:10994/;stream.nsv",
     "url_resolved": "https://streaming.softnep.net:10994/;stream.nsv",
     "homepage": "https://www.butwaldiary.com/",
-    "favicon": "",
+    "favicon": "assets/station-logos/name-cad424e976ad.svg",
     "tags": "",
     "country": "Nepal",
     "countrycode": "NP",
@@ -697,7 +962,9 @@
     "geo_long": 83.46163272857666,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "f7d8a07a-21dc-40cf-82fe-ac8483e364c3"
+    "_key": "f7d8a07a-21dc-40cf-82fe-ac8483e364c3",
+    "fallbackLogo": "assets/station-logos/name-cad424e976ad.svg",
+    "logo": "assets/station-logos/name-cad424e976ad.svg"
   },
   "57daa244-452f-4d35-8bc7-ac117e23c4d0": {
     "changeuuid": "fdc8e2af-944b-48b4-934e-d899541df094",
@@ -707,7 +974,7 @@
     "url": "https://www.hamropatro.com/api/radio/stream/34",
     "url_resolved": "https://www.hamropatro.com/api/radio/stream/34",
     "homepage": "",
-    "favicon": "",
+    "favicon": "assets/station-logos/name-84ec09b4370f.svg",
     "tags": "",
     "country": "Nepal",
     "countrycode": "NP",
@@ -737,7 +1004,9 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "57daa244-452f-4d35-8bc7-ac117e23c4d0"
+    "_key": "57daa244-452f-4d35-8bc7-ac117e23c4d0",
+    "fallbackLogo": "assets/station-logos/name-84ec09b4370f.svg",
+    "logo": "assets/station-logos/name-84ec09b4370f.svg"
   },
   "0925498e-15f7-425d-8183-0f62f4b94c15": {
     "changeuuid": "3a086e50-d1be-4bb1-98d0-5357d1d9ffe8",
@@ -747,7 +1016,7 @@
     "url": "https://www.hamropatro.com/api/radio/stream/82",
     "url_resolved": "https://www.hamropatro.com/api/radio/stream/82",
     "homepage": "",
-    "favicon": "",
+    "favicon": "assets/station-logos/name-a9a53e2e1e1e.svg",
     "tags": "",
     "country": "Nepal",
     "countrycode": "NP",
@@ -777,7 +1046,9 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "0925498e-15f7-425d-8183-0f62f4b94c15"
+    "_key": "0925498e-15f7-425d-8183-0f62f4b94c15",
+    "fallbackLogo": "assets/station-logos/name-a9a53e2e1e1e.svg",
+    "logo": "assets/station-logos/name-a9a53e2e1e1e.svg"
   },
   "https://d3hrxqn1tritdh.cloudfront.net/84ad819b3f45dc08/84ad819b3f45dc08.m3u8": {
     "stationuuid": "https://d3hrxqn1tritdh.cloudfront.net/84ad819b3f45dc08/84ad819b3f45dc08.m3u8",
@@ -790,7 +1061,8 @@
     "bitrate": 0,
     "clickcount": 0,
     "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "https://d3hrxqn1tritdh.cloudfront.net/84ad819b3f45dc08/84ad819b3f45dc08.m3u8"
+    "_key": "https://d3hrxqn1tritdh.cloudfront.net/84ad819b3f45dc08/84ad819b3f45dc08.m3u8",
+    "fallbackLogo": "assets/station-logos/name-f31d3c2619fa.svg"
   },
   "akashvani:251": {
     "stationuuid": "akashvani:251",
@@ -803,7 +1075,8 @@
     "bitrate": 0,
     "clickcount": 0,
     "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:251"
+    "_key": "akashvani:251",
+    "fallbackLogo": "assets/station-logos/name-40c77d421927.svg"
   },
   "6fe75c70-6b0f-41d3-b37c-f398bba44161": {
     "changeuuid": "a0dbb926-d41e-494a-90db-1fe1a03c4f11",
@@ -843,7 +1116,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "6fe75c70-6b0f-41d3-b37c-f398bba44161"
+    "_key": "6fe75c70-6b0f-41d3-b37c-f398bba44161",
+    "fallbackLogo": "assets/station-logos/name-e237b1d8c055.svg"
   },
   "akashvani:249": {
     "stationuuid": "akashvani:249",
@@ -856,7 +1130,8 @@
     "bitrate": 0,
     "clickcount": 0,
     "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:249"
+    "_key": "akashvani:249",
+    "fallbackLogo": "assets/station-logos/name-f9cf424793c9.svg"
   },
   "akashvani:244": {
     "stationuuid": "akashvani:244",
@@ -869,7 +1144,8 @@
     "bitrate": 0,
     "clickcount": 0,
     "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:244"
+    "_key": "akashvani:244",
+    "fallbackLogo": "assets/station-logos/name-8aed321f2164.svg"
   },
   "a85a37b9-8a09-42d1-ad65-e8569a0bc0c0": {
     "changeuuid": "77227da7-5631-452d-a0e9-a256bbc04a5e",
@@ -909,7 +1185,8 @@
     "geo_long": null,
     "geo_distance": null,
     "has_extended_info": false,
-    "_key": "a85a37b9-8a09-42d1-ad65-e8569a0bc0c0"
+    "_key": "a85a37b9-8a09-42d1-ad65-e8569a0bc0c0",
+    "fallbackLogo": "assets/station-logos/name-49371679e38e.svg"
   },
   "akashvani:5": {
     "stationuuid": "akashvani:5",
@@ -921,423 +1198,9 @@
     "codec": "HLS",
     "bitrate": 0,
     "clickcount": 0,
-    "_key": "akashvani:5"
-  },
-  "akashvani:242": {
-    "stationuuid": "akashvani:242",
-    "name": "VB Tamil Chennai",
-    "url": "https://radio.wavespb.com/live/f893db91dedcb4ab/f893db91dedcb4ab.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/f893db91dedcb4ab/f893db91dedcb4ab.m3u8",
-    "country": "India",
-    "tags": "TAMIL NADU, Tamil, English",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "_key": "akashvani:242"
-  },
-  "akashvani:286": {
-    "stationuuid": "akashvani:286",
-    "name": "FM Gold Kolkata",
-    "url": "https://d3r9rhourdc02u.cloudfront.net/assets/radio/airkol06/air070_Auto.m3u8",
-    "url_resolved": "https://d3r9rhourdc02u.cloudfront.net/assets/radio/airkol06/air070_Auto.m3u8",
-    "country": "India",
-    "tags": "WEST BENGAL, Bengali, Hindi, English",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:286"
-  },
-  "akashvani:241": {
-    "stationuuid": "akashvani:241",
-    "name": "FM Gold Chennai",
-    "url": "https://radio.wavespb.com/live/84ad819b3f45dc08/84ad819b3f45dc08.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/84ad819b3f45dc08/84ad819b3f45dc08.m3u8",
-    "country": "India",
-    "tags": "TAMIL NADU, Tamil, English",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:241"
-  },
-  "akashvani:240": {
-    "stationuuid": "akashvani:240",
-    "name": "Akashvani Gangtok",
-    "url": "https://radio.wavespb.com/live/a2fa73a479445b3d/a2fa73a479445b3d.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/a2fa73a479445b3d/a2fa73a479445b3d.m3u8",
-    "country": "India",
-    "tags": "SIKKIM, Nepali, Hindi",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:240"
-  },
-  "akashvani:305": {
-    "stationuuid": "akashvani:305",
-    "name": "Akashvani Madurai FM",
-    "url": "https://radio.wavespb.com/live/f910c4cf0415b953/f910c4cf0415b953.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/f910c4cf0415b953/f910c4cf0415b953.m3u8",
-    "country": "India",
-    "tags": "TAMIL NADU, Tamil, English",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:305"
-  },
-  "mediacorp:938NOWAAC": {
-    "stationuuid": "mediacorp:938NOWAAC",
-    "name": "CNA938",
-    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/938NOWAAC.aac",
-    "url_resolved": "https://playerservices.streamtheworld.com/api/livestream-redirect/938NOWAAC.aac",
-    "country": "Singapore",
-    "tags": "English · News and talk",
-    "codec": "AAC",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://www16.mediacorp.sg/melisten/radiostation-logos/cna-938.png",
-    "_key": "mediacorp:938NOWAAC"
-  },
-  "40789cec-804f-4cf2-85ee-651cb666a127": {
-    "changeuuid": "217db5a2-a44f-4685-8c35-b8b0c09dda50",
-    "stationuuid": "40789cec-804f-4cf2-85ee-651cb666a127",
-    "serveruuid": null,
-    "name": "Radio Sargam",
-    "url": "https://stream.rcs.revma.com/8a38ru8a303vv?ver=531608",
-    "url_resolved": "https://stream.rcs.revma.com/8a38ru8a303vv?ver=531608",
-    "homepage": "https://radiosargam.com.fj/",
-    "favicon": "https://radiosargam.com.fj/wp-content/uploads/2021/09/sargam-header-213x68-1.png",
-    "tags": "music,news",
-    "country": "Fiji",
-    "countrycode": "FJ",
-    "iso_3166_2": null,
-    "state": "",
-    "language": "english,fijian,fijian hindi",
-    "languagecodes": "en,fj",
-    "votes": 0,
-    "lastchangetime": "2026-10-29 11:03:20",
-    "lastchangetime_iso8601": "2026-10-29T11:03:20Z",
-    "codec": "MP3",
-    "bitrate": 0,
-    "hls": 0,
-    "lastcheckok": 1,
-    "lastchecktime": "2026-10-29 21:13:38",
-    "lastchecktime_iso8601": "2026-10-29T21:13:38Z",
-    "lastcheckoktime": "2026-10-29 21:13:38",
-    "lastcheckoktime_iso8601": "2026-10-29T21:13:38Z",
-    "lastlocalchecktime": "2026-10-29 21:13:38",
-    "lastlocalchecktime_iso8601": "2026-10-29T21:13:38Z",
-    "clicktimestamp": "2026-10-30 03:46:45",
-    "clicktimestamp_iso8601": "2026-10-30T03:46:45Z",
-    "clickcount": 3,
-    "clicktrend": 3,
-    "ssl_error": 0,
-    "geo_lat": null,
-    "geo_long": null,
-    "geo_distance": null,
-    "has_extended_info": false,
-    "_key": "40789cec-804f-4cf2-85ee-651cb666a127"
-  },
-  "mediacorp:INDIEGO_S01AAC_48": {
-    "stationuuid": "mediacorp:INDIEGO_S01AAC_48",
-    "name": "indiego",
-    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/INDIEGO_S01AAC_48.aac",
-    "url_resolved": "https://playerservices.streamtheworld.com/api/livestream-redirect/INDIEGO_S01AAC_48.aac",
-    "country": "Singapore",
-    "tags": "English · Indie · Digital",
-    "codec": "AAC",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://www16.mediacorp.sg/melisten/radiostation-logos/indiego.png",
-    "_key": "mediacorp:INDIEGO_S01AAC_48"
-  },
-  "4a1caf35-e380-4b0d-8a7b-43c46958cfe5": {
-    "changeuuid": "84be22e6-4b4b-4ac2-9161-2e0199fa556d",
-    "stationuuid": "4a1caf35-e380-4b0d-8a7b-43c46958cfe5",
-    "serveruuid": null,
-    "name": "Bhutan Broadcasting Service",
-    "url": "https://radio.bbs.bt/dz-ch",
-    "url_resolved": "https://radio.bbs.bt/dz-ch",
-    "homepage": "https://www.bbs.bt/",
-    "favicon": "https://www.bbs.bt/wp-content/plugins/bbs-video-stories/assets/bbs-logo.png",
-    "tags": "",
-    "country": "Bhutan",
-    "countrycode": "BT",
-    "iso_3166_2": null,
-    "state": "",
-    "language": "english",
-    "languagecodes": "en",
-    "votes": 0,
-    "lastchangetime": "2026-10-23 13:33:12",
-    "lastchangetime_iso8601": "2026-10-23T13:33:12Z",
-    "codec": "MP3",
-    "bitrate": 128,
-    "hls": 0,
-    "lastcheckok": 1,
-    "lastchecktime": "2026-10-28 15:43:41",
-    "lastchecktime_iso8601": "2026-10-28T15:43:41Z",
-    "lastcheckoktime": "2026-10-28 15:43:41",
-    "lastcheckoktime_iso8601": "2026-10-28T15:43:41Z",
-    "lastlocalchecktime": "2026-10-28 15:43:41",
-    "lastlocalchecktime_iso8601": "2026-10-28T15:43:41Z",
-    "clicktimestamp": "2026-10-29 22:14:16",
-    "clicktimestamp_iso8601": "2026-10-29T22:14:16Z",
-    "clickcount": 12,
-    "clicktrend": 12,
-    "ssl_error": 0,
-    "geo_lat": null,
-    "geo_long": null,
-    "geo_distance": null,
-    "has_extended_info": false,
-    "_key": "4a1caf35-e380-4b0d-8a7b-43c46958cfe5"
-  },
-  "bbc:bbc_radio_five_live": {
-    "stationuuid": "bbc:bbc_radio_five_live",
-    "name": "BBC Radio 5 Live",
-    "url": "https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio=96000.norewind.m3u8",
-    "url_resolved": "https://as-hls-ww-live.akamaized.net/pool_89021708/live/ww/bbc_radio_five_live/bbc_radio_five_live.isml/bbc_radio_five_live-audio=96000.norewind.m3u8",
-    "country": "United Kingdom",
-    "tags": "News and sport",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "_key": "bbc:bbc_radio_five_live"
-  },
-  "3260b4f1-f1bd-4850-9c1d-8d7ffdeb3bbd": {
-    "changeuuid": "4d46ac0f-2693-41a0-95f8-edd531ad3bc3",
-    "stationuuid": "3260b4f1-f1bd-4850-9c1d-8d7ffdeb3bbd",
-    "serveruuid": null,
-    "name": "Tube Tamil FM Radio டியூப் தமிழ் எஃப்.எம் பண்பலை ரேடியோ",
-    "url": "http://s2.voscast.com:12084/;stream1619441439791/1",
-    "url_resolved": "http://s2.voscast.com:12084/;stream1619441439791/1",
-    "homepage": "https://tubetamil.fm/",
-    "favicon": "",
-    "tags": "indian music,jaffna,radio,south indian,sri lanka,tamil,tamil fm,tamil music,tamil songs,tube tamil",
-    "country": "Sri Lanka",
-    "countrycode": "LK",
-    "iso_3166_2": "",
-    "state": "Northern Province",
-    "language": "tamil",
-    "languagecodes": "ta",
-    "votes": 4518,
-    "lastchangetime": "2026-01-14 23:51:52",
-    "lastchangetime_iso8601": "2026-01-14T23:51:52Z",
-    "codec": "MP3",
-    "bitrate": 64,
-    "hls": 0,
-    "lastcheckok": 1,
-    "lastchecktime": "2026-10-27 16:14:34",
-    "lastchecktime_iso8601": "2026-10-27T16:14:34Z",
-    "lastcheckoktime": "2026-10-27 16:14:34",
-    "lastcheckoktime_iso8601": "2026-10-27T16:14:34Z",
-    "lastlocalchecktime": "2026-10-27 16:14:34",
-    "lastlocalchecktime_iso8601": "2026-10-27T16:14:34Z",
-    "clicktimestamp": "2026-10-30 12:05:11",
-    "clicktimestamp_iso8601": "2026-10-30T12:05:11Z",
-    "clickcount": 11,
-    "clicktrend": 11,
-    "ssl_error": 0,
-    "geo_lat": null,
-    "geo_long": null,
-    "geo_distance": null,
-    "has_extended_info": false,
-    "_key": "3260b4f1-f1bd-4850-9c1d-8d7ffdeb3bbd"
-  },
-  "akashvani:2": {
-    "stationuuid": "akashvani:2",
-    "name": "FM Gold Delhi",
-    "url": "https://d3r9rhourdc02u.cloudfront.net/assets/radio/airdelhi03/air003_Auto.m3u8",
-    "url_resolved": "https://d3r9rhourdc02u.cloudfront.net/assets/radio/airdelhi03/air003_Auto.m3u8",
-    "country": "India",
-    "tags": "DELHI, Hindi",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:2"
-  },
-  "akashvani:293": {
-    "stationuuid": "akashvani:293",
-    "name": "Akashvani Siliguri",
-    "url": "https://radio.wavespb.com/live/165856ba98ca031a/165856ba98ca031a.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/165856ba98ca031a/165856ba98ca031a.m3u8",
-    "country": "India",
-    "tags": "WEST BENGAL, Bengali",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:293"
-  },
-  "akashvani:42": {
-    "stationuuid": "akashvani:42",
-    "name": "Akashvani Sri Vijaya Puram (Akashvani Port Blair)",
-    "url": "https://radio.wavespb.com/live/dc9ff2a05098df5b/dc9ff2a05098df5b.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/dc9ff2a05098df5b/dc9ff2a05098df5b.m3u8",
-    "country": "India",
-    "tags": "ANDAMAN NICOBAR, Hindi, English, Nicobarese",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:42"
-  },
-  "bbc:bbc_world_service": {
-    "stationuuid": "bbc:bbc_world_service",
-    "name": "BBC World Service",
-    "url": "https://as-hls-ww-live.akamaized.net/pool_87948813/live/ww/bbc_world_service/bbc_world_service.isml/bbc_world_service-audio=96000.norewind.m3u8",
-    "url_resolved": "https://as-hls-ww-live.akamaized.net/pool_87948813/live/ww/bbc_world_service/bbc_world_service.isml/bbc_world_service-audio=96000.norewind.m3u8",
-    "country": "United Kingdom",
-    "tags": "World news",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "_key": "bbc:bbc_world_service"
-  },
-  "mediacorp:SYMPHONY924AAC": {
-    "stationuuid": "mediacorp:SYMPHONY924AAC",
-    "name": "Symphony 924",
-    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/SYMPHONY924AAC.aac",
-    "url_resolved": "https://playerservices.streamtheworld.com/api/livestream-redirect/SYMPHONY924AAC.aac",
-    "country": "Singapore",
-    "tags": "English · Classical",
-    "codec": "AAC",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://www16.mediacorp.sg/melisten/radiostation-logos/symphony-924.png",
-    "_key": "mediacorp:SYMPHONY924AAC"
-  },
-  "akashvani:252": {
-    "stationuuid": "akashvani:252",
-    "name": "Akashvani Tirunelveli",
-    "url": "https://radio.wavespb.com/live/ee7f2a29ab3b6bf9/ee7f2a29ab3b6bf9.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/ee7f2a29ab3b6bf9/ee7f2a29ab3b6bf9.m3u8",
-    "country": "India",
-    "tags": "TAMIL NADU, Tamil, English",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:252"
-  },
-  "mediacorp:987FMAAC": {
-    "stationuuid": "mediacorp:987FMAAC",
-    "name": "987",
-    "url": "https://playerservices.streamtheworld.com/api/livestream-redirect/987FMAAC.aac",
-    "url_resolved": "https://playerservices.streamtheworld.com/api/livestream-redirect/987FMAAC.aac",
-    "country": "Singapore",
-    "tags": "English · Pop",
-    "codec": "AAC",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://www16.mediacorp.sg/melisten/radiostation-logos/987.png",
-    "_key": "mediacorp:987FMAAC"
-  },
-  "f681b6ba-09b0-4bda-94dd-b10a7cdecd74": {
-    "changeuuid": "4c75c2f0-4478-4ae7-b004-07ab63b4d3eb",
-    "stationuuid": "f681b6ba-09b0-4bda-94dd-b10a7cdecd74",
-    "serveruuid": null,
-    "name": "SLBC Thendral FM",
-    "url": "http://220.247.227.20:8000/Threndralstream",
-    "url_resolved": "http://220.247.227.20:8000/Threndralstream",
-    "homepage": "https://www.slbc.lk/",
-    "favicon": "https://onlineradiofm.in/assets/image/radio/180/photo.webp",
-    "tags": "",
-    "country": "Sri Lanka",
-    "countrycode": "LK",
-    "iso_3166_2": null,
-    "state": "Colombo",
-    "language": "",
-    "languagecodes": "",
-    "votes": 49,
-    "lastchangetime": "2026-04-22 02:55:22",
-    "lastchangetime_iso8601": "2026-04-22T02:55:22Z",
-    "codec": "MP3",
-    "bitrate": 128,
-    "hls": 0,
-    "lastcheckok": 1,
-    "lastchecktime": "2026-10-27 02:38:02",
-    "lastchecktime_iso8601": "2026-10-27T02:38:02Z",
-    "lastcheckoktime": "2026-10-27 02:38:02",
-    "lastcheckoktime_iso8601": "2026-10-27T02:38:02Z",
-    "lastlocalchecktime": "2026-10-27 02:38:02",
-    "lastlocalchecktime_iso8601": "2026-10-27T02:38:02Z",
-    "clicktimestamp": "2026-10-30 12:39:02",
-    "clicktimestamp_iso8601": "2026-10-30T12:39:02Z",
-    "clickcount": 6,
-    "clicktrend": 6,
-    "ssl_error": 0,
-    "geo_lat": null,
-    "geo_long": null,
-    "geo_distance": null,
-    "has_extended_info": false,
-    "_key": "f681b6ba-09b0-4bda-94dd-b10a7cdecd74"
-  },
-  "akashvani:297": {
-    "stationuuid": "akashvani:297",
-    "name": "FM Rainbow Chennai",
-    "url": "https://radio.wavespb.com/live/b20ff2fc0bb34b3d/b20ff2fc0bb34b3d.m3u8",
-    "url_resolved": "https://radio.wavespb.com/live/b20ff2fc0bb34b3d/b20ff2fc0bb34b3d.m3u8",
-    "country": "India",
-    "tags": "TAMIL NADU, Tamil, English",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "favicon": "https://newsonair.gov.in/wp-content/themes/newsonair/images/Akhashvani-1.png",
-    "_key": "akashvani:297"
-  },
-  "akashvani:41": {
-    "stationuuid": "akashvani:41",
-    "name": "VBS Delhi",
-    "url": "https://d3r9rhourdc02u.cloudfront.net/assets/radio/airdelhi04/air004_Auto.m3u8",
-    "url_resolved": "https://d3r9rhourdc02u.cloudfront.net/assets/radio/airdelhi04/air004_Auto.m3u8",
-    "country": "India",
-    "tags": "DELHI, Hindi",
-    "codec": "HLS",
-    "bitrate": 0,
-    "clickcount": 0,
-    "_key": "akashvani:41"
-  },
-  "aa2d0a92-7e8a-4b7f-ace3-fc24d207543f": {
-    "changeuuid": "413c7a95-ecb9-4288-8439-41711b60a4f4",
-    "stationuuid": "aa2d0a92-7e8a-4b7f-ace3-fc24d207543f",
-    "serveruuid": null,
-    "name": "Vasantham FM",
-    "url": "https://cp12.serverse.com/proxy/vasanthamfm?mp=/stream",
-    "url_resolved": "https://cp12.serverse.com/proxy/vasanthamfm?mp=/stream",
-    "homepage": "https://www.vasanthamfm.lk/",
-    "favicon": "https://www.vasanthamfm.lk/wp-content/uploads/2023/05/Vasantham-FM.svg",
-    "tags": "tamil melody songs,tamil music,tamil songs",
-    "country": "Sri Lanka",
-    "countrycode": "LK",
-    "iso_3166_2": null,
-    "state": "Colombo",
-    "language": "tamil",
-    "languagecodes": "ta",
-    "votes": 39,
-    "lastchangetime": "2026-04-07 02:50:12",
-    "lastchangetime_iso8601": "2026-04-07T02:50:12Z",
-    "codec": "MP3",
-    "bitrate": 128,
-    "hls": 0,
-    "lastcheckok": 1,
-    "lastchecktime": "2026-10-27 16:39:21",
-    "lastchecktime_iso8601": "2026-10-27T16:39:21Z",
-    "lastcheckoktime": "2026-10-27 16:39:21",
-    "lastcheckoktime_iso8601": "2026-10-27T16:39:21Z",
-    "lastlocalchecktime": "2026-10-27 16:39:21",
-    "lastlocalchecktime_iso8601": "2026-10-27T16:39:21Z",
-    "clicktimestamp": "2026-10-30 11:28:10",
-    "clicktimestamp_iso8601": "2026-10-30T11:28:10Z",
-    "clickcount": 9,
-    "clicktrend": 9,
-    "ssl_error": 0,
-    "geo_lat": 6.937689653413571,
-    "geo_long": 79.87002611160278,
-    "geo_distance": null,
-    "has_extended_info": false,
-    "_key": "aa2d0a92-7e8a-4b7f-ace3-fc24d207543f"
+    "_key": "akashvani:5",
+    "fallbackLogo": "assets/station-logos/name-0eacd31fa04e.svg",
+    "logo": "assets/station-logos/name-0eacd31fa04e.svg",
+    "favicon": "assets/station-logos/name-0eacd31fa04e.svg"
   }
 }

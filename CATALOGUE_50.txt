@@ -1,0 +1,103 @@
+RADIO: news-TV entries play audio feeds
+1. COOL RETRO RADIO Tamil
+2. COOL Nagpuri
+3. BBC World Service
+4. SIKKIM SCHOOL RADIO
+5. Aaj Tak · News Audio
+6. Sun News · News Audio
+7. Republic TV · News Audio
+8. Polimer News · News Audio
+9. News18 India · News Audio
+10. Times Now · News Audio
+11. Puthiya Thalaimurai · News Audio
+12. India TV · News Audio
+13. NDTV 24x7 · News Audio
+14. Thanthi TV · News Audio
+15. ABP News · News Audio
+16. CNN-News18 · News Audio
+17. News18 Tamil Nadu · News Audio
+18. Republic Bharat · News Audio
+19. India Today TV · News Audio
+20. Kalaignar Seithigal · News Audio
+21. Zee News · News Audio
+22. WION · News Audio
+23. Jaya Plus · News Audio
+24. BBC World · News Audio
+25. Oli 96.8 FM
+26. Hindi Gold Radio
+27. Radio Bollywood Gaane Purane
+28. Hits Of Bollywood
+29. COOL 90s
+30. 89.4 Tamil FM
+31. evergreen-tamil-radio
+32. BEST OF AR RAHMAN TAMIL SONGS
+33. Tamil Old Hits FM
+34. SLBC Tamil National Service
+35. Radio Paramankurichi Tamil
+36. fmrainbowtamil
+37. airtamil
+38. swiss-tamil-radio
+39. British Tamil Radio
+40. Kantipur FM
+41. Butwal FM
+42. Radio Annapurna Nepal
+43. Times FM (90.6 MHz)
+44. FM GOLD CHENNAI
+45. Akashvani Tiruchirappalli FM
+46. Radio Fiji Two
+47. Akashvani Ooty
+48. FM Rainbow Coimbatore
+49. Classic Country Legends Radio 
+50. Live News 24x7
+
+TV
+1. Aaj Tak
+2. Sun News
+3. Republic TV
+4. Polimer News
+5. News18 India
+6. Times Now
+7. Puthiya Thalaimurai
+8. India TV
+9. NDTV 24x7
+10. Thanthi TV
+11. ABP News
+12. CNN-News18
+13. News18 Tamil Nadu
+14. Republic Bharat
+15. India Today TV
+16. Kalaignar Seithigal
+17. Zee News
+18. WION
+19. Jaya Plus
+20. BBC World
+21. DD National HD
+22. DD Tamil
+23. DD India
+24. DD News
+25. DD Bharati
+26. DD Kisan
+27. DD Sports
+28. Sansad TV 1
+29. Sansad TV 2
+30. Dangal TV
+31. Dangal 2
+32. B4U Music
+33. B4U Kadak
+34. B4U Bhojpuri
+35. 9XM
+36. 9X Jalwa
+37. Mastiii
+38. Manoranjan Movies
+39. Manoranjan TV
+40. Manoranjan Grand
+41. DD Malayalam
+42. DD Chandana
+43. DD Saptagiri
+44. DD Yadagiri
+45. DD Bangla
+46. DD Punjabi
+47. DD Sahyadri
+48. DD Girnar
+49. DD Urdu
+50. DD Assam

@@ -1,0 +1,208 @@
+[
+  {
+    "name": "Aaj Tak",
+    "playlist": false,
+    "error": "<urlopen error timed out>"
+  },
+  {
+    "name": "Sun News",
+    "playlist": false,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "name": "Republic TV",
+    "playlist": true
+  },
+  {
+    "name": "Polimer News",
+    "playlist": true
+  },
+  {
+    "name": "News18 India",
+    "playlist": true
+  },
+  {
+    "name": "Times Now",
+    "playlist": true
+  },
+  {
+    "name": "Puthiya Thalaimurai",
+    "playlist": true
+  },
+  {
+    "name": "India TV",
+    "playlist": true
+  },
+  {
+    "name": "NDTV 24x7",
+    "playlist": true
+  },
+  {
+    "name": "Thanthi TV",
+    "playlist": true
+  },
+  {
+    "name": "ABP News",
+    "playlist": true
+  },
+  {
+    "name": "CNN-News18",
+    "playlist": true
+  },
+  {
+    "name": "News18 Tamil Nadu",
+    "playlist": true
+  },
+  {
+    "name": "Republic Bharat",
+    "playlist": true
+  },
+  {
+    "name": "India Today TV",
+    "playlist": true
+  },
+  {
+    "name": "Kalaignar Seithigal",
+    "playlist": true
+  },
+  {
+    "name": "Zee News",
+    "playlist": true
+  },
+  {
+    "name": "WION",
+    "playlist": true
+  },
+  {
+    "name": "Jaya Plus",
+    "playlist": false,
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "BBC World",
+    "playlist": true
+  },
+  {
+    "name": "DD National HD",
+    "playlist": true
+  },
+  {
+    "name": "DD Tamil",
+    "playlist": true
+  },
+  {
+    "name": "DD India",
+    "playlist": true
+  },
+  {
+    "name": "DD News",
+    "playlist": true
+  },
+  {
+    "name": "DD Bharati",
+    "playlist": true
+  },
+  {
+    "name": "DD Kisan",
+    "playlist": true
+  },
+  {
+    "name": "DD Sports",
+    "playlist": true
+  },
+  {
+    "name": "Sansad TV 1",
+    "playlist": true
+  },
+  {
+    "name": "Sansad TV 2",
+    "playlist": true
+  },
+  {
+    "name": "Dangal TV",
+    "playlist": true
+  },
+  {
+    "name": "Dangal 2",
+    "playlist": true
+  },
+  {
+    "name": "B4U Music",
+    "playlist": true
+  },
+  {
+    "name": "B4U Kadak",
+    "playlist": true
+  },
+  {
+    "name": "B4U Bhojpuri",
+    "playlist": true
+  },
+  {
+    "name": "9XM",
+    "playlist": false,
+    "error": "HTTP Error 403: Forbidden"
+  },
+  {
+    "name": "9X Jalwa",
+    "playlist": true
+  },
+  {
+    "name": "Mastiii",
+    "playlist": true
+  },
+  {
+    "name": "Manoranjan Movies",
+    "playlist": true
+  },
+  {
+    "name": "Manoranjan TV",
+    "playlist": true
+  },
+  {
+    "name": "Manoranjan Grand",
+    "playlist": true
+  },
+  {
+    "name": "DD Malayalam",
+    "playlist": true
+  },
+  {
+    "name": "DD Chandana",
+    "playlist": true
+  },
+  {
+    "name": "DD Saptagiri",
+    "playlist": true
+  },
+  {
+    "name": "DD Yadagiri",
+    "playlist": true
+  },
+  {
+    "name": "DD Bangla",
+    "playlist": true
+  },
+  {
+    "name": "DD Punjabi",
+    "playlist": false,
+    "error": "HTTP Error 404: Not Found"
+  },
+  {
+    "name": "DD Sahyadri",
+    "playlist": true
+  },
+  {
+    "name": "DD Girnar",
+    "playlist": true
+  },
+  {
+    "name": "DD Urdu",
+    "playlist": true
+  },
+  {
+    "name": "DD Assam",
+    "playlist": false,
+    "error": "HTTP Error 404: Not Found"
+  }
+]
