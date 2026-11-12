@@ -1,10 +1,10 @@
-const CACHE_NAME = 'retroradtv-v3-131';
+const CACHE_NAME = 'retroradtv-v3-134';
 const APP_FILES = [
   './',
   './index.html',
-  './preset-defaults.js?v=3.0.131',
+  './preset-defaults.js?v=3.0.134',
   './style.css?v=3.0.92',
-  './app.js?v=3.0.131',
+  './app.js?v=3.0.134',
   './onboarding.js?v=3.0.115',
   './assets/station-logos/name-69ee6685de85.svg',
   './assets/station-logos/name-c791f4a53328.svg',
