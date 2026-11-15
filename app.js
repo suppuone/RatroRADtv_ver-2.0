@@ -257,6 +257,37 @@
     if(!loadStore('retrotvra.tv-dd-news-only.2026-11-12',null)){saveStore('retrotvra.tv-dd-news-only.previous',tvPresets);tvPresets=Object.fromEntries(tvs.slice(0,50).map(s=>[s.url,s]));saveStore(TV_ORDER_STORE,Object.keys(tvPresets));saveStore('retrotvra.tv-dd-news-only.2026-11-12',{done:true});}
     if(!loadStore('retrotvra.radio-fm-air.2026-11-12',null)){saveStore('retrotvra.radio-fm-air.previous',radioPresets);radioPresets=Object.fromEntries(radios.slice(0,50).map(s=>[stationKey(s),s]));saveStore('retrotvra.radio-fm-air.2026-11-12',{done:true});}
     if(!loadStore('retrotvra.remove-unavailable-news.2026-11-12',null)){for(const [key,station] of Object.entries(tvPresets))if(['Republic TV','Republic Bharat','Sun News','Aaj Tak'].includes(station.name))delete tvPresets[key];saveStore('retrotvra.remove-unavailable-news.2026-11-12',{done:true});}
+    // Apply the renamed station and requested order once; later user reorders stay saved.
+    const nepaliUpdate='retrotvra.cool-retro-nepali-second.2026-11-15';
+    if(!loadStore(nepaliUpdate,null)){
+      const first=radios.find(s=>stationKey(s)==='https://stream.zeno.fm/rc7dnetgrwzuv');
+      const second=radios.find(s=>stationKey(s)==='https://stream.zeno.fm/g2szgxxpqwzuv');
+      if(first&&second){
+        saveStore(nepaliUpdate+'.previous',radioPresets);
+        const priority=[first,second].map(s=>[stationKey(s),s]);
+        const remaining=Object.entries(radioPresets).filter(([key,s])=>!priority.some(([id])=>id===key||id===stationKey(s)));
+        radioPresets=Object.fromEntries([...priority,...remaining].slice(0,PRESET_LIMIT));
+        saveStore(nepaliUpdate,{applied:true});
+      }
+    }
+    // Refresh only this station's artwork, preserving saved order and stream settings.
+    const nagpuriIconUpdate='retrotvra.cool-nagpuri-icon.2026-11-15';
+    if(!loadStore(nagpuriIconUpdate,null)){
+      const logo='assets/station-logos/cool-nagpuri.png';
+      for(const station of Object.values(radioPresets)){
+        if(stationKey(station)==='https://stream.zeno.fm/74mzdgk024zuv'||station.url==='https://stream.zeno.fm/74mzdgk024zuv')Object.assign(station,{logo,favicon:logo,fallbackLogo:logo});
+      }
+      saveStore(nagpuriIconUpdate,{applied:true});
+    }
+    // Update COOL 90s artwork without changing saved station order.
+    const cool90sIconUpdate='retrotvra.cool-90s-icon.2026-11-15';
+    if(!loadStore(cool90sIconUpdate,null)){
+      const logo='assets/station-logos/cool-90s.png';
+      for(const station of Object.values(radioPresets)){
+        if(stationKey(station)==='https://stream.zeno.fm/fdgs82xkzhhvv'||station.url==='https://stream.zeno.fm/fdgs82xkzhhvv')Object.assign(station,{logo,favicon:logo,fallbackLogo:logo});
+      }
+      saveStore(cool90sIconUpdate,{applied:true});
+    }
     const storedRecent=loadStore(RECENT_STORE,[]);recentHistory=Array.isArray(storedRecent)?storedRecent.filter(item=>item&&item.url&&item.name).slice(0,40):[];
     saveStore(RADIO_STORE,radioPresets);saveStore(TV_STORE,tvPresets);
     fillCountries();populateExploreFilters();renderPresets();renderTVRail();renderRemotePresets();renderRadioDisplay();renderExplore();

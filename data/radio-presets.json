@@ -11,18 +11,35 @@
     "genre": "Music",
     "fallbackLogo": "assets/station-logos/name-69ee6685de85.svg"
   },
+  "https://stream.zeno.fm/g2szgxxpqwzuv": {
+    "stationuuid": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "name": "COOL Retro Nepali",
+    "url": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "url_resolved": "https://stream.zeno.fm/g2szgxxpqwzuv",
+    "homepage": "https://stream.zeno.fm/g2szgxxpqwzuv.m3u",
+    "favicon": "assets/station-logos/cool-retro-nepali.png",
+    "logo": "assets/station-logos/cool-retro-nepali.png",
+    "country": "India",
+    "state": "Sikkim",
+    "tags": "nepali,retro,music",
+    "genre": "Music",
+    "fallbackLogo": "assets/station-logos/cool-retro-nepali.png",
+    "language": "nepali",
+    "languagecodes": "ne"
+  },
   "https://stream.zeno.fm/74mzdgk024zuv": {
     "stationuuid": "https://stream.zeno.fm/74mzdgk024zuv",
     "name": "COOL Nagpuri",
     "url": "https://stream.zeno.fm/74mzdgk024zuv",
     "url_resolved": "https://stream.zeno.fm/74mzdgk024zuv",
     "country": "INDIA",
-    "favicon": "https://raw.githubusercontent.com/suppuone/RADIOtv/main/nagpuri%20logo.png",
+    "favicon": "assets/station-logos/cool-nagpuri.png",
     "tags": "",
     "codec": "",
     "bitrate": 0,
     "_key": "https://stream.zeno.fm/74mzdgk024zuv",
-    "fallbackLogo": "assets/station-logos/name-c791f4a53328.svg"
+    "fallbackLogo": "assets/station-logos/cool-nagpuri.png",
+    "logo": "assets/station-logos/cool-nagpuri.png"
   },
   "https://stream.zeno.fm/fdgs82xkzhhvv": {
     "stationuuid": "https://stream.zeno.fm/fdgs82xkzhhvv",
@@ -30,26 +47,13 @@
     "url": "https://stream.zeno.fm/fdgs82xkzhhvv",
     "url_resolved": "https://stream.zeno.fm/fdgs82xkzhhvv",
     "country": "INDIA",
-    "favicon": "https://raw.githubusercontent.com/suppuone/RADIOtv/main/image%20(2).jpeg",
+    "favicon": "assets/station-logos/cool-90s.png",
     "tags": "",
     "codec": "",
     "bitrate": 0,
     "_key": "https://stream.zeno.fm/fdgs82xkzhhvv",
-    "fallbackLogo": "assets/station-logos/name-d041fa89fbc9.svg"
-  },
-  "https://stream.zeno.fm/g2szgxxpqwzuv": {
-    "stationuuid": "https://stream.zeno.fm/g2szgxxpqwzuv",
-    "name": "SIKKIM SCHOOL RADIO",
-    "url": "https://stream.zeno.fm/g2szgxxpqwzuv",
-    "url_resolved": "https://stream.zeno.fm/g2szgxxpqwzuv",
-    "homepage": "https://stream.zeno.fm/g2szgxxpqwzuv.m3u",
-    "favicon": "assets/station-logos/sikkim-school-radio.png",
-    "logo": "assets/station-logos/sikkim-school-radio.png",
-    "country": "India",
-    "state": "Sikkim",
-    "tags": "school,education",
-    "genre": "Education",
-    "fallbackLogo": "assets/station-logos/name-c20f85670f1e.svg"
+    "fallbackLogo": "assets/station-logos/cool-90s.png",
+    "logo": "assets/station-logos/cool-90s.png"
   },
   "https://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FMAAC.aac": {
     "changeuuid": "7379e9a3-7500-458a-88b7-5fbbe2d89160",

@@ -1,10 +1,10 @@
-const CACHE_NAME = 'retroradtv-v3-134';
+const CACHE_NAME = 'retroradtv-v3-137';
 const APP_FILES = [
   './',
   './index.html',
-  './preset-defaults.js?v=3.0.134',
+  './preset-defaults.js?v=3.0.137',
   './style.css?v=3.0.92',
-  './app.js?v=3.0.134',
+  './app.js?v=3.0.137',
   './onboarding.js?v=3.0.115',
   './assets/station-logos/name-69ee6685de85.svg',
   './assets/station-logos/name-c791f4a53328.svg',
@@ -111,6 +111,9 @@ const APP_FILES = [
   './icon.svg',
   './assets/station-logos/coolmag-radio.png',
   './assets/station-logos/sikkim-school-radio.png',
+  './assets/station-logos/cool-retro-nepali.png',
+  './assets/station-logos/cool-nagpuri.png',
+  './assets/station-logos/cool-90s.png',
   './data/radio-presets.json',
   './data/tv-presets.json',
   './data/app-settings.json'
