@@ -1,10 +1,17 @@
-const CACHE_NAME = 'retroradtv-v3-137';
+const CACHE_NAME = 'retroradtv-v3-151';
 const APP_FILES = [
+  './legacy-github.css?v=3.0.151',
   './',
   './index.html',
-  './preset-defaults.js?v=3.0.137',
-  './style.css?v=3.0.92',
-  './app.js?v=3.0.137',
+  './tv-auto-fullscreen.js?v=3.0.151',
+  './volume-knob.js?v=3.0.151',
+  './tone-controls.js?v=3.0.151',
+  './assets/station-logos/kishore-kumar-hits.png',
+  './stations.json',
+  './stream-recovery.js?v=3.0.151',
+  './preset-defaults.js?v=3.0.151',
+  './styles.css?v=3.0.151',
+  './app.js?v=3.0.151',
   './onboarding.js?v=3.0.115',
   './assets/station-logos/name-69ee6685de85.svg',
   './assets/station-logos/name-c791f4a53328.svg',
@@ -114,6 +121,7 @@ const APP_FILES = [
   './assets/station-logos/cool-retro-nepali.png',
   './assets/station-logos/cool-nagpuri.png',
   './assets/station-logos/cool-90s.png',
+  './assets/station-logos/kishore-kumar-hits.svg',
   './data/radio-presets.json',
   './data/tv-presets.json',
   './data/app-settings.json'

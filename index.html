@@ -14,11 +14,15 @@
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="icon" href="icon.svg" type="image/svg+xml">
   <link rel="apple-touch-icon" href="icon.svg">
-  <link rel="stylesheet" href="style.css?v=3.0.92">
+  <link rel="stylesheet" href="styles.css?v=3.0.151">
   <script defer src="https://cdn.jsdelivr.net/npm/hls.js@1.5.18/dist/hls.min.js"></script>
-  <script defer src="preset-defaults.js?v=3.0.137"></script>
+  <script defer src="preset-defaults.js?v=3.0.151"></script>
   <script defer src="onboarding.js?v=3.0.115"></script>
-  <script defer src="app.js?v=3.0.137"></script>
+  <script defer src="stream-recovery.js?v=3.0.151"></script>
+  <script defer src="tone-controls.js?v=3.0.151"></script>
+  <script defer src="volume-knob.js?v=3.0.151"></script>
+  <script defer src="tv-auto-fullscreen.js?v=3.0.151"></script>
+  <script defer src="app.js?v=3.0.151"></script>
 </head>
 <body>
 <section class="welcome-splash-v2 tuning-splash" id="welcome-splash-v2" role="dialog" aria-modal="true" aria-labelledby="tuning-title">
@@ -53,12 +57,41 @@
         <audio id="radio-audio" preload="none"></audio>
       </article>
 
-      <div class="transport" aria-label="Radio controls">
-        <button class="transport-button" id="radio-prev" title="Previous station" aria-label="Previous station">⏮</button>
-        <button class="transport-button main-play" id="radio-play" title="Play" aria-label="Play">▶</button>
-        <button class="transport-button" id="radio-next" title="Next station" aria-label="Next station">⏭</button>
+      <div class="radio-tone-bank" aria-label="Radio playback and tone controls">
+        <div class="tone-control" style="--tone-angle:0deg">
+          <label for="radio-bass" class="tone-label">BASS</label>
+          <div class="tone-dial" title="Drag up/right to boost, down/left to reduce; double-tap to reset">
+            <span class="tone-scale" aria-hidden="true"></span><span class="tone-face" aria-hidden="true"><i></i></span>
+          </div>
+          <input class="tone-input" id="radio-bass" data-tone="bass" type="range" min="-12" max="12" step="1" value="0" aria-label="Radio bass" aria-describedby="tone-status">
+          <output id="radio-bass-value" for="radio-bass" class="tone-value">0 dB</output>
+        </div>
+        <div class="radio-transport-stack">
+          <div class="volume-transport" aria-label="Previous, volume and play, next">
+            <button class="transport-button" id="radio-prev" title="Previous station" aria-label="Previous station">⏮</button>
+            <div class="volume-knob-control">
+            <label for="radio-volume-knob" class="tone-label">VOLUME</label>
+            <div class="volume-dial" id="radio-volume-dial" title="Drag up/right to increase volume; down/left to decrease">
+              <span class="volume-knob-scale" aria-hidden="true"></span>
+              <span class="volume-knob-face" aria-hidden="true"><i></i></span>
+              <button class="transport-button main-play" id="radio-play" title="Play" aria-label="Play">▶</button>
+            </div>
+            <input class="volume-knob-input" id="radio-volume-knob" type="range" min="0" max="100" step="1" value="30" aria-label="Radio volume knob">
+            <output id="radio-volume-knob-value" for="radio-volume-knob">30%</output>
+          </div>
+            <button class="transport-button" id="radio-next" title="Next station" aria-label="Next station">⏭</button>
+          </div>
+        </div>
+        <div class="tone-control" style="--tone-angle:0deg">
+          <label for="radio-treble" class="tone-label">TREBLE</label>
+          <div class="tone-dial" title="Drag up/right to boost, down/left to reduce; double-tap to reset">
+            <span class="tone-scale" aria-hidden="true"></span><span class="tone-face" aria-hidden="true"><i></i></span>
+          </div>
+          <input class="tone-input" id="radio-treble" data-tone="treble" type="range" min="-12" max="12" step="1" value="0" aria-label="Radio treble" aria-describedby="tone-status">
+          <output id="radio-treble-value" for="radio-treble" class="tone-value">0 dB</output>
+        </div>
       </div>
-      <div class="control-labels"><span>CH DOWN</span><span>PLAY / PAUSE</span><span>CH UP</span></div>
+      <p id="tone-status" class="tone-status" role="status" aria-live="polite"></p>
       <div class="radio-volume-row" aria-label="Radio volume control"><button type="button" class="radio-volume-icon" data-radio-volume-action="mute" aria-label="Mute radio"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 9a4 4 0 0 1 0 6m3-9a8 8 0 0 1 0 12"/></svg></button><label class="radio-volume-track" id="radio-volume-track" for="radio-volume"><span>VOL</span><input id="radio-volume" type="range" min="0" max="100" value="30" aria-label="Radio volume"><b id="volume-number">30</b></label><button type="button" class="radio-volume-icon" data-radio-volume-action="up" aria-label="Volume up"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M11 5 6 9H3v6h3l5 4zM15 12h6m-3-3v6"/></svg></button></div>
       <div class="station-status" id="radio-status" role="status">READY · SELECT A PRESET OR EXPLORE</div>
     </section>
@@ -142,7 +175,7 @@
       <button class="nav-item" data-screen="explore-screen"><span>⌕</span>EXPLORE</button>
     </nav>
   </main>
-  <dialog class="settings-dialog" id="settings-dialog"><form method="dialog"><button class="dialog-close" aria-label="Close settings">×</button><span class="eyebrow">PERSONALISE YOUR PLAYER</span><h2>Settings</h2><div class="setting-row"><span><b>LEGACY THEME</b><small>Allow 10 taps on the Radio page to switch to the Version 1 look.</small></span><label class="setting-switch"><input id="legacy-theme-enabled" type="checkbox" role="switch" aria-label="Legacy theme on or off"><span class="switch-track" aria-hidden="true"></span></label></div><div class="setting-row"><span><b>THEME</b><small>Allow switching between Retro, Modern, and Ultra.</small></span><label class="setting-switch"><input id="theme-switch-enabled" type="checkbox" role="switch" aria-label="Theme switching on or off"><span class="switch-track" aria-hidden="true"></span></label></div><label class="setting-row"><span><b>App theme</b><small>Retro: warm glow · Modern: white glow · Ultra: color glow</small></span><select id="theme-choice"><option value="retro">RETRO</option><option value="modern">MODERN</option><option value="ultra">ULTRA</option></select></label><label class="setting-row"><span><b>Radio visualizer</b><small>Audio-reactive patterns across the bottom</small></span><select id="visualizer-choice"><option value="wave">Colour waves</option><option value="halo">Particle halo</option><option value="mesh">Flowing mesh</option><option value="mix">Mix — random cycle</option><option value="off">Off</option></select></label><div class="setting-row"><span><b>Curated presets</b><small>Export your saved Radio and TV lists in their current order</small></span><button type="button" id="export-curated-presets">Export presets</button></div><p class="settings-note">Your presets and choices remain saved in this browser.</p></form></dialog>
+  <dialog class="settings-dialog" id="settings-dialog"><form method="dialog"><button class="dialog-close" aria-label="Close settings">×</button><span class="eyebrow">PERSONALISE YOUR PLAYER</span><h2>Settings</h2><div class="setting-row"><span><b>LEGACY THEME</b><small>Allow 10 taps on the Radio page to switch to the GitHub v2 look.</small></span><label class="setting-switch"><input id="legacy-theme-enabled" type="checkbox" role="switch" aria-label="Legacy theme on or off"><span class="switch-track" aria-hidden="true"></span></label></div><div class="setting-row"><span><b>THEME</b><small>Allow switching between Retro, Modern, and Ultra.</small></span><label class="setting-switch"><input id="theme-switch-enabled" type="checkbox" role="switch" aria-label="Theme switching on or off"><span class="switch-track" aria-hidden="true"></span></label></div><label class="setting-row"><span><b>App theme</b><small>Retro: warm glow · Modern: white glow · Ultra: color glow</small></span><select id="theme-choice"><option value="retro">RETRO</option><option value="modern">MODERN</option><option value="ultra">ULTRA</option></select></label><label class="setting-row"><span><b>Radio visualizer</b><small>Audio-reactive patterns across the bottom</small></span><select id="visualizer-choice"><option value="wave">Colour waves</option><option value="halo">Particle halo</option><option value="mesh">Flowing mesh</option><option value="mix">Mix — random cycle</option><option value="off">Off</option></select></label><div class="setting-row"><span><b>Curated presets</b><small>Export your saved Radio and TV lists in their current order</small></span><button type="button" id="export-curated-presets">Export presets</button></div><div class="setting-row"><span><b>Unavailable channels</b><small>Hide locally; restore whenever you want.</small></span><button type="button" id="hide-radio-channel">Hide current radio</button><button type="button" id="hide-tv-channel">Hide current TV</button><button type="button" id="restore-hidden-channels">Restore hidden</button></div><p class="settings-note">Your presets and choices remain saved in this browser.</p></form></dialog>
   <div class="toast" id="toast" role="status" aria-live="polite"></div>
 </body>
 </html>

@@ -55,6 +55,20 @@
     "fallbackLogo": "assets/station-logos/cool-90s.png",
     "logo": "assets/station-logos/cool-90s.png"
   },
+  "https://stream.zeno.fm/0ghtfp8ztm0uv": {
+    "stationuuid": "https://stream.zeno.fm/0ghtfp8ztm0uv",
+    "name": "KISHORE KUMAR hits",
+    "url": "https://stream.zeno.fm/0ghtfp8ztm0uv",
+    "url_resolved": "https://stream.zeno.fm/0ghtfp8ztm0uv",
+    "logo": "assets/station-logos/kishore-kumar-hits.png",
+    "favicon": "assets/station-logos/kishore-kumar-hits.png",
+    "fallbackLogo": "assets/station-logos/kishore-kumar-hits.png",
+    "country": "India",
+    "language": "hindi",
+    "languagecodes": "hi",
+    "tags": "kishore kumar,hindi,retro,hits,music",
+    "genre": "Music"
+  },
   "https://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FMAAC.aac": {
     "changeuuid": "7379e9a3-7500-458a-88b7-5fbbe2d89160",
     "stationuuid": "https://playerservices.streamtheworld.com/api/livestream-redirect/OLI968FMAAC.aac",
